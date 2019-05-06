@@ -1,9 +1,9 @@
 
 SET NAMES 'utf8';
 
-CREATE DATABASE IF NOT EXISTS `webeeq_framework4_sieciq` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
+CREATE DATABASE IF NOT EXISTS `webeeq_framework` DEFAULT CHARACTER SET utf8 COLLATE utf8_polish_ci;
 
-USE `webeeq_framework4_sieciq`;
+USE `webeeq_framework`;
 
 CREATE TABLE IF NOT EXISTS `users` (
     `user_id` int(11) NOT NULL AUTO_INCREMENT,
