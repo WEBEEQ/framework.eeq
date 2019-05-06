@@ -1,0 +1,1 @@
+                <p class="info">Osiągnięto maksymalną liczbę możliwych do wykonania wyświetleń stron innych użytkowników systemu. Jest ona równa ilości aktywnych stron w portalu. Dalsze odsłony stron nie będą możliwe, dopóki inni użytkownicy systemu nie odwiedzą Państwa stron. Doradzamy zajrzeć tu ponownie dopiero jutro.</p>
