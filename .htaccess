@@ -1,0 +1,38 @@
+ErrorDocument 403 /error.php?name=403
+ErrorDocument 404 /error.php?name=404
+ErrorDocument 500 /error.php?name=500
+DirectoryIndex index.html index.php /error.php?name=403
+# AddType application/x-httpd-php .php .html .js
+# php_flag register_globals off
+# php_value default_charset utf-8
+# php_value date.timezone Europe/Warsaw
+# php_value max_execution_time 60
+# php_value memory_limit 256M
+# php_value post_max_size 20M
+# php_value upload_max_filesize 10M
+RewriteEngine on
+RewriteBase /
+RewriteCond %{HTTPS} !^on$
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.8$ [NC]
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTP_HOST} !^framework\.eeq$ [NC]
+RewriteCond %{HTTP_HOST} !^127\.0\.0\.8$ [NC]
+RewriteRule ^(.*)$ https://framework.eeq/$1 [R=301,L]
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?framework\.eeq/ [NC]
+RewriteCond %{HTTP_REFERER} !^http(s)?://127\.0\.0\.8/ [NC]
+RewriteRule \.(exe|pdf|zip|rar|swf|flv|avi|mpg|mpeg|wav|vqf|mp3|flac|bmp|png|gif|jpg|jpeg)$ - [NC,F,L]
+RewriteRule \.(ini)$ - [NC,F,L]
+RewriteRule ^$ /index.php?option=page&level=1 [L]
+RewriteRule ^strona,([0-9]+)$ /index.php?option=page&level=$1 [L]
+RewriteRule ^osoba,([0-9]+)$ /index.php?option=person&user=$1 [L]
+RewriteRule ^dodawanie$ /index.php?option=addition [L]
+RewriteRule ^szukanie$ /search.php [L]
+RewriteRule ^kontakt$ /index.php?option=contact [L]
+RewriteRule ^ajax/miejsce,([0-9]+)$ /ajax/index.php?option=place&province=$1 [L]
+RewriteRule ^$ - [L]
+RewriteRule ^index\.php$ - [L]
+RewriteRule ^search\.php$ - [L]
+RewriteRule ^error\.php$ - [L]
+RewriteRule ^ajax/ - [L]
+RewriteRule \.(txt|js|css|ico|bmp|png|gif|jpg|jpeg|swf|flv)$ - [NC,L]
+RewriteRule ^.*$ - [F,L]

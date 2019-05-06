@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteBase /
+RewriteRule ^503\.php$ - [L]
+RewriteRule ^.*$ /503.php [L]
