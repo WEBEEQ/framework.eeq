@@ -7,6 +7,16 @@ use App\Core\DataBase;
 
 class UserAccountModel extends DataBase
 {
+    protected $config;
+    protected $html;
+
+    public function __construct(object $config, object $html)
+    {
+        parent::__construct();
+        $this->config = $config;
+        $this->html = $html;
+    }
+
     public function getUserData(int $id): array
     {
         $arrayResult = array();
@@ -46,8 +56,6 @@ class UserAccountModel extends DataBase
     }
 
     public function pageNavigator(
-        object $config,
-        object $html,
         int $id,
         int $level,
         int $listLimit
@@ -64,8 +72,8 @@ class UserAccountModel extends DataBase
             $count = (is_numeric($row['count'])) ? (int) $row['count'] : 0;
         }
 
-        return $html->preparePageNavigator(
-            $config->getUrl() . '/konto,' . $id . ',strona,',
+        return $this->html->preparePageNavigator(
+            $this->config->getUrl() . '/konto,' . $id . ',strona,',
             $level,
             $listLimit,
             $count,

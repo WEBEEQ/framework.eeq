@@ -9,23 +9,23 @@ class LoginUserService
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $loginUserError;
     protected $loginUserModel;
+    protected $loginUserValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $loginUserError,
-        object $loginUserModel
+        object $loginUserModel,
+        object $loginUserValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->loginUserError = $loginUserError;
         $this->loginUserModel = $loginUserModel;
+        $this->loginUserValidator = $loginUserValidator;
     }
 
     public function variableAction(
@@ -40,13 +40,13 @@ class LoginUserService
     ): array {
         if ($submit) {
             if ($forget) {
-                $this->loginUserError->validate(
+                $this->loginUserValidator->validate(
                     $forget,
                     $login,
                     $password,
                     $token
                 );
-                if ($this->loginUserError->isValid()) {
+                if ($this->loginUserValidator->isValid()) {
                     $userLogin = $this->loginUserModel->isUserLogin(
                         $login,
                         $active,
@@ -88,19 +88,19 @@ class LoginUserService
                             );
                         }
                     } else {
-                        $this->loginUserError->addError(
+                        $this->loginUserValidator->addError(
                             'Konto o podanym loginie nie istnieje.'
                         );
                     }
                 }
             } else {
-                $this->loginUserError->validate(
+                $this->loginUserValidator->validate(
                     $forget,
                     $login,
                     $password,
                     $token
                 );
-                if ($this->loginUserError->isValid()) {
+                if ($this->loginUserValidator->isValid()) {
                     $userPassword = $this->loginUserModel->getUserPassword(
                         $login,
                         $id,
@@ -149,7 +149,7 @@ class LoginUserService
                             );
                         }
                     } else {
-                        $this->loginUserError->addError(
+                        $this->loginUserValidator->addError(
                             'Konto o podanym loginie i haśle nie istnieje.'
                         );
                     }
@@ -222,7 +222,7 @@ class LoginUserService
             'activeMenu' => 'login-user',
             'title' => 'Logowanie',
             'error' => $this->html->prepareError(
-                $this->loginUserError->getError()
+                $this->loginUserValidator->getError()
             ),
             'login' => $login,
             'forget' => $forget,

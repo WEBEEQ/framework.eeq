@@ -8,21 +8,21 @@ class EditSiteService
     protected $config;
     protected $html;
     protected $csrfToken;
-    protected $editSiteError;
     protected $editSiteModel;
+    protected $editSiteValidator;
 
     public function __construct(
         object $config,
         object $html,
         object $csrfToken,
-        object $editSiteError,
-        object $editSiteModel
+        object $editSiteModel,
+        object $editSiteValidator
     ) {
         $this->config = $config;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->editSiteError = $editSiteError;
         $this->editSiteModel = $editSiteModel;
+        $this->editSiteValidator = $editSiteValidator;
     }
 
     public function variableAction(
@@ -53,8 +53,8 @@ class EditSiteService
                     'siteData' => $siteData
                 );
             } else {
-                $this->editSiteError->validate($name, $token);
-                if ($this->editSiteError->isValid()) {
+                $this->editSiteValidator->validate($name, $token);
+                if ($this->editSiteValidator->isValid()) {
                     $siteData = $this->editSiteModel->setSiteData(
                         $site,
                         $visible,
@@ -82,7 +82,7 @@ class EditSiteService
             'activeMenu' => 'edit-site',
             'title' => 'Edycja strony',
             'error' => $this->html->prepareError(
-                $this->editSiteError->getError()
+                $this->editSiteValidator->getError()
             ),
             'name' => $name,
             'www' => $www,

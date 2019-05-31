@@ -5,9 +5,9 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Error\AcceptSiteError;
 use App\Model\AcceptSiteModel;
 use App\Service\AcceptSiteService;
+use App\Validator\AcceptSiteValidator;
 
 class AcceptSiteController
 {
@@ -25,8 +25,9 @@ class AcceptSiteController
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $acceptSiteError = new AcceptSiteError($csrfToken);
         $acceptSiteModel = new AcceptSiteModel();
+        $acceptSiteValidator = new AcceptSiteValidator($csrfToken);
+
         $acceptSiteModel->dbConnect();
 
         $acceptSiteService = new AcceptSiteService(
@@ -34,8 +35,8 @@ class AcceptSiteController
             $mail,
             $html,
             $csrfToken,
-            $acceptSiteError,
-            $acceptSiteModel
+            $acceptSiteModel,
+            $acceptSiteValidator
         );
         $array = $acceptSiteService->variableAction(
             $name,

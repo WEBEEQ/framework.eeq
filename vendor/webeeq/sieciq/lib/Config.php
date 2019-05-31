@@ -4,7 +4,7 @@ namespace Webeeq\Sieciq;
 
 class Config
 {
-    protected $url = 'http://127.0.0.13';
+    protected $url = 'http://127.0.0.15';
     protected $addSitePath = '/rest/dodawanie';
     protected $updateSitePath = '/rest/aktualizacja';
     protected $deleteSitePath = '/rest/usuwanie';

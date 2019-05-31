@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Error/ContactFormError.php
-namespace App\Error;
+// src/Validator/ContactFormValidator.php
+namespace App\Validator;
 
 use App\Bundle\Error;
 
-class ContactFormError extends Error
+class ContactFormValidator extends Error
 {
     protected $csrfToken;
 

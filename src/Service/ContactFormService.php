@@ -9,20 +9,20 @@ class ContactFormService
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $contactFormError;
+    protected $contactFormValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $contactFormError
+        object $contactFormValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->contactFormError = $contactFormError;
+        $this->contactFormValidator = $contactFormValidator;
     }
 
     public function variableAction(
@@ -33,8 +33,13 @@ class ContactFormService
         string $token
     ): array {
         if ($submit) {
-            $this->contactFormError->validate($email, $subject, $text, $token);
-            if ($this->contactFormError->isValid()) {
+            $this->contactFormValidator->validate(
+                $email,
+                $subject,
+                $text,
+                $token
+            );
+            if ($this->contactFormValidator->isValid()) {
                 $contactEmail = $this->sendContactEmail(
                     $email,
                     $subject,
@@ -57,7 +62,7 @@ class ContactFormService
             'activeMenu' => 'contact-form',
             'title' => 'Kontakt',
             'error' => $this->html->prepareError(
-                $this->contactFormError->getError()
+                $this->contactFormValidator->getError()
             ),
             'email' => $email,
             'subject' => $subject,

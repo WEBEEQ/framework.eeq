@@ -13,6 +13,7 @@ class ShowSiteController
     {
         $config = new Config();
         $showSiteModel = new ShowSiteModel();
+
         $showSiteModel->dbConnect();
 
         $showSiteService = new ShowSiteService($config, $showSiteModel);

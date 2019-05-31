@@ -5,9 +5,9 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Error\AddUserError;
 use App\Model\AddUserModel;
 use App\Service\AddUserService;
+use App\Validator\AddUserValidator;
 
 class AddUserController
 {
@@ -29,8 +29,9 @@ class AddUserController
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $addUserError = new AddUserError($csrfToken);
         $addUserModel = new AddUserModel();
+        $addUserValidator = new AddUserValidator($csrfToken, $addUserModel);
+
         $addUserModel->dbConnect();
 
         $addUserService = new AddUserService(
@@ -38,8 +39,8 @@ class AddUserController
             $mail,
             $html,
             $csrfToken,
-            $addUserError,
-            $addUserModel
+            $addUserModel,
+            $addUserValidator
         );
         $array = $addUserService->variableAction(
             $name,

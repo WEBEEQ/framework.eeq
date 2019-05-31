@@ -6,17 +6,17 @@ namespace App\Service;
 class RestService
 {
     protected $config;
-    protected $message;
     protected $restModel;
+    protected $message;
 
     public function __construct(
         object $config,
-        object $message,
-        object $restModel
+        object $restModel,
+        object $message
     ) {
         $this->config = $config;
-        $this->message = $message;
         $this->restModel = $restModel;
+        $this->message = $message;
     }
 
     public function addSiteMessage(

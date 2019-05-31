@@ -17,12 +17,12 @@ class AdminAccountController
     ): array {
         $config = new Config();
         $html = new Html();
-        $adminAccountModel = new AdminAccountModel();
+        $adminAccountModel = new AdminAccountModel($config, $html);
+
         $adminAccountModel->dbConnect();
 
         $adminAccountService = new AdminAccountService(
             $config,
-            $html,
             $adminAccountModel
         );
         $array = $adminAccountService->variableAction(

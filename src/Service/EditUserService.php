@@ -9,23 +9,23 @@ class EditUserService
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $editUserError;
     protected $editUserModel;
+    protected $editUserValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $editUserError,
-        object $editUserModel
+        object $editUserModel,
+        object $editUserValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->editUserError = $editUserError;
         $this->editUserModel = $editUserModel;
+        $this->editUserValidator = $editUserValidator;
     }
 
     public function variableAction(
@@ -58,8 +58,7 @@ class EditUserService
         }
 
         if ($submit) {
-            $this->editUserError->validate(
-                $this->editUserModel,
+            $this->editUserValidator->validate(
                 $password,
                 $newPassword,
                 $repeatPassword,
@@ -72,7 +71,7 @@ class EditUserService
                 $token,
                 $user
             );
-            if ($this->editUserError->isValid()) {
+            if ($this->editUserValidator->isValid()) {
                 if ($login != $lastLogin) {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
@@ -158,7 +157,7 @@ class EditUserService
             'activeMenu' => 'edit-user',
             'title' => 'Edycja użytkownika',
             'error' => $this->html->prepareError(
-                $this->editUserError->getError()
+                $this->editUserValidator->getError()
             ),
             'name' => $name,
             'surname' => $surname,

@@ -5,9 +5,9 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Token};
-use App\Error\UserAccountError;
 use App\Model\UserAccountModel;
 use App\Service\UserAccountService;
+use App\Validator\UserAccountValidator;
 
 class UserAccountController
 {
@@ -23,16 +23,17 @@ class UserAccountController
         $config = new Config();
         $html = new Html();
         $csrfToken = new Token();
-        $userAccountError = new UserAccountError($csrfToken);
-        $userAccountModel = new UserAccountModel();
+        $userAccountModel = new UserAccountModel($config, $html);
+        $userAccountValidator = new UserAccountValidator($csrfToken);
+
         $userAccountModel->dbConnect();
 
         $userAccountService = new UserAccountService(
             $config,
             $html,
             $csrfToken,
-            $userAccountError,
-            $userAccountModel
+            $userAccountModel,
+            $userAccountValidator
         );
         $array = $userAccountService->variableAction(
             $name,

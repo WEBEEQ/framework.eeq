@@ -9,23 +9,23 @@ class AcceptSiteService
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $acceptSiteError;
     protected $acceptSiteModel;
+    protected $acceptSiteValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $acceptSiteError,
-        object $acceptSiteModel
+        object $acceptSiteModel,
+        object $acceptSiteValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->acceptSiteError = $acceptSiteError;
         $this->acceptSiteModel = $acceptSiteModel;
+        $this->acceptSiteValidator = $acceptSiteValidator;
     }
 
     public function variableAction(
@@ -75,8 +75,8 @@ class AcceptSiteService
                     );
                 }
             } else {
-                $this->acceptSiteError->validate($name, $www, $token);
-                if ($this->acceptSiteError->isValid()) {
+                $this->acceptSiteValidator->validate($name, $www, $token);
+                if ($this->acceptSiteValidator->isValid()) {
                     $siteData = $this->acceptSiteModel->setSiteData(
                         $site,
                         $active,
@@ -142,7 +142,7 @@ class AcceptSiteService
             'activeMenu' => 'accept-site',
             'title' => 'Akceptacja strony',
             'error' => $this->html->prepareError(
-                $this->acceptSiteError->getError()
+                $this->acceptSiteValidator->getError()
             ),
             'name' => $name,
             'www' => $www,

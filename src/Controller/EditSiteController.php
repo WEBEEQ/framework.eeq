@@ -5,9 +5,9 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Token};
-use App\Error\EditSiteError;
 use App\Model\EditSiteModel;
 use App\Service\EditSiteService;
+use App\Validator\EditSiteValidator;
 
 class EditSiteController
 {
@@ -24,16 +24,17 @@ class EditSiteController
         $config = new Config();
         $html = new Html();
         $csrfToken = new Token();
-        $editSiteError = new EditSiteError($csrfToken);
         $editSiteModel = new EditSiteModel();
+        $editSiteValidator = new EditSiteValidator($csrfToken);
+
         $editSiteModel->dbConnect();
 
         $editSiteService = new EditSiteService(
             $config,
             $html,
             $csrfToken,
-            $editSiteError,
-            $editSiteModel
+            $editSiteModel,
+            $editSiteValidator
         );
         $array = $editSiteService->variableAction(
             $name,

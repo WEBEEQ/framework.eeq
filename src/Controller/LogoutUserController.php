@@ -10,6 +10,7 @@ class LogoutUserController
     public function logoutUserAction(): array
     {
         $config = new Config();
+
         session_destroy();
         setcookie('login', '', 0, '/');
         header('Location: ' . $config->getUrl() . '/logowanie');

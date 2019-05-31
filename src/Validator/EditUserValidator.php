@@ -1,22 +1,23 @@
 <?php declare(strict_types=1);
 
-// src/Error/EditUserError.php
-namespace App\Error;
+// src/Validator/EditUserValidator.php
+namespace App\Validator;
 
 use App\Bundle\Error;
 
-class EditUserError extends Error
+class EditUserValidator extends Error
 {
     protected $csrfToken;
+    protected $editUserModel;
 
-    public function __construct(object $csrfToken)
+    public function __construct(object $csrfToken, object $editUserModel)
     {
         parent::__construct();
         $this->csrfToken = $csrfToken;
+        $this->editUserModel = $editUserModel;
     }
 
     public function validate(
-        object $editUserModel,
         string $password,
         string $newPassword,
         string $repeatPassword,
@@ -59,7 +60,7 @@ class EditUserError extends Error
             }
         }
         if ($password != '') {
-            $userPassword = $editUserModel->getUserPassword($user);
+            $userPassword = $this->editUserModel->getUserPassword($user);
             if (!password_verify($password, $userPassword)) {
                 $error .= 'Stare hasło nie jest zgodne z dotychczas '
                     . 'istniejącym.' . "\r\n";

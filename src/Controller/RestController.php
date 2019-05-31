@@ -17,11 +17,12 @@ class RestController
         string $www
     ): array {
         $config = new Config();
-        $message = new Message();
         $restModel = new RestModel();
+        $message = new Message();
+
         $restModel->dbConnect();
 
-        $restService = new RestService($config, $message, $restModel);
+        $restService = new RestService($config, $restModel, $message);
         $message = $restService->addSiteMessage(
             $user,
             $password,
@@ -45,11 +46,12 @@ class RestController
         int $visible
     ): array {
         $config = new Config();
-        $message = new Message();
         $restModel = new RestModel();
+        $message = new Message();
+
         $restModel->dbConnect();
 
-        $restService = new RestService($config, $message, $restModel);
+        $restService = new RestService($config, $restModel, $message);
         $message = $restService->updateSiteMessage(
             $user,
             $password,
@@ -72,11 +74,12 @@ class RestController
         int $site
     ): array {
         $config = new Config();
-        $message = new Message();
         $restModel = new RestModel();
+        $message = new Message();
+
         $restModel->dbConnect();
 
-        $restService = new RestService($config, $message, $restModel);
+        $restService = new RestService($config, $restModel, $message);
         $message = $restService->deleteSiteMessage(
             $user,
             $password,

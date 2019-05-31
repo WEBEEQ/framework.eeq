@@ -8,21 +8,21 @@ class UserAccountService
     protected $config;
     protected $html;
     protected $csrfToken;
-    protected $userAccountError;
     protected $userAccountModel;
+    protected $userAccountValidator;
 
     public function __construct(
         object $config,
         object $html,
         object $csrfToken,
-        object $userAccountError,
-        object $userAccountModel
+        object $userAccountModel,
+        object $userAccountValidator
     ) {
         $this->config = $config;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->userAccountError = $userAccountError;
         $this->userAccountModel = $userAccountModel;
+        $this->userAccountValidator = $userAccountValidator;
     }
 
     public function variableAction(
@@ -47,8 +47,8 @@ class UserAccountService
         }
 
         if ($submit) {
-            $this->userAccountError->validate($name, $www, $token);
-            if ($this->userAccountError->isValid()) {
+            $this->userAccountValidator->validate($name, $www, $token);
+            if ($this->userAccountValidator->isValid()) {
                 $siteData = $this->userAccountModel->addSiteData(
                     $id,
                     $name,
@@ -82,8 +82,6 @@ class UserAccountService
             $listLimit = 10
         );
         $pageNavigator = $this->userAccountModel->pageNavigator(
-            $this->config,
-            $this->html,
             $id,
             $level,
             $listLimit
@@ -95,7 +93,7 @@ class UserAccountService
             'activeMenu' => 'user-account',
             'title' => 'Konto',
             'error' => $this->html->prepareError(
-                $this->userAccountError->getError()
+                $this->userAccountValidator->getError()
             ),
             'name' => $name,
             'www' => $www,

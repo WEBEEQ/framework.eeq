@@ -6,16 +6,13 @@ namespace App\Service;
 class AdminAccountService
 {
     protected $config;
-    protected $html;
     protected $adminAccountModel;
 
     public function __construct(
         object $config,
-        object $html,
         object $adminAccountModel
     ) {
         $this->config = $config;
-        $this->html = $html;
         $this->adminAccountModel = $adminAccountModel;
     }
 
@@ -41,8 +38,6 @@ class AdminAccountService
             $listLimit = 10
         );
         $pageNavigator = $this->adminAccountModel->pageNavigator(
-            $this->config,
-            $this->html,
             $id,
             $level,
             $listLimit

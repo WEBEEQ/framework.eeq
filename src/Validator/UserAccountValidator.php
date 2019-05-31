@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Error/AcceptSiteError.php
-namespace App\Error;
+// src/Validator/UserAccountValidator.php
+namespace App\Validator;
 
 use App\Bundle\Error;
 
-class AcceptSiteError extends Error
+class UserAccountValidator extends Error
 {
     protected $csrfToken;
 
@@ -15,13 +15,15 @@ class AcceptSiteError extends Error
         $this->csrfToken = $csrfToken;
     }
 
-    public function validate(string $name, string $www, string $token): void
-    {
+    public function validate(
+        string $name,
+        string $www,
+        string $token
+    ): void {
         $error = '';
 
         if (strlen($name) < 1) {
-            $error .= 'Nazwa strony www musi zostać podana.'
-                . "\r\n";
+            $error .= 'Nazwa strony www musi zostać podana.' . "\r\n";
         } elseif (strlen($name) > 100) {
             $error .= 'Nazwa strony www może zawierać maksymalnie '
                 . '100 znaków.' . "\r\n";

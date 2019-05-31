@@ -5,9 +5,9 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Error\EditUserError;
 use App\Model\EditUserModel;
 use App\Service\EditUserService;
+use App\Validator\EditUserValidator;
 
 class EditUserController
 {
@@ -38,8 +38,9 @@ class EditUserController
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $editUserError = new EditUserError($csrfToken);
         $editUserModel = new EditUserModel();
+        $editUserValidator = new EditUserValidator($csrfToken, $editUserModel);
+
         $editUserModel->dbConnect();
 
         $editUserService = new EditUserService(
@@ -47,8 +48,8 @@ class EditUserController
             $mail,
             $html,
             $csrfToken,
-            $editUserError,
-            $editUserModel
+            $editUserModel,
+            $editUserValidator
         );
         $array = $editUserService->variableAction(
             $lastLogin,

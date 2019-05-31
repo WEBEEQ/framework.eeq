@@ -9,23 +9,23 @@ class AddUserService
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $addUserError;
     protected $addUserModel;
+    protected $addUserValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $addUserError,
-        object $addUserModel
+        object $addUserModel,
+        object $addUserValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->addUserError = $addUserError;
         $this->addUserModel = $addUserModel;
+        $this->addUserValidator = $addUserValidator;
     }
 
     public function variableAction(
@@ -43,8 +43,7 @@ class AddUserService
         string $code
     ): array {
         if ($submit) {
-            $this->addUserError->validate(
-                $this->addUserModel,
+            $this->addUserValidator->validate(
                 $name,
                 $surname,
                 $login,
@@ -55,7 +54,7 @@ class AddUserService
                 $accept,
                 $token
             );
-            if ($this->addUserError->isValid()) {
+            if ($this->addUserValidator->isValid()) {
                 $key = $this->addUserModel->generateKey();
                 $userData = $this->addUserModel->addUserData(
                     $name,
@@ -137,7 +136,7 @@ class AddUserService
             'activeMenu' => 'add-user',
             'title' => 'Rejestracja',
             'error' => $this->html->prepareError(
-                $this->addUserError->getError()
+                $this->addUserValidator->getError()
             ),
             'name' => $name,
             'surname' => $surname,

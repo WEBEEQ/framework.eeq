@@ -10,6 +10,7 @@ class AjaxController
     public function cityListAction(int $province): array
     {
         $ajaxModel = new AjaxModel();
+
         $ajaxModel->dbConnect();
 
         $cityList = $ajaxModel->getCityList($province);

@@ -5,8 +5,8 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Error\ContactFormError;
 use App\Service\ContactFormService;
+use App\Validator\ContactFormValidator;
 
 class ContactFormController
 {
@@ -21,14 +21,14 @@ class ContactFormController
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $contactFormError = new ContactFormError($csrfToken);
+        $contactFormValidator = new ContactFormValidator($csrfToken);
 
         $contactFormService = new ContactFormService(
             $config,
             $mail,
             $html,
             $csrfToken,
-            $contactFormError
+            $contactFormValidator
         );
         $array = $contactFormService->variableAction(
             $email,

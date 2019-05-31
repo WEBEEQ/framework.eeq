@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Error/LoginUserError.php
-namespace App\Error;
+// src/Validator/LoginUserValidator.php
+namespace App\Validator;
 
 use App\Bundle\Error;
 
-class LoginUserError extends Error
+class LoginUserValidator extends Error
 {
     protected $csrfToken;
 

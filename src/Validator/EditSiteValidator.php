@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Error/EditSiteError.php
-namespace App\Error;
+// src/Validator/EditSiteValidator.php
+namespace App\Validator;
 
 use App\Bundle\Error;
 
-class EditSiteError extends Error
+class EditSiteValidator extends Error
 {
     protected $csrfToken;
 

@@ -5,9 +5,9 @@ namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Error\LoginUserError;
 use App\Model\LoginUserModel;
 use App\Service\LoginUserService;
+use App\Validator\LoginUserValidator;
 
 class LoginUserController
 {
@@ -25,8 +25,9 @@ class LoginUserController
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $loginUserError = new LoginUserError($csrfToken);
         $loginUserModel = new LoginUserModel();
+        $loginUserValidator = new LoginUserValidator($csrfToken);
+
         $loginUserModel->dbConnect();
 
         $loginUserService = new LoginUserService(
@@ -34,8 +35,8 @@ class LoginUserController
             $mail,
             $html,
             $csrfToken,
-            $loginUserError,
-            $loginUserModel
+            $loginUserModel,
+            $loginUserValidator
         );
         $array = $loginUserService->variableAction(
             $login,
