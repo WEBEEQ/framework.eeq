@@ -5,34 +5,17 @@ namespace App\Service;
 
 class AdminAccountService
 {
-    protected $config;
     protected $adminAccountModel;
 
-    public function __construct(
-        object $config,
-        object $adminAccountModel
-    ) {
-        $this->config = $config;
+    public function __construct(object $adminAccountModel)
+    {
         $this->adminAccountModel = $adminAccountModel;
     }
 
     public function variableAction(
-        int $account,
         int $level,
         int $id
     ): array {
-        if ($account && $account != $id) {
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
-        $userData = $this->adminAccountModel->getUserData($id);
-        if (!$userData) {
-            $this->adminAccountModel->dbClose();
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
         $siteList = $this->adminAccountModel->getSiteList(
             $level,
             $listLimit = 10

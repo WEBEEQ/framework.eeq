@@ -43,6 +43,12 @@ class EditUserController
 
         $editUserModel->dbConnect();
 
+        if (!$editUserModel->isUserId($id, $user)) {
+            $editUserModel->dbClose();
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
+
         $editUserService = new EditUserService(
             $config,
             $mail,
@@ -71,7 +77,6 @@ class EditUserController
             $submit,
             $token,
             $user,
-            $id,
             $login
         );
 

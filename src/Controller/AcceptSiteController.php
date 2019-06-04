@@ -30,6 +30,12 @@ class AcceptSiteController
 
         $acceptSiteModel->dbConnect();
 
+        if (!$acceptSiteModel->isSiteId($site)) {
+            $acceptSiteModel->dbClose();
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
+
         $acceptSiteService = new AcceptSiteService(
             $config,
             $mail,

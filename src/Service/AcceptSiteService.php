@@ -38,12 +38,6 @@ class AcceptSiteService
         string $token,
         int $site
     ): array {
-        if (!$this->acceptSiteModel->isSiteId($site)) {
-            $this->acceptSiteModel->dbClose();
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
         if ($submit) {
             if ($delete) {
                 $this->acceptSiteModel->getUserData($site, $login, $email);

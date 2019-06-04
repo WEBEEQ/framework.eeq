@@ -29,6 +29,12 @@ class EditSiteController
 
         $editSiteModel->dbConnect();
 
+        if (!$editSiteModel->isUserSiteId($id, $site)) {
+            $editSiteModel->dbClose();
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
+
         $editSiteService = new EditSiteService(
             $config,
             $html,
@@ -43,8 +49,7 @@ class EditSiteController
             $delete,
             $submit,
             $token,
-            $site,
-            $id
+            $site
         );
 
         $editSiteModel->dbClose();

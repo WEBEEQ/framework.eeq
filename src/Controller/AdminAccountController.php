@@ -19,14 +19,22 @@ class AdminAccountController
         $html = new Html();
         $adminAccountModel = new AdminAccountModel($config, $html);
 
+        if ($account && $account != $id) {
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
+
         $adminAccountModel->dbConnect();
 
-        $adminAccountService = new AdminAccountService(
-            $config,
-            $adminAccountModel
-        );
+        $userData = $adminAccountModel->getUserData($id);
+        if (!$userData) {
+            $adminAccountModel->dbClose();
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
+
+        $adminAccountService = new AdminAccountService($adminAccountModel);
         $array = $adminAccountService->variableAction(
-            $account,
             $level,
             $id
         );

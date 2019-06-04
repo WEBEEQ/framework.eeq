@@ -26,26 +26,14 @@ class UserAccountService
     }
 
     public function variableAction(
+        array $userData,
         string $name,
         string $www,
         bool $submit,
         string $token,
-        int $account,
         int $level,
         int $id
     ): array {
-        if ($account && $account != $id) {
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
-        $userData = $this->userAccountModel->getUserData($id);
-        if (!$userData) {
-            $this->userAccountModel->dbClose();
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
         if ($submit) {
             $this->userAccountValidator->validate($name, $www, $token);
             if ($this->userAccountValidator->isValid()) {

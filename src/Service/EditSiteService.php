@@ -32,15 +32,8 @@ class EditSiteService
         bool $delete,
         bool $submit,
         string $token,
-        int $site,
-        int $id
+        int $site
     ): array {
-        if (!$this->editSiteModel->isUserSiteId($id, $site)) {
-            $this->editSiteModel->dbClose();
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
         if ($submit) {
             if ($delete) {
                 $siteData = $this->editSiteModel->deleteSiteData($site);

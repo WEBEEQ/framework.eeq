@@ -26,7 +26,19 @@ class UserAccountController
         $userAccountModel = new UserAccountModel($config, $html);
         $userAccountValidator = new UserAccountValidator($csrfToken);
 
+        if ($account && $account != $id) {
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
+
         $userAccountModel->dbConnect();
+
+        $userData = $userAccountModel->getUserData($id);
+        if (!$userData) {
+            $userAccountModel->dbClose();
+            header('Location: ' . $config->getUrl() . '/logowanie');
+            exit;
+        }
 
         $userAccountService = new UserAccountService(
             $config,
@@ -36,11 +48,11 @@ class UserAccountController
             $userAccountValidator
         );
         $array = $userAccountService->variableAction(
+            $userData,
             $name,
             $www,
             $submit,
             $token,
-            $account,
             $level,
             $id
         );

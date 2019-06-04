@@ -48,15 +48,8 @@ class EditUserService
         bool $submit,
         string $token,
         int $user,
-        int $id,
         string $login
     ): array {
-        if (!$this->editUserModel->isUserId($id, $user)) {
-            $this->editUserModel->dbClose();
-            header('Location: ' . $this->config->getUrl() . '/logowanie');
-            exit;
-        }
-
         if ($submit) {
             $this->editUserValidator->validate(
                 $password,
