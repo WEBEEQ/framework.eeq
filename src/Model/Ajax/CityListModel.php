@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Model/AjaxModel.php
-namespace App\Model;
+// src/Model/Ajax/CityListModel.php
+namespace App\Model\Ajax;
 
 use App\Core\DataBase;
 
-class AjaxModel extends DataBase
+class CityListModel extends DataBase
 {
     public function getCityList(int $province): array
     {

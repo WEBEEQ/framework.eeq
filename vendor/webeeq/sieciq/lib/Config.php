@@ -5,9 +5,9 @@ namespace Webeeq\Sieciq;
 class Config
 {
     protected $url = 'http://127.0.0.15';
-    protected $addSitePath = '/rest/dodawanie';
-    protected $updateSitePath = '/rest/aktualizacja';
-    protected $deleteSitePath = '/rest/usuwanie';
+    protected $addSitePath = '/api/dodawanie';
+    protected $updateSitePath = '/api/aktualizacja';
+    protected $deleteSitePath = '/api/usuwanie';
 
     public function getAddSitePathUrl(): string
     {

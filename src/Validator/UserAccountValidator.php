@@ -28,9 +28,9 @@ class UserAccountValidator extends Error
             $error .= 'Nazwa strony www może zawierać maksymalnie '
                 . '100 znaków.' . "\r\n";
         }
-        $http = substr($www, 0, 7) != 'http://';
-        $https = substr($www, 0, 8) != 'https://';
-        if ($http && $https) {
+        $http = substr($www, 0, 7) == 'http://';
+        $https = substr($www, 0, 8) == 'https://';
+        if (!$http && !$https) {
             $error .= 'Url musi rozpoczynać się od znaków: http://'
                 . "\r\n";
         }

@@ -6,14 +6,12 @@ use App\Controller\{
     AcceptSiteController,
     AddUserController,
     AdminAccountController,
-    AjaxController,
     ContactFormController,
     EditSiteController,
     EditUserController,
     LoginUserController,
     LogoutUserController,
     MainPageController,
-    RestController,
     ShowInfoController,
     ShowLinkController,
     ShowSiteController,
@@ -21,6 +19,12 @@ use App\Controller\{
     UserHelpController,
     UserPrivacyController,
     UserRegulationController
+};
+use App\Controller\Ajax\CityListController;
+use App\Controller\Api\{
+    AddSiteController,
+    DeleteSiteController,
+    UpdateSiteController
 };
 use App\Core\{Config, CookieLogin, Param};
 
@@ -288,8 +292,8 @@ switch ($_GET['option']) {
     case 'city-list':
         $province = $param->prepareInt($_GET['province']);
 
-        $ajaxController = new AjaxController();
-        $array = $ajaxController->cityListAction($province);
+        $cityListController = new CityListController();
+        $array = $cityListController->cityListAction($province);
 
         include($array['content']);
         exit;
@@ -305,8 +309,8 @@ switch ($_GET['option']) {
         $name = $param->prepareString((string) $data['name']);
         $www = $param->prepareString((string) $data['www']);
 
-        $restController = new RestController();
-        $array = $restController->addSiteAction(
+        $addSiteController = new AddSiteController();
+        $array = $addSiteController->addSiteAction(
             $user,
             $password,
             $name,
@@ -328,8 +332,8 @@ switch ($_GET['option']) {
         $name = $param->prepareString((string) $data['name']);
         $visible = $param->prepareIntBool((string) $data['visible']);
 
-        $restController = new RestController();
-        $array = $restController->updateSiteAction(
+        $updateSiteController = new UpdateSiteController();
+        $array = $updateSiteController->updateSiteAction(
             $user,
             $password,
             $id,
@@ -350,8 +354,12 @@ switch ($_GET['option']) {
 
         $id = $param->prepareInt((string) $data['id']);
 
-        $restController = new RestController();
-        $array = $restController->deleteSiteAction($user, $password, $id);
+        $deleteSiteController = new DeleteSiteController();
+        $array = $deleteSiteController->deleteSiteAction(
+            $user,
+            $password,
+            $id
+        );
 
         echo json_encode($array);
         exit;

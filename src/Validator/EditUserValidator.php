@@ -124,9 +124,9 @@ class EditUserValidator extends Error
             $error .= 'Nowy e-mail i stary e-mail nie mogą być zgodne.'
                 . "\r\n";
         }
-        $http = substr($www, 0, 7) != 'http://';
-        $https = substr($www, 0, 8) != 'https://';
-        if ($www != '' && $http && $https) {
+        $http = substr($www, 0, 7) == 'http://';
+        $https = substr($www, 0, 8) == 'https://';
+        if ($www != '' && !$http && !$https) {
             $error .= 'Strona www musi rozpoczynać się od znaków: '
                 . 'http://' . "\r\n";
         }

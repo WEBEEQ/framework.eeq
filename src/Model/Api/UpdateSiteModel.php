@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Model/RestModel.php
-namespace App\Model;
+// src/Model/Api/UpdateSiteModel.php
+namespace App\Model\Api;
 
 use App\Core\DataBase;
 
-class RestModel extends DataBase
+class UpdateSiteModel extends DataBase
 {
     public function getUserPassword(
         string $login,
@@ -37,35 +37,6 @@ class RestModel extends DataBase
         return ($this->dbFetchArray($result)) ? true : false;
     }
 
-    public function addSiteData(
-        int $id,
-        string $name,
-        string $www,
-        string $ip,
-        string $date
-    ): bool {
-        return $this->dbQuery(
-            'INSERT INTO `sites` (
-                `user_id`,
-                `site_active`,
-                `site_visible`,
-                `site_name`,
-                `site_url`,
-                `site_ip_added`,
-                `site_date_added`
-            )
-            VALUES (
-                ' . $id . ",
-                0,
-                1,
-                '" . $name . "',
-                '" . $www . "',
-                '" . $ip . "',
-                '" . $date . "'
-            )"
-        );
-    }
-
     public function setSiteData(
         int $site,
         int $visible,
@@ -80,14 +51,6 @@ class RestModel extends DataBase
                 `sites`.`site_ip_updated` = '" . $ip . "',
                 `sites`.`site_date_updated` = '" . $date . "'
             WHERE `sites`.`site_id` = " . $site
-        );
-    }
-
-    public function deleteSiteData(int $site): bool
-    {
-        return $this->dbQuery(
-            'DELETE FROM `sites`
-            WHERE `sites`.`site_id` = ' . $site
         );
     }
 }
