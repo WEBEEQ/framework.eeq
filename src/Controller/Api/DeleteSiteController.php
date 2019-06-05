@@ -3,7 +3,6 @@
 // src/Controller/Api/DeleteSiteController.php
 namespace App\Controller\Api;
 
-use App\Core\Config;
 use App\Model\Api\DeleteSiteModel;
 use App\Service\Api\DeleteSiteService;
 use App\Validator\Api\DeleteSiteValidator;
@@ -15,14 +14,12 @@ class DeleteSiteController
         string $password,
         int $site
     ): array {
-        $config = new Config();
         $deleteSiteModel = new DeleteSiteModel();
         $deleteSiteValidator = new DeleteSiteValidator($deleteSiteModel);
 
         $deleteSiteModel->dbConnect();
 
         $deleteSiteService = new DeleteSiteService(
-            $config,
             $deleteSiteModel,
             $deleteSiteValidator
         );

@@ -11,7 +11,7 @@ $data = array();
 $auth['user'] = 'user';
 $auth['password'] = '!@#$%^&*()';
 
-$data['id'] = 7;
+$data['id'] = 8;
 $data['name'] = 'Fachowcy';
 $data['visible'] = 1;
 

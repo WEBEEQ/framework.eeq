@@ -5,16 +5,13 @@ namespace App\Service\Api;
 
 class DeleteSiteService
 {
-    protected $config;
     protected $deleteSiteModel;
     protected $deleteSiteValidator;
 
     public function __construct(
-        object $config,
         object $deleteSiteModel,
         object $deleteSiteValidator
     ) {
-        $this->config = $config;
         $this->deleteSiteModel = $deleteSiteModel;
         $this->deleteSiteValidator = $deleteSiteValidator;
     }
