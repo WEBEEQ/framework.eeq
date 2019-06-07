@@ -6,7 +6,7 @@ class Config
 {
     protected $url = 'http://127.0.0.15';
     protected $addSitePath = '/api/dodaj-strone';
-    protected $updateSitePath = '/api/aktualizuj-strone';
+    protected $updateSitePath = '/api/zaktualizuj-strone';
     protected $deleteSitePath = '/api/usun-strone';
 
     public function getAddSitePathUrl(): string
