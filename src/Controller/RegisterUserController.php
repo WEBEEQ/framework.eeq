@@ -1,17 +1,17 @@
 <?php declare(strict_types=1);
 
-// src/Controller/AddUserController.php
+// src/Controller/RegisterUserController.php
 namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Model\AddUserModel;
-use App\Service\AddUserService;
-use App\Validator\AddUserValidator;
+use App\Model\RegisterUserModel;
+use App\Service\RegisterUserService;
+use App\Validator\RegisterUserValidator;
 
-class AddUserController
+class RegisterUserController
 {
-    public function addUserAction(
+    public function registerUserAction(
         string $name,
         string $surname,
         string $login,
@@ -21,28 +21,29 @@ class AddUserController
         string $repeatEmail,
         bool $accept,
         bool $submit,
-        string $token,
-        string $user,
-        string $code
+        string $token
     ): array {
         $config = new Config();
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $addUserModel = new AddUserModel();
-        $addUserValidator = new AddUserValidator($csrfToken, $addUserModel);
+        $registerUserModel = new RegisterUserModel();
+        $registerUserValidator = new RegisterUserValidator(
+            $csrfToken,
+            $registerUserModel
+        );
 
-        $addUserModel->dbConnect();
+        $registerUserModel->dbConnect();
 
-        $addUserService = new AddUserService(
+        $registerUserService = new RegisterUserService(
             $config,
             $mail,
             $html,
             $csrfToken,
-            $addUserModel,
-            $addUserValidator
+            $registerUserModel,
+            $registerUserValidator
         );
-        $array = $addUserService->variableAction(
+        $array = $registerUserService->variableAction(
             $name,
             $surname,
             $login,
@@ -52,12 +53,10 @@ class AddUserController
             $repeatEmail,
             $accept,
             $submit,
-            $token,
-            $user,
-            $code
+            $token
         );
 
-        $addUserModel->dbClose();
+        $registerUserModel->dbClose();
 
         return $array;
     }

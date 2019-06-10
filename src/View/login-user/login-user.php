@@ -1,5 +1,5 @@
                 <h2>Logowanie</h2>
-                <p>Opcja ta pozwala na zalogowanie użytkownika do systemu. Proszę podać login i hasło do swojego konta. Jeśli nie pamiętają Państwo hasła, system prześle na adres e-mail nowe. Można zapamiętać hasło w systemie, aby w przyszłości nie musieć się ponownie logować.</p>
+                <p>Opcja ta pozwala na zalogowanie użytkownika do systemu. Proszę podać login i hasło do swojego konta. Jeśli nie pamiętają Państwo hasła, proszę kliknąć w link resetowania hasła. Można zapamiętać hasło w systemie, aby w przyszłości nie musieć się ponownie logować.</p>
                 <form method="post">
 <?php
 echo $array['error'];
@@ -15,11 +15,11 @@ echo $array['error'];
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
-                            <td><input type="checkbox" name="forget" value="1"<?php if ($array['forget']) { ?> checked="checked"<?php } ?> /> Nie pamiętam hasła</td>
+                            <td><input type="checkbox" name="remember" value="1"<?php if ($array['remember']) { ?> checked="checked"<?php } ?> /> Nie wylogowuj mnie</td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
-                            <td><input type="checkbox" name="remember" value="1"<?php if ($array['remember']) { ?> checked="checked"<?php } ?> /> Zapamiętaj hasło</td>
+                            <td><a href="<?php echo $array['url']; ?>/resetowanie">Nie pamiętam hasła</a></td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>

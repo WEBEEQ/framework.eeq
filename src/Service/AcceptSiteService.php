@@ -68,54 +68,53 @@ class AcceptSiteService
                         'title' => 'Informacja'
                     );
                 }
-            } else {
-                $this->acceptSiteValidator->validate($name, $www, $token);
-                if ($this->acceptSiteValidator->isValid()) {
-                    $siteData = $this->acceptSiteModel->setSiteData(
+            }
+            $this->acceptSiteValidator->validate($name, $www, $token);
+            if ($this->acceptSiteValidator->isValid()) {
+                $siteData = $this->acceptSiteModel->setSiteData(
+                    $site,
+                    $active,
+                    $visible,
+                    $name,
+                    $www,
+                    $this->config->getRemoteAddress(),
+                    $this->config->getDateTimeNow()
+                );
+                if ($siteData) {
+                    $this->acceptSiteModel->getSiteData(
                         $site,
                         $active,
                         $visible,
                         $name,
                         $www,
-                        $this->config->getRemoteAddress(),
-                        $this->config->getDateTimeNow()
+                        $login,
+                        $email
                     );
-                    if ($siteData) {
-                        $this->acceptSiteModel->getSiteData(
-                            $site,
-                            $active,
-                            $visible,
-                            $name,
-                            $www,
-                            $login,
-                            $email
-                        );
-                        $acceptationEmail = $this->sendAcceptationEmail(
-                            (int) $active,
-                            $delete,
-                            $email,
-                            $login,
-                            $www
-                        );
+                    $acceptationEmail = $this->sendAcceptationEmail(
+                        (int) $active,
+                        $delete,
+                        $email,
+                        $login,
+                        $www
+                    );
 
-                        return array(
-                            'layout' => 'src/Layout/main/main.php',
-                            'content' =>
-                                'src/View/accept-site/site-accepted-info.php',
-                            'activeMenu' => 'accept-site',
-                            'title' => 'Informacja',
-                            'active' => $active,
-                            'acceptationEmail' => $acceptationEmail
-                        );
-                    } else {
-                        return array(
-                            'layout' => 'src/Layout/main/main.php',
-                            'content' =>
-                                'src/View/accept-site/data-not-saved-info.php',
-                            'activeMenu' => 'accept-site',
-                            'title' => 'Informacja'
-                        );
-                    }
+                    return array(
+                        'layout' => 'src/Layout/main/main.php',
+                        'content' =>
+                            'src/View/accept-site/site-accepted-info.php',
+                        'activeMenu' => 'accept-site',
+                        'title' => 'Informacja',
+                        'active' => $active,
+                        'acceptationEmail' => $acceptationEmail
+                    );
+                } else {
+                    return array(
+                        'layout' => 'src/Layout/main/main.php',
+                        'content' =>
+                            'src/View/accept-site/data-not-saved-info.php',
+                        'activeMenu' => 'accept-site',
+                        'title' => 'Informacja'
+                    );
                 }
             }
         } else {

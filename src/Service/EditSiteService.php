@@ -45,25 +45,24 @@ class EditSiteService
                     'title' => 'Informacja',
                     'siteData' => $siteData
                 );
-            } else {
-                $this->editSiteValidator->validate($name, $token);
-                if ($this->editSiteValidator->isValid()) {
-                    $siteData = $this->editSiteModel->setSiteData(
-                        $site,
-                        $visible,
-                        $name,
-                        $this->config->getRemoteAddress(),
-                        $this->config->getDateTimeNow()
-                    );
+            }
+            $this->editSiteValidator->validate($name, $token);
+            if ($this->editSiteValidator->isValid()) {
+                $siteData = $this->editSiteModel->setSiteData(
+                    $site,
+                    $visible,
+                    $name,
+                    $this->config->getRemoteAddress(),
+                    $this->config->getDateTimeNow()
+                );
 
-                    return array(
-                        'layout' => 'src/Layout/main/main.php',
-                        'content' => 'src/View/edit-site/data-record-info.php',
-                        'activeMenu' => 'edit-site',
-                        'title' => 'Informacja',
-                        'siteData' => $siteData
-                    );
-                }
+                return array(
+                    'layout' => 'src/Layout/main/main.php',
+                    'content' => 'src/View/edit-site/data-record-info.php',
+                    'activeMenu' => 'edit-site',
+                    'title' => 'Informacja',
+                    'siteData' => $siteData
+                );
             }
         } else {
             $this->editSiteModel->getSiteData($site, $visible, $name, $www);

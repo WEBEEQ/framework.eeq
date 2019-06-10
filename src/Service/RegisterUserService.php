@@ -1,31 +1,31 @@
 <?php declare(strict_types=1);
 
-// src/Service/AddUserService.php
+// src/Service/RegisterUserService.php
 namespace App\Service;
 
-class AddUserService
+class RegisterUserService
 {
     protected $config;
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $addUserModel;
-    protected $addUserValidator;
+    protected $registerUserModel;
+    protected $registerUserValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $addUserModel,
-        object $addUserValidator
+        object $registerUserModel,
+        object $registerUserValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->addUserModel = $addUserModel;
-        $this->addUserValidator = $addUserValidator;
+        $this->registerUserModel = $registerUserModel;
+        $this->registerUserValidator = $registerUserValidator;
     }
 
     public function variableAction(
@@ -38,12 +38,10 @@ class AddUserService
         string $repeatEmail,
         bool $accept,
         bool $submit,
-        string $token,
-        string $user,
-        string $code
+        string $token
     ): array {
         if ($submit) {
-            $this->addUserValidator->validate(
+            $this->registerUserValidator->validate(
                 $name,
                 $surname,
                 $login,
@@ -54,9 +52,9 @@ class AddUserService
                 $accept,
                 $token
             );
-            if ($this->addUserValidator->isValid()) {
-                $key = $this->addUserModel->generateKey();
-                $userData = $this->addUserModel->addUserData(
+            if ($this->registerUserValidator->isValid()) {
+                $key = $this->registerUserModel->generateKey();
+                $userData = $this->registerUserModel->addUserData(
                     $name,
                     $surname,
                     $login,
@@ -75,68 +73,31 @@ class AddUserService
 
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/add-user/account-created-info.php',
-                        'activeMenu' => 'add-user',
+                        'content' => 'src/View/register-user/'
+                            . 'account-created-info.php',
+                        'activeMenu' => 'register-user',
                         'title' => 'Informacja',
                         'activationEmail' => $activationEmail
                     );
                 } else {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/add-user/account-not-created-info.php',
-                        'activeMenu' => 'add-user',
+                        'content' => 'src/View/register-user/'
+                            . 'account-not-created-info.php',
+                        'activeMenu' => 'register-user',
                         'title' => 'Informacja'
                     );
                 }
-            }
-        } elseif ($user && $code) {
-            $userKey = $this->addUserModel->getUserKey(
-                $user,
-                $id,
-                $active
-            );
-            if ($code == $userKey) {
-                if ($active) {
-                    return array(
-                        'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/add-user/account-is-active-info.php',
-                        'activeMenu' => 'add-user',
-                        'title' => 'Informacja'
-                    );
-                } else {
-                    $userActive = $this->addUserModel->setUserActive(
-                        (int) $id
-                    );
-
-                    return array(
-                        'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/add-user/account-activation-info.php',
-                        'activeMenu' => 'add-user',
-                        'title' => 'Informacja',
-                        'userActive' => $userActive
-                    );
-                }
-            } else {
-                return array(
-                    'layout' => 'src/Layout/main/main.php',
-                    'content' => 'src/View/add-user/code-not-valid-info.php',
-                    'activeMenu' => 'add-user',
-                    'title' => 'Informacja'
-                );
             }
         }
 
         return array(
             'layout' => 'src/Layout/main/main.php',
-            'content' => 'src/View/add-user/add-user.php',
-            'activeMenu' => 'add-user',
+            'content' => 'src/View/register-user/register-user.php',
+            'activeMenu' => 'register-user',
             'title' => 'Rejestracja',
             'error' => $this->html->prepareError(
-                $this->addUserValidator->getError()
+                $this->registerUserValidator->getError()
             ),
             'name' => $name,
             'surname' => $surname,
@@ -159,7 +120,7 @@ class AddUserService
             'Aktywacja konta ' . $login . ' w serwisie '
                 . $this->config->getServerDomain(),
             'Aby aktywować konto, otwórz w oknie przeglądarki url poniżej.'
-                . "\r\n\r\n" . $this->config->getUrl() . '/rejestracja,'
+                . "\r\n\r\n" . $this->config->getUrl() . '/aktywacja,'
                 . $login . ',' . $key . "\r\n\r\n" . '--' . "\r\n"
                 . $this->config->getAdminEmail()
         );

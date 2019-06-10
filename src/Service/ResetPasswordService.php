@@ -1,52 +1,48 @@
 <?php declare(strict_types=1);
 
-// src/Service/LoginUserService.php
+// src/Service/ResetPasswordService.php
 namespace App\Service;
 
-class LoginUserService
+class ResetPasswordService
 {
     protected $config;
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $loginUserModel;
-    protected $loginUserValidator;
+    protected $resetPasswordModel;
+    protected $resetPasswordValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $loginUserModel,
-        object $loginUserValidator
+        object $resetPasswordModel,
+        object $resetPasswordValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->loginUserModel = $loginUserModel;
-        $this->loginUserValidator = $loginUserValidator;
+        $this->resetPasswordModel = $resetPasswordModel;
+        $this->resetPasswordValidator = $resetPasswordValidator;
     }
 
     public function variableAction(
         string $login,
-        string $password,
-        bool $remember,
         bool $submit,
         string $token
     ): array {
         if ($submit) {
-            $this->loginUserValidator->validate($login, $password, $token);
-            if ($this->loginUserValidator->isValid()) {
-                $userPassword = $this->loginUserModel->getUserPassword(
+            $this->resetPasswordValidator->validate($login, $token);
+            if ($this->resetPasswordValidator->isValid()) {
+                $userLogin = $this->resetPasswordModel->isUserLogin(
                     $login,
-                    $id,
-                    $admin,
                     $active,
                     $email,
                     $key
                 );
-                if (password_verify($password, $userPassword ?? '')) {
+                if ($userLogin) {
                     if (!$active) {
                         $activationEmail = $this->sendActivationEmail(
                             $email,
@@ -56,33 +52,30 @@ class LoginUserService
 
                         return array(
                             'layout' => 'src/Layout/main/main.php',
-                            'content' => 'src/View/login-user/'
+                            'content' => 'src/View/reset-password/'
                                 . 'account-not-active-info.php',
-                            'activeMenu' => 'login-user',
+                            'activeMenu' => 'reset-password',
                             'title' => 'Informacja',
                             'activationEmail' => $activationEmail
                         );
                     }
-                    $this->loginUserModel->setUserLoged(
-                        (int) $id,
-                        $this->config->getRemoteAddress(),
-                        $this->config->getDateTimeNow()
+                    $passwordChangeEmail = $this->sendPasswordChangeEmail(
+                        $email,
+                        $login,
+                        $key
                     );
-                    $_SESSION['id'] = $id;
-                    $_SESSION['admin'] = $admin;
-                    $_SESSION['user'] = $login;
-                    if ($remember) {
-                        setcookie(
-                            'login',
-                            $login . ';' . $userPassword,
-                            time() + 365 * 24 * 60 * 60, '/'
-                        );
-                    }
-                    header('Location: ' . $this->config->getUrl() . '/konto');
-                    exit;
+
+                    return array(
+                        'layout' => 'src/Layout/main/main.php',
+                        'content' => 'src/View/reset-password/'
+                            . 'more-instructions-info.php',
+                        'activeMenu' => 'reset-password',
+                        'title' => 'Informacja',
+                        'passwordChangeEmail' => $passwordChangeEmail
+                    );
                 } else {
-                    $this->loginUserValidator->addError(
-                        'Konto o podanym loginie i haśle nie istnieje.'
+                    $this->resetPasswordValidator->addError(
+                        'Konto o podanym loginie nie istnieje.'
                     );
                 }
             }
@@ -90,14 +83,13 @@ class LoginUserService
 
         return array(
             'layout' => 'src/Layout/main/main.php',
-            'content' => 'src/View/login-user/login-user.php',
-            'activeMenu' => 'login-user',
-            'title' => 'Logowanie',
+            'content' => 'src/View/reset-password/reset-password.php',
+            'activeMenu' => 'reset-password',
+            'title' => 'Resetowanie',
             'error' => $this->html->prepareError(
-                $this->loginUserValidator->getError()
+                $this->resetPasswordValidator->getError()
             ),
             'login' => $login,
-            'remember' => $remember,
             'token' => $this->csrfToken->generateToken()
         );
     }
@@ -115,6 +107,24 @@ class LoginUserService
                 . $this->config->getServerDomain(),
             'Aby aktywować konto, otwórz w oknie przeglądarki url poniżej.'
                 . "\r\n\r\n" . $this->config->getUrl() . '/aktywacja,'
+                . $login . ',' . $key . "\r\n\r\n" . '--' . "\r\n"
+                . $this->config->getAdminEmail()
+        );
+    }
+
+    private function sendPasswordChangeEmail(
+        string $email,
+        string $login,
+        string $key
+    ): bool {
+        return $this->mail->sendEmail(
+            $this->config->getServerName(),
+            $this->config->getAdminEmail(),
+            $email,
+            'Zmiana hasła konta ' . $login . ' w serwisie '
+                . $this->config->getServerDomain(),
+            'Aby zmienić hasło konta, otwórz w oknie przeglądarki url poniżej.'
+                . "\r\n\r\n" . $this->config->getUrl() . '/resetowanie,'
                 . $login . ',' . $key . "\r\n\r\n" . '--' . "\r\n"
                 . $this->config->getAdminEmail()
         );

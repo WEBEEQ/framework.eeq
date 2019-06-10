@@ -14,12 +14,9 @@ class LoginUserController
     public function loginUserAction(
         string $login,
         string $password,
-        bool $forget,
         bool $remember,
         bool $submit,
-        string $token,
-        string $user,
-        string $code
+        string $token
     ): array {
         $config = new Config();
         $mail = new Email();
@@ -41,12 +38,9 @@ class LoginUserController
         $array = $loginUserService->variableAction(
             $login,
             $password,
-            $forget,
             $remember,
             $submit,
-            $token,
-            $user,
-            $code
+            $token
         );
 
         $loginUserModel->dbClose();

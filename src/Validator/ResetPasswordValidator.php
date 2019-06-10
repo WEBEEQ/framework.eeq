@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Validator/LoginUserValidator.php
+// src/Validator/ResetPasswordValidator.php
 namespace App\Validator;
 
 use App\Bundle\Error;
 
-class LoginUserValidator extends Error
+class ResetPasswordValidator extends Error
 {
     protected $csrfToken;
 
@@ -15,15 +15,12 @@ class LoginUserValidator extends Error
         $this->csrfToken = $csrfToken;
     }
 
-    public function validate(
-        string $login,
-        string $password,
-        string $token
-    ): void {
+    public function validate(string $login, string $token): void
+    {
         $error = '';
 
-        if ($login == '' || $password == '') {
-            $error .= 'Podaj login i hasło twojego konta.' . "\r\n";
+        if ($login == '') {
+            $error .= 'Podaj login twojego konta.' . "\r\n";
         }
         if ($token != $this->csrfToken->receiveToken()) {
             $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";

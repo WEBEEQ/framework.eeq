@@ -15,11 +15,8 @@ class UserAccountValidator extends Error
         $this->csrfToken = $csrfToken;
     }
 
-    public function validate(
-        string $name,
-        string $www,
-        string $token
-    ): void {
+    public function validate(string $name, string $www, string $token): void
+    {
         $error = '';
 
         if (strlen($name) < 1) {

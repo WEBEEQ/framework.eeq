@@ -1,20 +1,20 @@
 <?php declare(strict_types=1);
 
-// src/Validator/AddUserValidator.php
+// src/Validator/RegisterUserValidator.php
 namespace App\Validator;
 
 use App\Bundle\Error;
 
-class AddUserValidator extends Error
+class RegisterUserValidator extends Error
 {
     protected $csrfToken;
-    protected $addUserModel;
+    protected $registerUserModel;
 
-    public function __construct(object $csrfToken, object $addUserModel)
+    public function __construct(object $csrfToken, object $registerUserModel)
     {
         parent::__construct();
         $this->csrfToken = $csrfToken;
-        $this->addUserModel = $addUserModel;
+        $this->registerUserModel = $registerUserModel;
     }
 
     public function validate(
@@ -52,7 +52,7 @@ class AddUserValidator extends Error
             $error .= 'Login może składać się tylko z liter i cyfr.'
                 . "\r\n";
         }
-        if ($login != '' && $this->addUserModel->isUserLogin($login)) {
+        if ($login != '' && $this->registerUserModel->isUserLogin($login)) {
             $error .= 'Konto o podanym loginie już istnieje.' . "\r\n";
         }
         if (strlen($password) < 8 || strlen($repeatPassword) < 8) {

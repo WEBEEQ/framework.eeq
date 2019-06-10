@@ -80,7 +80,7 @@ class EditUserModel extends DataBase
 
         if ($password != '') {
             $setPassword = "`users`.`user_password` = '"
-                . password_hash($password, PASSWORD_ARGON2I) . "', ";
+                . password_hash($password, PASSWORD_DEFAULT) . "', ";
         } else {
             $setPassword = '';
         }

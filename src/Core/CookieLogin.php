@@ -28,14 +28,14 @@ class CookieLogin extends DataBase
 
         $this->dbConnect();
 
-        $userKey = $this->isUserKey(
+        $userPassword = $this->isUserPassword(
             $login[0],
             $login[1],
             $id,
             $admin,
             $active
         );
-        if ($userKey) {
+        if ($userPassword) {
             if ($active) {
                 $userLoged = $this->dbQuery(
                     "UPDATE `users`
@@ -56,9 +56,9 @@ class CookieLogin extends DataBase
         $this->dbClose();
     }
 
-    private function isUserKey(
+    private function isUserPassword(
         string $login,
-        string $key,
+        string $password,
         ?int &$user_id,
         ?bool &$user_admin,
         ?bool &$user_active
@@ -67,7 +67,7 @@ class CookieLogin extends DataBase
             "SELECT `users`.`user_id`, `users`.`user_admin`,
                 `users`.`user_active` FROM `users`
             WHERE `users`.`user_login` = '" . $login . "'
-                AND `users`.`user_key` = '" . $key . "'"
+                AND `users`.`user_password` = '" . $password . "'"
         );
         if ($row = $this->dbFetchArray($result)) {
             extract($row);

@@ -4,14 +4,17 @@ require('src/Core/core.php');
 
 use App\Controller\{
     AcceptSiteController,
-    AddUserController,
+    ActivateUserController,
     AdminAccountController,
+    ChangePasswordController,
     ContactFormController,
     EditSiteController,
     EditUserController,
     LoginUserController,
     LogoutUserController,
     MainPageController,
+    RegisterUserController,
+    ResetPasswordController,
     ShowInfoController,
     ShowLinkController,
     ShowSiteController,
@@ -61,7 +64,7 @@ switch ($_GET['option']) {
         $mainPageController = new MainPageController();
         $array = $mainPageController->mainPageAction();
         break;
-    case 'add-user':
+    case 'register-user':
         $name = $param->prepareString($_POST['name']);
         $surname = $param->prepareString($_POST['surname']);
         $login = $param->prepareString($_POST['login']);
@@ -72,11 +75,9 @@ switch ($_GET['option']) {
         $accept = $param->prepareBool($_POST['accept']);
         $submit = $param->prepareBool($_POST['submit']);
         $token = $param->prepareString($_POST['token']);
-        $user = $param->prepareString($_GET['user']);
-        $code = $param->prepareString($_GET['code']);
 
-        $addUserController = new AddUserController();
-        $array = $addUserController->addUserAction(
+        $registerUserController = new RegisterUserController();
+        $array = $registerUserController->registerUserAction(
             $name,
             $surname,
             $login,
@@ -86,27 +87,56 @@ switch ($_GET['option']) {
             $repeatEmail,
             $accept,
             $submit,
-            $token,
-            $user,
-            $code
+            $token
         );
+        break;
+    case 'activate-user':
+        $user = $param->prepareString($_GET['user']);
+        $code = $param->prepareString($_GET['code']);
+
+        $activateUserController = new ActivateUserController();
+        $array = $activateUserController->activateUserAction($user, $code);
         break;
     case 'login-user':
         $login = $param->prepareString($_POST['login']);
         $password = $param->preparePassString($_POST['password']);
-        $forget = $param->prepareBool($_POST['forget']);
         $remember = $param->prepareBool($_POST['remember']);
         $submit = $param->prepareBool($_POST['submit']);
         $token = $param->prepareString($_POST['token']);
-        $user = $param->prepareString($_GET['user']);
-        $code = $param->prepareString($_GET['code']);
 
         $loginUserController = new LoginUserController();
         $array = $loginUserController->loginUserAction(
             $login,
             $password,
-            $forget,
             $remember,
+            $submit,
+            $token
+        );
+        break;
+    case 'reset-password':
+        $login = $param->prepareString($_POST['login']);
+        $submit = $param->prepareBool($_POST['submit']);
+        $token = $param->prepareString($_POST['token']);
+
+        $resetPasswordController = new ResetPasswordController();
+        $array = $resetPasswordController->resetPasswordAction(
+            $login,
+            $submit,
+            $token
+        );
+        break;
+    case 'change-password':
+        $newPassword = $param->preparePassString($_POST['new_password']);
+        $repeatPassword = $param->preparePassString($_POST['repeat_password']);
+        $submit = $param->prepareBool($_POST['submit']);
+        $token = $param->prepareString($_POST['token']);
+        $user = $param->prepareString($_GET['user']);
+        $code = $param->prepareString($_GET['code']);
+
+        $changePasswordController = new ChangePasswordController();
+        $array = $changePasswordController->changePasswordAction(
+            $newPassword,
+            $repeatPassword,
             $submit,
             $token,
             $user,
