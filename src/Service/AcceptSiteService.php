@@ -53,8 +53,8 @@ class AcceptSiteService
 
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/accept-site/site-rejected-info.php',
+                        'content' => 'src/View/accept-site/'
+                            . 'site-rejected-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja',
                         'acceptationEmail' => $acceptationEmail
@@ -62,8 +62,8 @@ class AcceptSiteService
                 } else {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/accept-site/data-not-deleted-info.php',
+                        'content' => 'src/View/accept-site/'
+                            . 'data-not-deleted-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja'
                     );
@@ -100,8 +100,8 @@ class AcceptSiteService
 
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/accept-site/site-accepted-info.php',
+                        'content' => 'src/View/accept-site/'
+                            . 'site-accepted-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja',
                         'active' => $active,
@@ -110,8 +110,8 @@ class AcceptSiteService
                 } else {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/accept-site/data-not-saved-info.php',
+                        'content' => 'src/View/accept-site/'
+                            . 'data-not-saved-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja'
                     );

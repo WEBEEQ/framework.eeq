@@ -17,8 +17,8 @@ class DeleteSiteValidator extends Message
 
     public function validate(string $user, string $password, int $site): void
     {
-        $userPassword =
-            $this->deleteSiteModel->getUserPassword($user, $id) ?? '';
+        $userPassword = $this->deleteSiteModel
+            ->getUserPassword($user, $id) ?? '';
         if (!password_verify($password, $userPassword)) {
             $this->addMessage('Błędna autoryzacja przesyłanych danych.');
 

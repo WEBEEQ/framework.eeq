@@ -68,8 +68,8 @@ class EditUserService
                 if ($login != $lastLogin) {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/edit-user/record-stopped-info.php',
+                        'content' => 'src/View/edit-user/'
+                            . 'record-stopped-info.php',
                         'activeMenu' => 'edit-user',
                         'title' => 'Informacja'
                     );
@@ -118,8 +118,8 @@ class EditUserService
                 } else {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/edit-user/data-not-saved-info.php',
+                        'content' => 'src/View/edit-user/'
+                            . 'data-not-saved-info.php',
                         'activeMenu' => 'edit-user',
                         'title' => 'Informacja'
                     );

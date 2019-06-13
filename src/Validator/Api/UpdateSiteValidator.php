@@ -21,8 +21,8 @@ class UpdateSiteValidator extends Message
         int $site,
         string $name
     ): void {
-        $userPassword =
-            $this->updateSiteModel->getUserPassword($user, $id) ?? '';
+        $userPassword = $this->updateSiteModel
+            ->getUserPassword($user, $id) ?? '';
         if (!password_verify($password, $userPassword)) {
             $this->addMessage('Błędna autoryzacja przesyłanych danych.');
 

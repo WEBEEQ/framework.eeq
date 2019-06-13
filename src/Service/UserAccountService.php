@@ -47,16 +47,16 @@ class UserAccountService
                 if ($siteData) {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/user-account/site-added-info.php',
+                        'content' => 'src/View/user-account/'
+                            . 'site-added-info.php',
                         'activeMenu' => 'user-account',
                         'title' => 'Informacja'
                     );
                 } else {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
-                        'content' =>
-                            'src/View/user-account/site-not-added-info.php',
+                        'content' => 'src/View/user-account/'
+                            . 'site-not-added-info.php',
                         'activeMenu' => 'user-account',
                         'title' => 'Informacja'
                     );
