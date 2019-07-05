@@ -1,31 +1,31 @@
 <?php declare(strict_types=1);
 
-// src/Service/LoginUserService.php
+// src/Service/LogInUserService.php
 namespace App\Service;
 
-class LoginUserService
+class LogInUserService
 {
     protected $config;
     protected $mail;
     protected $html;
     protected $csrfToken;
-    protected $loginUserModel;
-    protected $loginUserValidator;
+    protected $logInUserModel;
+    protected $logInUserValidator;
 
     public function __construct(
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $loginUserModel,
-        object $loginUserValidator
+        object $logInUserModel,
+        object $logInUserValidator
     ) {
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->loginUserModel = $loginUserModel;
-        $this->loginUserValidator = $loginUserValidator;
+        $this->logInUserModel = $logInUserModel;
+        $this->logInUserValidator = $logInUserValidator;
     }
 
     public function variableAction(
@@ -36,9 +36,9 @@ class LoginUserService
         string $token
     ): array {
         if ($submit) {
-            $this->loginUserValidator->validate($login, $password, $token);
-            if ($this->loginUserValidator->isValid()) {
-                $userPassword = $this->loginUserModel->getUserPassword(
+            $this->logInUserValidator->validate($login, $password, $token);
+            if ($this->logInUserValidator->isValid()) {
+                $userPassword = $this->logInUserModel->getUserPassword(
                     $login,
                     $id,
                     $admin,
@@ -56,14 +56,14 @@ class LoginUserService
 
                         return array(
                             'layout' => 'src/Layout/main/main.php',
-                            'content' => 'src/View/login-user/'
+                            'content' => 'src/View/log-in-user/'
                                 . 'account-not-active-info.php',
-                            'activeMenu' => 'login-user',
+                            'activeMenu' => 'log-in-user',
                             'title' => 'Informacja',
                             'activationEmail' => $activationEmail
                         );
                     }
-                    $this->loginUserModel->setUserLoged(
+                    $this->logInUserModel->setUserLoged(
                         (int) $id,
                         $this->config->getRemoteAddress(),
                         $this->config->getDateTimeNow()
@@ -81,7 +81,7 @@ class LoginUserService
                     header('Location: ' . $this->config->getUrl() . '/konto');
                     exit;
                 } else {
-                    $this->loginUserValidator->addError(
+                    $this->logInUserValidator->addError(
                         'Konto o podanym loginie i haśle nie istnieje.'
                     );
                 }
@@ -90,11 +90,11 @@ class LoginUserService
 
         return array(
             'layout' => 'src/Layout/main/main.php',
-            'content' => 'src/View/login-user/login-user.php',
-            'activeMenu' => 'login-user',
+            'content' => 'src/View/log-in-user/log-in-user.php',
+            'activeMenu' => 'log-in-user',
             'title' => 'Logowanie',
             'error' => $this->html->prepareError(
-                $this->loginUserValidator->getError()
+                $this->logInUserValidator->getError()
             ),
             'login' => $login,
             'remember' => $remember,

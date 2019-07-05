@@ -10,8 +10,8 @@ use App\Controller\{
     ContactFormController,
     EditSiteController,
     EditUserController,
-    LoginUserController,
-    LogoutUserController,
+    LogInUserController,
+    LogOutUserController,
     MainPageController,
     RegisterUserController,
     ResetPasswordController,
@@ -97,15 +97,15 @@ switch ($_GET['option']) {
         $activateUserController = new ActivateUserController();
         $array = $activateUserController->activateUserAction($user, $code);
         break;
-    case 'login-user':
+    case 'log-in-user':
         $login = $param->prepareString($_POST['login']);
         $password = $param->preparePassString($_POST['password']);
         $remember = $param->prepareBool($_POST['remember']);
         $submit = $param->prepareBool($_POST['submit']);
         $token = $param->prepareString($_POST['token']);
 
-        $loginUserController = new LoginUserController();
-        $array = $loginUserController->loginUserAction(
+        $logInUserController = new LogInUserController();
+        $array = $logInUserController->logInUserAction(
             $login,
             $password,
             $remember,
@@ -271,9 +271,9 @@ switch ($_GET['option']) {
             $site
         );
         break;
-    case 'logout-user':
-        $logoutUserController = new LogoutUserController();
-        $array = $logoutUserController->logoutUserAction();
+    case 'log-out-user':
+        $logOutUserController = new LogOutUserController();
+        $array = $logOutUserController->logOutUserAction();
         break;
     case 'user-regulation':
         $userRegulationController = new UserRegulationController();

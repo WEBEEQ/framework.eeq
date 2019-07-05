@@ -1,11 +1,11 @@
 <?php declare(strict_types=1);
 
-// src/Model/LoginUserModel.php
+// src/Model/LogInUserModel.php
 namespace App\Model;
 
 use App\Core\DataBase;
 
-class LoginUserModel extends DataBase
+class LogInUserModel extends DataBase
 {
     public function getUserPassword(
         string $login,

@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --  KEY `user_date_loged` (`user_date_loged`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci AUTO_INCREMENT=1;
 
-CREATE TABLE `sites` (
+CREATE TABLE IF NOT EXISTS `sites` (
     `site_id` int(11) NOT NULL AUTO_INCREMENT,
     `user_id` int(11) NOT NULL DEFAULT '0',
     `site_active` tinyint(1) NOT NULL DEFAULT '1',

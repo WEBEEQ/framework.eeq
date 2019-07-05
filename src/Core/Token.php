@@ -34,7 +34,7 @@ class Token
 
     public function receiveToken(): string
     {
-        $token = $_SESSION['token'];
+        $token = $_SESSION['token'] ?? $this->generateToken();
 
         $this->generateToken();
 

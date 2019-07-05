@@ -4,7 +4,7 @@
 if (!$_SESSION['user']) {
 ?>
                     <li<?php if ($array['activeMenu'] == 'register-user') { echo ' class="active"'; } ?>><a href="<?php echo $array['url']; ?>/rejestracja">Rejestracja</a></li>
-                    <li<?php if ($array['activeMenu'] == 'login-user') { echo ' class="active"'; } ?>><a href="<?php echo $array['url']; ?>/logowanie">Logowanie</a></li>
+                    <li<?php if ($array['activeMenu'] == 'log-in-user') { echo ' class="active"'; } ?>><a href="<?php echo $array['url']; ?>/logowanie">Logowanie</a></li>
 <?php
 } else {
 ?>
@@ -16,7 +16,7 @@ if (!$_SESSION['user']) {
 <?php
     }
 ?>
-                    <li<?php if ($array['activeMenu'] == 'logout-user') { echo ' class="active"'; } ?>><a href="<?php echo $array['url']; ?>/wylogowanie">Wylogowanie</a></li>
+                    <li<?php if ($array['activeMenu'] == 'log-out-user') { echo ' class="active"'; } ?>><a href="<?php echo $array['url']; ?>/wylogowanie">Wylogowanie</a></li>
 <?php
 }
 ?>

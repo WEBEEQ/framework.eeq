@@ -1,15 +1,15 @@
 <?php declare(strict_types=1);
 
-// src/Controller/LoginUserController.php
+// src/Controller/LogInUserController.php
 namespace App\Controller;
 
 use App\Bundle\Html;
 use App\Core\{Config, Email, Token};
-use App\Model\LoginUserModel;
-use App\Service\LoginUserService;
-use App\Validator\LoginUserValidator;
+use App\Model\LogInUserModel;
+use App\Service\LogInUserService;
+use App\Validator\LogInUserValidator;
 
-class LoginUserController
+class LogInUserController
 {
     public function loginUserAction(
         string $login,
@@ -22,20 +22,20 @@ class LoginUserController
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $loginUserModel = new LoginUserModel();
-        $loginUserValidator = new LoginUserValidator($csrfToken);
+        $logInUserModel = new LogInUserModel();
+        $logInUserValidator = new LogInUserValidator($csrfToken);
 
-        $loginUserModel->dbConnect();
+        $logInUserModel->dbConnect();
 
-        $loginUserService = new LoginUserService(
+        $logInUserService = new LogInUserService(
             $config,
             $mail,
             $html,
             $csrfToken,
-            $loginUserModel,
-            $loginUserValidator
+            $logInUserModel,
+            $logInUserValidator
         );
-        $array = $loginUserService->variableAction(
+        $array = $logInUserService->variableAction(
             $login,
             $password,
             $remember,
@@ -43,7 +43,7 @@ class LoginUserController
             $token
         );
 
-        $loginUserModel->dbClose();
+        $logInUserModel->dbClose();
 
         return $array;
     }

@@ -1,13 +1,13 @@
 <?php declare(strict_types=1);
 
-// src/Controller/LogoutUserController.php
+// src/Controller/LogOutUserController.php
 namespace App\Controller;
 
 use App\Core\Config;
 
-class LogoutUserController
+class LogOutUserController
 {
-    public function logoutUserAction(): array
+    public function logOutUserAction(): array
     {
         $config = new Config();
 
