@@ -10,18 +10,10 @@ class HttpCurl
         string $requestType,
         string $pathUrl,
         array $auth,
-        array $data
+        ?array $data = null
     ): array {
         if (empty($pathUrl)) {
             throw new SieciqException('The endpoint is empty');
-        }
-
-        if (empty($auth)) {
-            throw new SieciqException('No auth to set');
-        }
-
-        if (empty($data)) {
-            throw new SieciqException('No data to send');
         }
 
         $ch = curl_init($pathUrl);
@@ -34,7 +26,9 @@ class HttpCurl
         ));
         curl_setopt($ch, CURLOPT_USERPWD,
             $auth['user'] . ':' . $auth['password']);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        if ($data) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        }
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
