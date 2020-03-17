@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Validator/RegisterUserValidator.php
 namespace App\Validator;
@@ -28,88 +30,78 @@ class RegisterUserValidator extends Error
         bool $accept,
         string $token
     ): void {
-        $error = '';
-
         if (strlen($name) < 1) {
-            $error .= 'Imię musi zostać podane.' . "\r\n";
+            $this->addError('Imię musi zostać podane.');
         } elseif (strlen($name) > 30) {
-            $error .= 'Imię może zawierać maksymalnie 30 znaków.'
-                . "\r\n";
+            $this->addError('Imię może zawierać maksymalnie 30 znaków.');
         }
         if (strlen($surname) < 1) {
-            $error .= 'Nazwisko musi zostać podane.' . "\r\n";
+            $this->addError('Nazwisko musi zostać podane.');
         } elseif (strlen($surname) > 50) {
-            $error .= 'Nazwisko może zawierać maksymalnie 50 znaków.'
-                . "\r\n";
+            $this->addError('Nazwisko może zawierać maksymalnie 50 znaków.');
         }
         if (strlen($login) < 3) {
-            $error .= 'Login musi zawierać minimalnie 3 znaki.' . "\r\n";
+            $this->addError('Login musi zawierać minimalnie 3 znaki.');
         } elseif (strlen($login) > 20) {
-            $error .= 'Login może zawierać maksymalnie 20 znaków.'
-                . "\r\n";
+            $this->addError('Login może zawierać maksymalnie 20 znaków.');
         }
         if (!preg_match('/^([0-9A-Za-z]*)$/', $login)) {
-            $error .= 'Login może składać się tylko z liter i cyfr.'
-                . "\r\n";
+            $this->addError('Login może składać się tylko z liter i cyfr.');
         }
         if ($login != '' && $this->registerUserModel->isUserLogin($login)) {
-            $error .= 'Konto o podanym loginie już istnieje.' . "\r\n";
+            $this->addError('Konto o podanym loginie już istnieje.');
         }
         if (strlen($password) < 8 || strlen($repeatPassword) < 8) {
-            $error .= 'Hasło musi zawierać minimalnie 8 znaków.'
-                . "\r\n";
+            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
         } elseif (strlen($password) > 30 || strlen($repeatPassword) > 30) {
-            $error .= 'Hasło może zawierać maksymalnie 30 znaków.'
-                . "\r\n";
+            $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $password)) {
-            $error .= 'Hasło może składać się tylko z liter i cyfr.'
-                . "\r\n";
+            $this->addError('Hasło może składać się tylko z liter i cyfr.');
         } else {
             $pregMatch = preg_match(
                 '/^([!@#$%^&*()0-9A-Za-z]*)$/',
                 $repeatPassword
             );
             if (!$pregMatch) {
-                $error .= 'Hasło może składać się tylko z liter i cyfr.'
-                    . "\r\n";
+                $this->addError(
+                    'Hasło może składać się tylko z liter i cyfr.'
+                );
             }
         }
         if ($password != $repeatPassword) {
-            $error .= 'Hasło i powtórzone hasło nie są zgodne.' . "\r\n";
+            $this->addError('Hasło i powtórzone hasło nie są zgodne.');
         }
         if (strlen($email) > 100 || strlen($repeatEmail) > 100) {
-            $error .= 'E-mail może zawierać maksymalnie 100 znaków.'
-                . "\r\n";
+            $this->addError('E-mail może zawierać maksymalnie 100 znaków.');
         }
         $pregMatch = preg_match(
             '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
             $email
         );
         if (!$pregMatch) {
-            $error .= 'E-mail musi mieć format zapisu: '
-                . 'nazwisko@domena.pl' . "\r\n";
+            $this->addError(
+                'E-mail musi mieć format zapisu: nazwisko@domena.pl'
+            );
         } else {
             $pregMatch = preg_match(
                 '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
                 $repeatEmail
             );
             if (!$pregMatch) {
-                $error .= 'E-mail musi mieć format zapisu: '
-                    . 'nazwisko@domena.pl' . "\r\n";
+                $this->addError(
+                    'E-mail musi mieć format zapisu: nazwisko@domena.pl'
+                );
             }
         }
         if ($email != $repeatEmail) {
-            $error .= 'E-mail i powtórzony e-mail nie są zgodne.'
-                . "\r\n";
+            $this->addError('E-mail i powtórzony e-mail nie są zgodne.');
         }
         if (!$accept) {
-            $error .= 'Musisz zaakceptować regulamin serwisu.' . "\r\n";
+            $this->addError('Musisz zaakceptować regulamin serwisu.');
         }
         if ($token != $this->csrfToken->receiveToken()) {
-            $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";
+            $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
-
-        $this->setError($error);
     }
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Validator/UserAccountValidator.php
 namespace App\Validator;
@@ -17,28 +19,23 @@ class UserAccountValidator extends Error
 
     public function validate(string $name, string $www, string $token): void
     {
-        $error = '';
-
         if (strlen($name) < 1) {
-            $error .= 'Nazwa strony www musi zostać podana.' . "\r\n";
+            $this->addError('Nazwa strony www musi zostać podana.');
         } elseif (strlen($name) > 100) {
-            $error .= 'Nazwa strony www może zawierać maksymalnie '
-                . '100 znaków.' . "\r\n";
+            $this->addError(
+                'Nazwa strony www może zawierać maksymalnie 100 znaków.'
+            );
         }
         $http = substr($www, 0, 7) == 'http://';
         $https = substr($www, 0, 8) == 'https://';
         if (!$http && !$https) {
-            $error .= 'Url musi rozpoczynać się od znaków: http://'
-                . "\r\n";
+            $this->addError('Url musi rozpoczynać się od znaków: http://');
         }
         if (strlen($www) > 100) {
-            $error .= 'Url może zawierać maksymalnie 100 znaków.'
-                . "\r\n";
+            $this->addError('Url może zawierać maksymalnie 100 znaków.');
         }
         if ($token != $this->csrfToken->receiveToken()) {
-            $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";
+            $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
-
-        $this->setError($error);
     }
 }

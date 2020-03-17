@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Core/Email.php
 namespace App\Core;
@@ -20,8 +22,8 @@ class Email
             $emailTo,
             '=?utf-8?B?' . base64_encode($subject) . '?=',
             $message,
-            'From: ' . $emailFrom . "\r\n" . 'Content-Transfer-Encoding: 8bit'
-                . "\r\n" . 'Content-Type: text/plain; charset=utf-8'
+            'From: ' . $emailFrom . "\n" . 'Content-Transfer-Encoding: 8bit'
+                . "\n" . 'Content-Type: text/plain; charset=utf-8'
         );
     }
 }

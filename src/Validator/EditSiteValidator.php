@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Validator/EditSiteValidator.php
 namespace App\Validator;
@@ -17,19 +19,15 @@ class EditSiteValidator extends Error
 
     public function validate(string $name, string $token): void
     {
-        $error = '';
-
         if (strlen($name) < 1) {
-            $error .= 'Nazwa strony www musi zostać podana.'
-                . "\r\n";
+            $this->addError('Nazwa strony www musi zostać podana.');
         } elseif (strlen($name) > 100) {
-            $error .= 'Nazwa strony www może zawierać maksymalnie '
-                . '100 znaków.' . "\r\n";
+            $this->addError(
+                'Nazwa strony www może zawierać maksymalnie 100 znaków.'
+            );
         }
         if ($token != $this->csrfToken->receiveToken()) {
-            $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";
+            $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
-
-        $this->setError($error);
     }
 }

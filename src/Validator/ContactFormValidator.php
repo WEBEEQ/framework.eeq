@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Validator/ContactFormValidator.php
 namespace App\Validator;
@@ -21,26 +23,23 @@ class ContactFormValidator extends Error
         string $text,
         string $token
     ): void {
-        $error = '';
-
         $pregMatch = preg_match(
             '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
             $email
         );
         if (!$pregMatch) {
-            $error .= 'E-mail musi mieć format zapisu: '
-                . 'nazwisko@domena.pl' . "\r\n";
+            $this->addError(
+                'E-mail musi mieć format zapisu: nazwisko@domena.pl'
+            );
         }
         if ($subject == '') {
-            $error .= 'Temat wiadomości musi zostać podany.' . "\r\n";
+            $this->addError('Temat wiadomości musi zostać podany.');
         }
         if ($text == '') {
-            $error .= 'Treść wiadomości musi zostać podana.' . "\r\n";
+            $this->addError('Treść wiadomości musi zostać podana.');
         }
         if ($token != $this->csrfToken->receiveToken()) {
-            $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";
+            $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
-
-        $this->setError($error);
     }
 }

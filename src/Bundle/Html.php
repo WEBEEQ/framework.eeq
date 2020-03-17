@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Bundle/Html.php
 namespace App\Bundle;
@@ -14,7 +16,7 @@ class Html
             foreach ($array as $key => $value) {
                 $error .= '<li>' . $value . '</li>';
             }
-            $error .= '</ul>' . "\r\n";
+            $error .= '</ul>' . "\n";
         }
 
         return $error;
@@ -24,7 +26,7 @@ class Html
     {
         return ($message != '') ? '                <p class="'
             . (($ok) ? 'ok' : 'bad') . '">'
-            . str_replace("\r\n", '<br />', $message) . '</p>' . "\r\n" : '';
+            . str_replace("\n", '<br />', $message) . '</p>' . "\n" : '';
     }
 
     public function preparePageNavigator(

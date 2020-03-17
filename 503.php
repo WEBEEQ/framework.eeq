@@ -1,4 +1,5 @@
 <?php
+
 require_once('src/Config/config.php');
 ?>
 <!DOCTYPE html>

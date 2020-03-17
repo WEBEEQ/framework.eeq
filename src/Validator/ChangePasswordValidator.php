@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Validator/ChangePasswordValidator.php
 namespace App\Validator;
@@ -20,47 +22,40 @@ class ChangePasswordValidator extends Error
         string $repeatPassword,
         string $token
     ): void {
-        $error = '';
-
         if (strlen($newPassword) < 8) {
-            $error .= 'Hasło musi zawierać minimalnie 8 znaków.'
-                . "\r\n";
+            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
         } elseif (strlen($repeatPassword) < 8) {
-            $error .= 'Hasło musi zawierać minimalnie 8 znaków.'
-                . "\r\n";
+            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
         } else {
             $newPasswordStrlen = strlen($newPassword) > 30;
             $repeatPasswordStrlen = strlen($repeatPassword) > 30;
             if ($newPasswordStrlen || $repeatPasswordStrlen) {
-                $error .= 'Hasło może zawierać maksymalnie 30 znaków.'
-                    . "\r\n";
+                $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
             }
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $newPassword)) {
-            $error .= 'Hasło może składać się tylko z liter i cyfr.'
-                . "\r\n";
+            $this->addError('Hasło może składać się tylko z liter i cyfr.');
         } else {
             $pregMatch = preg_match(
                 '/^([!@#$%^&*()0-9A-Za-z]*)$/',
                 $repeatPassword
             );
             if (!$pregMatch) {
-                $error .= 'Hasło może składać się tylko z liter i cyfr.'
-                    . "\r\n";
+                $this->addError(
+                    'Hasło może składać się tylko z liter i cyfr.'
+                );
             }
         }
         if ($newPassword == '' || $repeatPassword == '') {
-            $error .= 'Nowe hasło lub powtórzone hasło '
-                . 'nie zostało podane.' . "\r\n";
+            $this->addError(
+                'Nowe hasło lub powtórzone hasło nie zostało podane.'
+            );
         }
         if ($newPassword != $repeatPassword) {
-            $error .= 'Nowe hasło i powtórzone hasło nie są zgodne.'
-                . "\r\n";
+            $this->addError('Nowe hasło i powtórzone hasło nie są zgodne.');
         }
         if ($token != $this->csrfToken->receiveToken()) {
-            $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";
+            $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
-
-        $this->setError($error);
     }
 }

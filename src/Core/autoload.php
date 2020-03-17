@@ -1,4 +1,5 @@
 <?php
+
 spl_autoload_register(function ($class) {
     $directory = $_SERVER['DOCUMENT_ROOT'] . '/src/';
     $prefix = 'App\\';

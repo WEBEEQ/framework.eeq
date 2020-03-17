@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 require('config.php');
 require('../autoload.php');
@@ -44,7 +46,7 @@ if ($response['code'] == 200 && $response['response']['success']) {
 
 if ($response['response']['message']) {
 ?>
-            <pre><?php echo str_replace("\r\n", '<br />', $response['response']['message']); ?></pre>
+            <pre><?php echo str_replace("\n", '<br />', $response['response']['message']); ?></pre>
 <?php
 }
 ?>

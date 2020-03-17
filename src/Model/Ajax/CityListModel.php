@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Model/Ajax/CityListModel.php
 namespace App\Model\Ajax;

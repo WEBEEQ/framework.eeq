@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Bundle/Error.php
 namespace App\Bundle;
@@ -14,7 +16,7 @@ class Error
 
     public function addError(string $error): void
     {
-        $this->error .= $error . "\r\n";
+        $this->error .= $error . "\n";
     }
 
     protected function setError(string $error): void
@@ -27,7 +29,7 @@ class Error
         $length = strlen($this->error);
 
         if ($length >= 2) {
-            return explode("\r\n", substr($this->error, 0, ($length - 2)));
+            return explode("\n", substr($this->error, 0, ($length - 2)));
         }
 
         return null;

@@ -1,4 +1,5 @@
 <?php
+
 require_once('src/Config/config.php');
 
 $code = ($_GET['code']) ? (int) $_GET['code'] : 404;

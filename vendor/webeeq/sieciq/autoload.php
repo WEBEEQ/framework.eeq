@@ -1,4 +1,5 @@
 <?php
+
 spl_autoload_register(function ($class) {
     $directory = __DIR__ . '/lib/';
     $prefix = 'Webeeq\\Sieciq\\';

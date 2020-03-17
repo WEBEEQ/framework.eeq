@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 // src/Validator/LogInUserValidator.php
 namespace App\Validator;
@@ -20,15 +22,11 @@ class LogInUserValidator extends Error
         string $password,
         string $token
     ): void {
-        $error = '';
-
         if ($login == '' || $password == '') {
-            $error .= 'Podaj login i hasło twojego konta.' . "\r\n";
+            $this->addError('Podaj login i hasło twojego konta.');
         }
         if ($token != $this->csrfToken->receiveToken()) {
-            $error .= 'Nieprawidłowy token przesyłanych danych.' . "\r\n";
+            $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
-
-        $this->setError($error);
     }
 }
