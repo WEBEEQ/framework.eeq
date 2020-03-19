@@ -77,7 +77,16 @@ class LogInUserService
                         setcookie(
                             'login',
                             $login . ';' . $userPassword,
-                            time() + 365 * 24 * 60 * 60, '/'
+                            [
+                                'expires' => time() + 365 * 24 * 60 * 60,
+                                'path' => '/',
+                                'domain' => $this->config->getServerName(),
+                                'secure' => (
+                                    $this->config->getServerPort() == 443
+                                ) ? true : false,
+                                'httponly' => true,
+                                'samesite' => 'Strict'
+                            ]
                         );
                     }
                     header('Location: ' . $this->config->getUrl() . '/konto');

@@ -8,6 +8,7 @@ namespace App\Core;
 class Config
 {
     protected $url;
+    protected $serverPort;
     protected $serverName;
     protected $serverDomain;
     protected $serverEmail;
@@ -17,8 +18,9 @@ class Config
 
     public function __construct()
     {
-        $this->url = 'http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '')
-            . '://' . $_SERVER['HTTP_HOST'];
+        $this->serverPort = $_SERVER['SERVER_PORT'];
+        $this->url = 'http' . (($this->serverPort == 443) ? 's' : '') . '://'
+            . $_SERVER['HTTP_HOST'];
         $this->serverName = $_SERVER['SERVER_NAME'];
         $this->serverDomain = str_replace('www.', '', $this->serverName);
         $this->serverEmail = 'kontakt@' . $this->serverDomain;
@@ -30,6 +32,11 @@ class Config
     public function getUrl(): string
     {
         return $this->url;
+    }
+
+    public function getServerPort(): string
+    {
+        return $this->serverPort;
     }
 
     public function getServerName(): string
