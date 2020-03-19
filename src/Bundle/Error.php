@@ -28,8 +28,8 @@ class Error
     {
         $length = strlen($this->error);
 
-        if ($length >= 2) {
-            return explode("\n", substr($this->error, 0, ($length - 2)));
+        if ($length >= 1) {
+            return explode("\n", substr($this->error, 0, ($length - 1)));
         }
 
         return null;
