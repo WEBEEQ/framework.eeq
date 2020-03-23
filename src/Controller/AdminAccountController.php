@@ -28,8 +28,7 @@ class AdminAccountController
 
         $adminAccountModel->dbConnect();
 
-        $userData = $adminAccountModel->getUserData($id);
-        if (!$userData) {
+        if (!$adminAccountModel->getUserData($id)) {
             $adminAccountModel->dbClose();
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;

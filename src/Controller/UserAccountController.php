@@ -36,6 +36,7 @@ class UserAccountController
         $userAccountModel->dbConnect();
 
         $userData = $userAccountModel->getUserData($id);
+
         if (!$userData) {
             $userAccountModel->dbClose();
             header('Location: ' . $config->getUrl() . '/logowanie');

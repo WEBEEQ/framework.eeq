@@ -58,16 +58,15 @@ class RegisterUserValidator extends Error
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $password)) {
             $this->addError('Hasło może składać się tylko z liter i cyfr.');
-        } else {
-            $pregMatch = preg_match(
+        } elseif (
+            !preg_match(
                 '/^([!@#$%^&*()0-9A-Za-z]*)$/',
                 $repeatPassword
+            )
+        ) {
+            $this->addError(
+                'Hasło może składać się tylko z liter i cyfr.'
             );
-            if (!$pregMatch) {
-                $this->addError(
-                    'Hasło może składać się tylko z liter i cyfr.'
-                );
-            }
         }
         if ($password != $repeatPassword) {
             $this->addError('Hasło i powtórzone hasło nie są zgodne.');
@@ -75,24 +74,24 @@ class RegisterUserValidator extends Error
         if (strlen($email) > 100 || strlen($repeatEmail) > 100) {
             $this->addError('E-mail może zawierać maksymalnie 100 znaków.');
         }
-        $pregMatch = preg_match(
-            '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
-            $email
-        );
-        if (!$pregMatch) {
+        if (
+            !preg_match(
+                '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
+                $email
+            )
+        ) {
             $this->addError(
                 'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
-        } else {
-            $pregMatch = preg_match(
+        } elseif (
+            !preg_match(
                 '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
                 $repeatEmail
+            )
+        ) {
+            $this->addError(
+                'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
-            if (!$pregMatch) {
-                $this->addError(
-                    'E-mail musi mieć format zapisu: nazwisko@domena.pl'
-                );
-            }
         }
         if ($email != $repeatEmail) {
             $this->addError('E-mail i powtórzony e-mail nie są zgodne.');

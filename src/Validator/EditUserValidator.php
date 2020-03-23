@@ -36,40 +36,46 @@ class EditUserValidator extends Error
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
         } elseif ($repeatPassword != '' && strlen($repeatPassword) < 8) {
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } else {
-            $newPasswordStrlen = strlen($newPassword) > 30;
-            $repeatPasswordStrlen = strlen($repeatPassword) > 30;
-            if ($newPasswordStrlen || $repeatPasswordStrlen) {
-                $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
-            }
+        } elseif (
+            strlen($newPassword) > 30
+            || strlen($repeatPassword) > 30
+        ) {
+            $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $newPassword)) {
             $this->addError('Hasło może składać się tylko z liter i cyfr.');
-        } else {
-            $pregMatch = preg_match(
+        } elseif (
+            !preg_match(
                 '/^([!@#$%^&*()0-9A-Za-z]*)$/',
                 $repeatPassword
+            )
+        ) {
+            $this->addError(
+                'Hasło może składać się tylko z liter i cyfr.'
             );
-            if (!$pregMatch) {
-                $this->addError(
-                    'Hasło może składać się tylko z liter i cyfr.'
-                );
-            }
         }
-        if ($password != '') {
-            $userPassword = $this->editUserModel->getUserPassword($user);
-            if (!password_verify($password, $userPassword)) {
-                $this->addError(
-                    'Stare hasło nie jest zgodne z dotychczas istniejącym.'
-                );
-            }
+        if (
+            $password != ''
+            && !password_verify(
+                $password,
+                $this->editUserModel->getUserPassword($user)
+            )
+        ) {
+            $this->addError(
+                'Stare hasło nie jest zgodne z dotychczas istniejącym.'
+            );
         }
-        $pass = ($newPassword != '' || $repeatPassword != '');
-        if ($password == '' && $pass && $newPassword == $repeatPassword) {
+        if (
+            $password == ''
+            && ($newPassword != '' || $repeatPassword != '')
+            && $newPassword == $repeatPassword
+        ) {
             $this->addError('Stare hasło nie zostało podane.');
         }
-        $pass = ($newPassword == '' || $repeatPassword == '');
-        if ($password != '' && $pass) {
+        if (
+            $password != ''
+            && ($newPassword == '' || $repeatPassword == '')
+        ) {
             $this->addError(
                 'Nowe hasło lub powtórzone hasło nie zostało podane.'
             );
@@ -93,24 +99,26 @@ class EditUserValidator extends Error
         if (strlen($newEmail) > 100 || strlen($repeatEmail) > 100) {
             $this->addError('E-mail może zawierać maksymalnie 100 znaków.');
         }
-        $pregMatch = preg_match(
-            '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
-            $newEmail
-        );
-        if ($newEmail != '' && !$pregMatch) {
+        if (
+            $newEmail != ''
+            && !preg_match(
+                '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
+                $newEmail
+            )
+        ) {
             $this->addError(
                 'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
-        } elseif ($repeatEmail != '') {
-            $pregMatch = preg_match(
+        } elseif (
+            $repeatEmail != ''
+            && !preg_match(
                 '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
                 $repeatEmail
+            )
+        ) {
+            $this->addError(
+                'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
-            if (!$pregMatch) {
-                $this->addError(
-                    'E-mail musi mieć format zapisu: nazwisko@domena.pl'
-                );
-            }
         }
         if ($newEmail != $repeatEmail) {
             $this->addError('Nowy e-mail i powtórzony e-mail nie są zgodne.');
@@ -118,9 +126,11 @@ class EditUserValidator extends Error
         if ($email != '' && $email == $newEmail) {
             $this->addError('Nowy e-mail i stary e-mail nie mogą być zgodne.');
         }
-        $http = substr($www, 0, 7) == 'http://';
-        $https = substr($www, 0, 8) == 'https://';
-        if ($www != '' && !$http && !$https) {
+        if (
+            $www != ''
+            && !substr($www, 0, 7) == 'http://'
+            && !substr($www, 0, 8) == 'https://'
+        ) {
             $this->addError(
                 'Strona www musi rozpoczynać się od znaków: http://'
             );

@@ -43,8 +43,7 @@ class AcceptSiteService
         if ($submit) {
             if ($delete) {
                 $this->acceptSiteModel->getUserData($site, $login, $email);
-                $siteData = $this->acceptSiteModel->deleteSiteData($site);
-                if ($siteData) {
+                if ($this->acceptSiteModel->deleteSiteData($site)) {
                     $acceptationEmail = $this->sendAcceptationEmail(
                         $active,
                         $delete,

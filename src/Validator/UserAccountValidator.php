@@ -26,9 +26,10 @@ class UserAccountValidator extends Error
                 'Nazwa strony www może zawierać maksymalnie 100 znaków.'
             );
         }
-        $http = substr($www, 0, 7) == 'http://';
-        $https = substr($www, 0, 8) == 'https://';
-        if (!$http && !$https) {
+        if (
+            !substr($www, 0, 7) == 'http://'
+            && !substr($www, 0, 8) == 'https://'
+        ) {
             $this->addError('Url musi rozpoczynać się od znaków: http://');
         }
         if (strlen($www) > 100) {

@@ -26,25 +26,23 @@ class ChangePasswordValidator extends Error
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
         } elseif (strlen($repeatPassword) < 8) {
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } else {
-            $newPasswordStrlen = strlen($newPassword) > 30;
-            $repeatPasswordStrlen = strlen($repeatPassword) > 30;
-            if ($newPasswordStrlen || $repeatPasswordStrlen) {
-                $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
-            }
+        } elseif (
+            strlen($newPassword) > 30
+            || strlen($repeatPassword) > 30
+        ) {
+            $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $newPassword)) {
             $this->addError('Hasło może składać się tylko z liter i cyfr.');
-        } else {
-            $pregMatch = preg_match(
+        } elseif (
+            !preg_match(
                 '/^([!@#$%^&*()0-9A-Za-z]*)$/',
                 $repeatPassword
+            )
+        ) {
+            $this->addError(
+                'Hasło może składać się tylko z liter i cyfr.'
             );
-            if (!$pregMatch) {
-                $this->addError(
-                    'Hasło może składać się tylko z liter i cyfr.'
-                );
-            }
         }
         if ($newPassword == '' || $repeatPassword == '') {
             $this->addError(
