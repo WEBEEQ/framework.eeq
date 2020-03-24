@@ -5,20 +5,14 @@ require_once('src/Config/config.php');
 $code = ($_GET['code']) ? (int) $_GET['code'] : 404;
 ?>
 <!DOCTYPE html>
-<?php
-ob_start();
-?>
+<?php ob_start(); ?>
 <html lang="en-US">
     <head>
         <meta charset="utf-8" />
         <title>Error <?php echo $code; ?></title>
-<?php
-if ($code == 403 || $code == 404) {
-?>
-        <meta name="robots" content="noindex, nofollow" />
-<?php
-}
-?>
+        <?php if ($code == 403 || $code == 404) { ?>
+            <meta name="robots" content="noindex, nofollow" />
+        <?php } ?>
         <style type="text/css">
             body {
                 margin: 30px;
@@ -66,6 +60,4 @@ if ($code == 403 || $code == 404) {
         <p><a href="/">Back to the main page</a></p>
     </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>

@@ -12,7 +12,7 @@ class Html
         $error = '';
 
         if ($array) {
-            $error .= '                    <ul>';
+            $error .= '<ul>';
             foreach ($array as $key => $value) {
                 $error .= '<li>' . $value . '</li>';
             }
@@ -24,8 +24,7 @@ class Html
 
     public function prepareMessage(string $message, bool $ok): string
     {
-        return ($message != '') ? '                <p class="'
-            . (($ok) ? 'ok' : 'bad') . '">'
+        return ($message != '') ? '<p class="' . (($ok) ? 'ok' : 'bad') . '">'
             . str_replace("\n", '<br />', $message) . '</p>' . "\n" : '';
     }
 

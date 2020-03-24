@@ -3,9 +3,7 @@
 require_once('src/Config/config.php');
 ?>
 <!DOCTYPE html>
-<?php
-ob_start();
-?>
+<?php ob_start(); ?>
 <html lang="pl-PL">
     <head>
         <meta charset="utf-8" />
@@ -57,6 +55,4 @@ ob_start();
         <p><a href="/">Powróć do strony głównej</a></p>
     </body>
 </html>
-<?php
-ob_end_flush();
-?>
+<?php ob_end_flush(); ?>
