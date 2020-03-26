@@ -6,10 +6,10 @@ namespace Webeeq\Sieciq;
 
 class Config
 {
-    protected $url = 'http://127.0.0.15';
-    protected $addSitePath = '/api/dodaj-strone';
-    protected $updateSitePath = '/api/zaktualizuj-strone';
-    protected $deleteSitePath = '/api/usun-strone';
+    protected string $url = 'http://127.0.0.15';
+    protected string $addSitePath = '/api/dodaj-strone';
+    protected string $updateSitePath = '/api/zaktualizuj-strone';
+    protected string $deleteSitePath = '/api/usun-strone';
 
     public function getAddSitePathUrl(): string
     {

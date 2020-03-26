@@ -9,7 +9,7 @@ use App\Bundle\Message;
 
 class DeleteSiteValidator extends Message
 {
-    protected $deleteSiteModel;
+    protected object $deleteSiteModel;
 
     public function __construct(object $deleteSiteModel)
     {

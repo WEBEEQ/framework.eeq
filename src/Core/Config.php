@@ -7,14 +7,14 @@ namespace App\Core;
 
 class Config
 {
-    protected $url;
-    protected $serverPort;
-    protected $serverName;
-    protected $serverDomain;
-    protected $serverEmail;
-    protected $adminEmail;
-    protected $remoteAddress;
-    protected $dateTimeNow;
+    protected string $url;
+    protected string $serverPort;
+    protected string $serverName;
+    protected string $serverDomain;
+    protected string $serverEmail;
+    protected string $adminEmail;
+    protected string $remoteAddress;
+    protected string $dateTimeNow;
 
     public function __construct()
     {

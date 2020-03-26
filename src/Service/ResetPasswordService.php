@@ -7,12 +7,12 @@ namespace App\Service;
 
 class ResetPasswordService
 {
-    protected $config;
-    protected $mail;
-    protected $html;
-    protected $csrfToken;
-    protected $resetPasswordModel;
-    protected $resetPasswordValidator;
+    protected object $config;
+    protected object $mail;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $resetPasswordModel;
+    protected object $resetPasswordValidator;
 
     public function __construct(
         object $config,

@@ -7,8 +7,8 @@ namespace App\Service;
 
 class ShowSiteService
 {
-    protected $config;
-    protected $showSiteModel;
+    protected object $config;
+    protected object $showSiteModel;
 
     public function __construct(
         object $config,

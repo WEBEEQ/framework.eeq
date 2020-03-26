@@ -7,8 +7,8 @@ namespace App\Service\Api;
 
 class DeleteSiteService
 {
-    protected $deleteSiteModel;
-    protected $deleteSiteValidator;
+    protected object $deleteSiteModel;
+    protected object $deleteSiteValidator;
 
     public function __construct(
         object $deleteSiteModel,

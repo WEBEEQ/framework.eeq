@@ -7,7 +7,7 @@ namespace App\Service;
 
 class ActivateUserService
 {
-    protected $activateUserModel;
+    protected object $activateUserModel;
 
     public function __construct(object $activateUserModel)
     {

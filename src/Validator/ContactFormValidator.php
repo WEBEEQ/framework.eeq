@@ -9,7 +9,7 @@ use App\Bundle\Error;
 
 class ContactFormValidator extends Error
 {
-    protected $csrfToken;
+    protected object $csrfToken;
 
     public function __construct(object $csrfToken)
     {

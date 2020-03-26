@@ -7,8 +7,8 @@ namespace App\Core;
 
 class CookieLogin extends DataBase
 {
-    protected $config;
-    protected $param;
+    protected object $config;
+    protected object $param;
 
     public function __construct(object $config, object $param)
     {

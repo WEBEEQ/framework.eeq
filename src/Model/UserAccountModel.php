@@ -9,8 +9,8 @@ use App\Core\DataBase;
 
 class UserAccountModel extends DataBase
 {
-    protected $config;
-    protected $html;
+    protected object $config;
+    protected object $html;
 
     public function __construct(object $config, object $html)
     {

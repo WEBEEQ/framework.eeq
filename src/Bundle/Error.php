@@ -7,7 +7,7 @@ namespace App\Bundle;
 
 class Error
 {
-    protected $error;
+    protected string $error;
 
     public function __construct()
     {

@@ -7,12 +7,12 @@ namespace App\Service;
 
 class ChangePasswordService
 {
-    protected $config;
-    protected $mail;
-    protected $html;
-    protected $csrfToken;
-    protected $changePasswordModel;
-    protected $changePasswordValidator;
+    protected object $config;
+    protected object $mail;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $changePasswordModel;
+    protected object $changePasswordValidator;
 
     public function __construct(
         object $config,

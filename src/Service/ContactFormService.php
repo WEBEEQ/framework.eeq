@@ -7,11 +7,11 @@ namespace App\Service;
 
 class ContactFormService
 {
-    protected $config;
-    protected $mail;
-    protected $html;
-    protected $csrfToken;
-    protected $contactFormValidator;
+    protected object $config;
+    protected object $mail;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $contactFormValidator;
 
     public function __construct(
         object $config,

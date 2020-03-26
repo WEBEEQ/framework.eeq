@@ -7,12 +7,12 @@ namespace App\Service;
 
 class AcceptSiteService
 {
-    protected $config;
-    protected $mail;
-    protected $html;
-    protected $csrfToken;
-    protected $acceptSiteModel;
-    protected $acceptSiteValidator;
+    protected object $config;
+    protected object $mail;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $acceptSiteModel;
+    protected object $acceptSiteValidator;
 
     public function __construct(
         object $config,

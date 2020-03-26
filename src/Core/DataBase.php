@@ -7,14 +7,14 @@ namespace App\Core;
 
 class DataBase
 {
-    protected $mysqlHost;
-    protected $mysqlPort;
-    protected $mysqlUser;
-    protected $mysqlPassword;
-    protected $mysqlLink;
-    protected $mysqlDatabase;
-    protected $mysqlTimeZone;
-    protected $mysqlNames;
+    protected string $mysqlHost;
+    protected string $mysqlPort;
+    protected string $mysqlUser;
+    protected string $mysqlPassword;
+    protected ?object $mysqlLink;
+    protected string $mysqlDatabase;
+    protected string $mysqlTimeZone;
+    protected string $mysqlNames;
 
     public function __construct()
     {

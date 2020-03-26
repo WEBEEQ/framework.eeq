@@ -7,9 +7,9 @@ namespace App\Service\Api;
 
 class UpdateSiteService
 {
-    protected $config;
-    protected $updateSiteModel;
-    protected $updateSiteValidator;
+    protected object $config;
+    protected object $updateSiteModel;
+    protected object $updateSiteValidator;
 
     public function __construct(
         object $config,

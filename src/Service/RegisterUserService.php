@@ -7,12 +7,12 @@ namespace App\Service;
 
 class RegisterUserService
 {
-    protected $config;
-    protected $mail;
-    protected $html;
-    protected $csrfToken;
-    protected $registerUserModel;
-    protected $registerUserValidator;
+    protected object $config;
+    protected object $mail;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $registerUserModel;
+    protected object $registerUserValidator;
 
     public function __construct(
         object $config,

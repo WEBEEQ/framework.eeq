@@ -9,8 +9,8 @@ use App\Bundle\Error;
 
 class RegisterUserValidator extends Error
 {
-    protected $csrfToken;
-    protected $registerUserModel;
+    protected object $csrfToken;
+    protected object $registerUserModel;
 
     public function __construct(object $csrfToken, object $registerUserModel)
     {

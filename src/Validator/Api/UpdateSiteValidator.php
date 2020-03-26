@@ -9,7 +9,7 @@ use App\Bundle\Message;
 
 class UpdateSiteValidator extends Message
 {
-    protected $updateSiteModel;
+    protected object $updateSiteModel;
 
     public function __construct(object $updateSiteModel)
     {

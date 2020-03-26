@@ -7,7 +7,7 @@ namespace App\Service;
 
 class AdminAccountService
 {
-    protected $adminAccountModel;
+    protected object $adminAccountModel;
 
     public function __construct(object $adminAccountModel)
     {

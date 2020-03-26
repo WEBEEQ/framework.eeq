@@ -8,7 +8,7 @@ use Webeeq\Sieciq\Http;
 
 class Order extends Http
 {
-    protected $config;
+    protected object $config;
 
     public function __construct(object $config)
     {

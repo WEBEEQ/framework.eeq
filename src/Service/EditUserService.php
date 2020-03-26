@@ -7,12 +7,12 @@ namespace App\Service;
 
 class EditUserService
 {
-    protected $config;
-    protected $mail;
-    protected $html;
-    protected $csrfToken;
-    protected $editUserModel;
-    protected $editUserValidator;
+    protected object $config;
+    protected object $mail;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $editUserModel;
+    protected object $editUserValidator;
 
     public function __construct(
         object $config,

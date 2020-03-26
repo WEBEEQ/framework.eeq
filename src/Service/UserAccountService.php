@@ -7,11 +7,11 @@ namespace App\Service;
 
 class UserAccountService
 {
-    protected $config;
-    protected $html;
-    protected $csrfToken;
-    protected $userAccountModel;
-    protected $userAccountValidator;
+    protected object $config;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $userAccountModel;
+    protected object $userAccountValidator;
 
     public function __construct(
         object $config,

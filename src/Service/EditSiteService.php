@@ -7,11 +7,11 @@ namespace App\Service;
 
 class EditSiteService
 {
-    protected $config;
-    protected $html;
-    protected $csrfToken;
-    protected $editSiteModel;
-    protected $editSiteValidator;
+    protected object $config;
+    protected object $html;
+    protected object $csrfToken;
+    protected object $editSiteModel;
+    protected object $editSiteValidator;
 
     public function __construct(
         object $config,
