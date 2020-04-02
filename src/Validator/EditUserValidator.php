@@ -128,8 +128,8 @@ class EditUserValidator extends Error
         }
         if (
             $www != ''
-            && !substr($www, 0, 7) == 'http://'
-            && !substr($www, 0, 8) == 'https://'
+            && substr($www, 0, 7) != 'http://'
+            && substr($www, 0, 8) != 'https://'
         ) {
             $this->addError(
                 'Strona www musi rozpoczynać się od znaków: http://'
