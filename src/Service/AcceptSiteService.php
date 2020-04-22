@@ -168,7 +168,7 @@ class AcceptSiteService
             $email,
             'Akceptacja strony www konta ' . $login . ' w serwisie '
                 . $this->config->getServerDomain(),
-            $accept . "\r\n\r\n" . $www . "\r\n\r\n" . '--' . "\r\n"
+            $accept . "\n\n" . $www . "\n\n" . '--' . "\n"
                 . $this->config->getAdminEmail()
         );
     }

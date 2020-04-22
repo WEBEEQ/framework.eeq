@@ -183,8 +183,8 @@ class EditUserService
             'Aktywacja konta ' . $login . ' w serwisie '
                 . $this->config->getServerDomain(),
             'Aby aktywować konto, otwórz w oknie przeglądarki url poniżej.'
-                . "\r\n\r\n" . $this->config->getUrl() . '/aktywacja,'
-                . $login . ',' . $key . "\r\n\r\n" . '--' . "\r\n"
+                . "\n\n" . $this->config->getUrl() . '/aktywacja,'
+                . $login . ',' . $key . "\n\n" . '--' . "\n"
                 . $this->config->getAdminEmail()
         );
     }

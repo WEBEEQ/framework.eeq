@@ -108,8 +108,8 @@ class ResetPasswordService
             'Aktywacja konta ' . $login . ' w serwisie '
                 . $this->config->getServerDomain(),
             'Aby aktywować konto, otwórz w oknie przeglądarki url poniżej.'
-                . "\r\n\r\n" . $this->config->getUrl() . '/aktywacja,'
-                . $login . ',' . $key . "\r\n\r\n" . '--' . "\r\n"
+                . "\n\n" . $this->config->getUrl() . '/aktywacja,'
+                . $login . ',' . $key . "\n\n" . '--' . "\n"
                 . $this->config->getAdminEmail()
         );
     }
@@ -126,8 +126,8 @@ class ResetPasswordService
             'Zmiana hasła konta ' . $login . ' w serwisie '
                 . $this->config->getServerDomain(),
             'Aby zmienić hasło konta, otwórz w oknie przeglądarki url poniżej.'
-                . "\r\n\r\n" . $this->config->getUrl() . '/resetowanie,'
-                . $login . ',' . $key . "\r\n\r\n" . '--' . "\r\n"
+                . "\n\n" . $this->config->getUrl() . '/resetowanie,'
+                . $login . ',' . $key . "\n\n" . '--' . "\n"
                 . $this->config->getAdminEmail()
         );
     }
