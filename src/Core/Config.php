@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Core/Config.php
 namespace App\Core;
 
 class Config

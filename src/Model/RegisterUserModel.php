@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Model/RegisterUserModel.php
 namespace App\Model;
 
 use App\Core\DataBase;

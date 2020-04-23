@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Service/LogInUserService.php
 namespace App\Service;
 
 class LogInUserService

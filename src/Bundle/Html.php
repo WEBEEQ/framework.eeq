@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Bundle/Html.php
 namespace App\Bundle;
 
 class Html

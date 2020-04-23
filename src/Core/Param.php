@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Core/Param.php
 namespace App\Core;
 
 class Param

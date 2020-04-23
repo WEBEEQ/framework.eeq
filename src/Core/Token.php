@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Core/Token.php
 namespace App\Core;
 
 class Token

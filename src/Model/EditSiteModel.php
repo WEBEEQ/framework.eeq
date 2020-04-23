@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Model/EditSiteModel.php
 namespace App\Model;
 
 use App\Core\DataBase;

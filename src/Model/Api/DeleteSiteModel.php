@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Model/Api/DeleteSiteModel.php
 namespace App\Model\Api;
 
 use App\Core\DataBase;

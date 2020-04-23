@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Service/ResetPasswordService.php
 namespace App\Service;
 
 class ResetPasswordService

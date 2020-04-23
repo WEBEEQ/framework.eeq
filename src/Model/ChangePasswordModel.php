@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Model/ChangePasswordModel.php
 namespace App\Model;
 
 use App\Core\DataBase;

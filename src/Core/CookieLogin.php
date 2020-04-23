@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Core/CookieLogin.php
 namespace App\Core;
 
 class CookieLogin extends DataBase

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Core/Email.php
 namespace App\Core;
 
 class Email

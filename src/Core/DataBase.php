@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Core/DataBase.php
 namespace App\Core;
 
 class DataBase

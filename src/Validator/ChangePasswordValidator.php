@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-// src/Validator/ChangePasswordValidator.php
 namespace App\Validator;
 
 use App\Bundle\Error;
