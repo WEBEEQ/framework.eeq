@@ -25,7 +25,7 @@ class EditSiteValidator extends Error
                 'Nazwa strony www może zawierać maksymalnie 100 znaków.'
             );
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

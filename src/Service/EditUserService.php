@@ -66,7 +66,7 @@ class EditUserService
                 $user
             );
             if ($this->editUserValidator->isValid()) {
-                if ($login != $lastLogin) {
+                if ($login !== $lastLogin) {
                     return array(
                         'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/edit-user/'
@@ -94,10 +94,10 @@ class EditUserService
                     $this->config->getDateTimeNow()
                 );
                 if ($userData) {
-                    if ($newPassword != '') {
+                    if ($newPassword !== '') {
                         setcookie('login', '', 0, '/');
                     }
-                    if ($newEmail != '') {
+                    if ($newEmail !== '') {
                         session_destroy();
                         setcookie('login', '', 0, '/');
                         $activationEmail = $this->sendActivationEmail(

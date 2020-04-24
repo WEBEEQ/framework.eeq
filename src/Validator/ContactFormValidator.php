@@ -31,13 +31,13 @@ class ContactFormValidator extends Error
                 'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
         }
-        if ($subject == '') {
+        if ($subject === '') {
             $this->addError('Temat wiadomości musi zostać podany.');
         }
-        if ($text == '') {
+        if ($text === '') {
             $this->addError('Treść wiadomości musi zostać podana.');
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

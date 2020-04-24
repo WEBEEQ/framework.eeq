@@ -31,9 +31,9 @@ class EditUserValidator extends Error
         string $token,
         int $user
     ): void {
-        if ($newPassword != '' && strlen($newPassword) < 8) {
+        if ($newPassword !== '' && strlen($newPassword) < 8) {
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } elseif ($repeatPassword != '' && strlen($repeatPassword) < 8) {
+        } elseif ($repeatPassword !== '' && strlen($repeatPassword) < 8) {
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
         } elseif (
             strlen($newPassword) > 30
@@ -54,7 +54,7 @@ class EditUserValidator extends Error
             );
         }
         if (
-            $password != ''
+            $password !== ''
             && !password_verify(
                 $password,
                 $this->editUserModel->getUserPassword($user)
@@ -65,24 +65,24 @@ class EditUserValidator extends Error
             );
         }
         if (
-            $password == ''
-            && ($newPassword != '' || $repeatPassword != '')
-            && $newPassword == $repeatPassword
+            $password === ''
+            && ($newPassword !== '' || $repeatPassword !== '')
+            && $newPassword === $repeatPassword
         ) {
             $this->addError('Stare hasło nie zostało podane.');
         }
         if (
-            $password != ''
-            && ($newPassword == '' || $repeatPassword == '')
+            $password !== ''
+            && ($newPassword === '' || $repeatPassword === '')
         ) {
             $this->addError(
                 'Nowe hasło lub powtórzone hasło nie zostało podane.'
             );
         }
-        if ($newPassword != $repeatPassword) {
+        if ($newPassword !== $repeatPassword) {
             $this->addError('Nowe hasło i powtórzone hasło nie są zgodne.');
         }
-        if ($password != '' && $password == $newPassword) {
+        if ($password !== '' && $password === $newPassword) {
             $this->addError('Nowe hasło i stare hasło nie mogą być zgodne.');
         }
         if (strlen($name) < 1) {
@@ -99,7 +99,7 @@ class EditUserValidator extends Error
             $this->addError('E-mail może zawierać maksymalnie 100 znaków.');
         }
         if (
-            $newEmail != ''
+            $newEmail !== ''
             && !preg_match(
                 '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
                 $newEmail
@@ -109,7 +109,7 @@ class EditUserValidator extends Error
                 'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
         } elseif (
-            $repeatEmail != ''
+            $repeatEmail !== ''
             && !preg_match(
                 '/^([0-9A-Za-z._-]+)@([0-9A-Za-z-]+\.)+([0-9A-Za-z]{1,63})$/',
                 $repeatEmail
@@ -119,16 +119,16 @@ class EditUserValidator extends Error
                 'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
         }
-        if ($newEmail != $repeatEmail) {
+        if ($newEmail !== $repeatEmail) {
             $this->addError('Nowy e-mail i powtórzony e-mail nie są zgodne.');
         }
-        if ($email != '' && $email == $newEmail) {
+        if ($email !== '' && $email === $newEmail) {
             $this->addError('Nowy e-mail i stary e-mail nie mogą być zgodne.');
         }
         if (
-            $www != ''
-            && substr($www, 0, 7) != 'http://'
-            && substr($www, 0, 8) != 'https://'
+            $www !== ''
+            && substr($www, 0, 7) !== 'http://'
+            && substr($www, 0, 8) !== 'https://'
         ) {
             $this->addError(
                 'Strona www musi rozpoczynać się od znaków: http://'
@@ -139,7 +139,7 @@ class EditUserValidator extends Error
                 'Strona www może zawierać maksymalnie 100 znaków.'
             );
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

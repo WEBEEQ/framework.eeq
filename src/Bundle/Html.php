@@ -23,7 +23,7 @@ class Html
 
     public function prepareMessage(string $message, bool $ok): string
     {
-        return ($message != '') ? '<p class="' . (($ok) ? 'ok' : 'bad') . '">'
+        return ($message !== '') ? '<p class="' . (($ok) ? 'ok' : 'bad') . '">'
             . str_replace("\n", '<br />', $message) . '</p>' . "\n" : '';
     }
 
@@ -54,7 +54,7 @@ class Html
             $pageNavigator .= ($level > $minLevel) ? '<a href="' . $url
                 . $previousLevel . '">&nbsp;&laquo&nbsp;</a>' : '';
             for ($i = $fromLevel; $i <= $toLevel; $i++) {
-                $pageNavigator .= ($i != $level) ? '<a href="' . $url
+                $pageNavigator .= ($i !== $level) ? '<a href="' . $url
                     . $i . '">&nbsp;' . $i . '&nbsp;</a>' : '[' . $i . ']';
             }
             $pageNavigator .= ($level < $maxLevel) ? '<a href="' . $url

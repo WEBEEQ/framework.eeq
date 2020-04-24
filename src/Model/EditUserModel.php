@@ -13,7 +13,7 @@ class EditUserModel extends DataBase
         $key = '';
 
         for ($i = 0; $i < 100; $i++) {
-            if (rand(0, 2) != 0) {
+            if (rand(0, 2) !== 0) {
                 $j = rand(0, 51);
                 $key .= substr(
                     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',
@@ -79,13 +79,13 @@ class EditUserModel extends DataBase
         $province = ($province >= 1) ? (string) $province : 'NULL';
         $city = ($city >= 1) ? (string) $city : 'NULL';
 
-        if ($password != '') {
+        if ($password !== '') {
             $setPassword = "`users`.`user_password` = '"
                 . password_hash($password, PASSWORD_DEFAULT) . "', ";
         } else {
             $setPassword = '';
         }
-        if ($email != '') {
+        if ($email !== '') {
             $setActive = '`users`.`user_active` = 0, ';
             $setKey = "`users`.`user_key` = '" . $key . "', ";
             $setEmail = "`users`.`user_email` = '" . $email . "', ";

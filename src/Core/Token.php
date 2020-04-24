@@ -11,7 +11,7 @@ class Token
         $token = '';
 
         for ($i = 0; $i < 100; $i++) {
-            if (rand(0, 2) != 0) {
+            if (rand(0, 2) !== 0) {
                 $j = rand(0, 51);
                 $token .= substr(
                     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',

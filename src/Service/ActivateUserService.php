@@ -21,7 +21,7 @@ class ActivateUserService
                 $id,
                 $active
             );
-            if ($code != $userKey) {
+            if ($code !== $userKey) {
                 return array(
                     'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/activate-user/'

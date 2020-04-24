@@ -13,7 +13,7 @@ class ActivateUserModel extends DataBase
         $key = '';
 
         for ($i = 0; $i < 100; $i++) {
-            if (rand(0, 2) != 0) {
+            if (rand(0, 2) !== 0) {
                 $j = rand(0, 51);
                 $key .= substr(
                     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',

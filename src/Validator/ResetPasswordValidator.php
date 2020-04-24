@@ -18,10 +18,10 @@ class ResetPasswordValidator extends Error
 
     public function validate(string $login, string $token): void
     {
-        if ($login == '') {
+        if ($login === '') {
             $this->addError('Podaj login twojego konta.');
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

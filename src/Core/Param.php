@@ -11,7 +11,7 @@ class Param
         $parameter = '';
 
         foreach ($parameterList as $key => $value) {
-            $parameter .= ($key != 'level') ? $key . '='
+            $parameter .= ($key !== 'level') ? $key . '='
                 . urlencode(stripslashes((string) $value)) . '&amp;' : '';
         }
 
@@ -63,7 +63,7 @@ class Param
 
     public function prepareIntBool(?string $intBool): int
     {
-        $intBool = (is_numeric($intBool) && $intBool == 1) ? 1 : 0;
+        $intBool = (is_numeric($intBool) && $intBool === 1) ? 1 : 0;
 
         return $intBool;
     }

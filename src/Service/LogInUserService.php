@@ -81,7 +81,7 @@ class LogInUserService
                                 'path' => '/',
                                 'domain' => $this->config->getServerName(),
                                 'secure' => (
-                                    $this->config->getServerPort() == 443
+                                    $this->config->getServerPort() === 443
                                 ) ? true : false,
                                 'httponly' => true,
                                 'samesite' => 'Strict'

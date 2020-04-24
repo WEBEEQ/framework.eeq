@@ -21,10 +21,10 @@ class LogInUserValidator extends Error
         string $password,
         string $token
     ): void {
-        if ($login == '' || $password == '') {
+        if ($login === '' || $password === '') {
             $this->addError('Podaj login i hasło twojego konta.');
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

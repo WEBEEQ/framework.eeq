@@ -18,7 +18,7 @@ class Config
     public function __construct()
     {
         $this->serverPort = $_SERVER['SERVER_PORT'];
-        $this->url = 'http' . (($this->serverPort == 443) ? 's' : '') . '://'
+        $this->url = 'http' . (($this->serverPort === 443) ? 's' : '') . '://'
             . $_SERVER['HTTP_HOST'];
         $this->serverName = $_SERVER['SERVER_NAME'];
         $this->serverDomain = str_replace('www.', '', $this->serverName);

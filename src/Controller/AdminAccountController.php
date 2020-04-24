@@ -20,7 +20,7 @@ class AdminAccountController
         $html = new Html();
         $adminAccountModel = new AdminAccountModel($config, $html);
 
-        if ($account && $account != $id) {
+        if ($account && $account !== $id) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }

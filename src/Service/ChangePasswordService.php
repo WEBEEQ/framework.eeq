@@ -44,7 +44,7 @@ class ChangePasswordService
                 $active,
                 $email
             );
-            if ($code != $userKey) {
+            if ($code !== $userKey) {
                 return array(
                     'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/change-password/'

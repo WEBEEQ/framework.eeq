@@ -27,7 +27,7 @@ class UserAccountController
         $userAccountModel = new UserAccountModel($config, $html);
         $userAccountValidator = new UserAccountValidator($csrfToken);
 
-        if ($account && $account != $id) {
+        if ($account && $account !== $id) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }

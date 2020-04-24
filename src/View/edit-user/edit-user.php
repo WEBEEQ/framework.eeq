@@ -26,7 +26,7 @@
                 <select name="province" onchange="ajaxData('select1', '<?php echo $array['url']; ?>/ajax/miejsce,' + this.value);">
                     <option value="0">&nbsp;</option>
                     <?php foreach ($array['provinceList'] as $key => $value) { ?>
-                        <option value="<?php echo $key; ?>"<?php if ($key == $array['province']) { ?> selected="selected"<?php } ?>><?php echo $value['province_name']; ?></option>
+                        <option value="<?php echo $key; ?>"<?php if ($key === $array['province']) { ?> selected="selected"<?php } ?>><?php echo $value['province_name']; ?></option>
                     <?php } ?>
                 </select>
             </td>
@@ -37,7 +37,7 @@
                 <select name="city">
                     <option value="0">&nbsp;</option>
                     <?php foreach ($array['cityList'] as $key => $value) { ?>
-                        <option value="<?php echo $key; ?>"<?php if ($key == $array['city']) { ?> selected="selected"<?php } ?>><?php echo $value['city_name']; ?></option>
+                        <option value="<?php echo $key; ?>"<?php if ($key === $array['city']) { ?> selected="selected"<?php } ?>><?php echo $value['city_name']; ?></option>
                     <?php } ?>
                 </select>
             </td>

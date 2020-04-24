@@ -39,8 +39,8 @@ class AddSiteValidator extends Message
             );
         }
         if (
-            substr($www, 0, 7) != 'http://'
-            && substr($www, 0, 8) != 'https://'
+            substr($www, 0, 7) !== 'http://'
+            && substr($www, 0, 8) !== 'https://'
         ) {
             $this->addMessage(
                 'Url musi rozpoczynać się od znaków: http://'

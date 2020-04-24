@@ -34,7 +34,7 @@ $response = $order->updateSite($auth, $data);
                 <h1>Update Site</h1>
             </div>
 <?php
-if ($response['code'] == 200 && $response['response']['success']) {
+if ($response['code'] === 200 && $response['response']['success']) {
 ?>
             <div class="alert alert-success">SUCCESS</div>
 <?php

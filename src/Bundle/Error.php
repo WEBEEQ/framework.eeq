@@ -41,11 +41,11 @@ class Error
 
     public function isError(): bool
     {
-        return ($this->error != '') ? true : false;
+        return ($this->error !== '') ? true : false;
     }
 
     public function isValid(): bool
     {
-        return ($this->error == '') ? true : false;
+        return ($this->error === '') ? true : false;
     }
 }

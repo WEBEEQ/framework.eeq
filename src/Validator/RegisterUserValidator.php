@@ -47,7 +47,7 @@ class RegisterUserValidator extends Error
         if (!preg_match('/^([0-9A-Za-z]*)$/', $login)) {
             $this->addError('Login może składać się tylko z liter i cyfr.');
         }
-        if ($login != '' && $this->registerUserModel->isUserLogin($login)) {
+        if ($login !== '' && $this->registerUserModel->isUserLogin($login)) {
             $this->addError('Konto o podanym loginie już istnieje.');
         }
         if (strlen($password) < 8 || strlen($repeatPassword) < 8) {
@@ -67,7 +67,7 @@ class RegisterUserValidator extends Error
                 'Hasło może składać się tylko z liter i cyfr.'
             );
         }
-        if ($password != $repeatPassword) {
+        if ($password !== $repeatPassword) {
             $this->addError('Hasło i powtórzone hasło nie są zgodne.');
         }
         if (strlen($email) > 100 || strlen($repeatEmail) > 100) {
@@ -92,13 +92,13 @@ class RegisterUserValidator extends Error
                 'E-mail musi mieć format zapisu: nazwisko@domena.pl'
             );
         }
-        if ($email != $repeatEmail) {
+        if ($email !== $repeatEmail) {
             $this->addError('E-mail i powtórzony e-mail nie są zgodne.');
         }
         if (!$accept) {
             $this->addError('Musisz zaakceptować regulamin serwisu.');
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

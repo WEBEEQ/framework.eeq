@@ -33,7 +33,7 @@ $response = $order->addSite($auth, $data);
                 <h1>Add Site</h1>
             </div>
 <?php
-if ($response['code'] == 200 && $response['response']['success']) {
+if ($response['code'] === 200 && $response['response']['success']) {
 ?>
             <div class="alert alert-success">SUCCESS</div>
 <?php

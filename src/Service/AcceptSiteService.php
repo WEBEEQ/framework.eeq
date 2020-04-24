@@ -155,7 +155,7 @@ class AcceptSiteService
     ): ?bool {
         if ($delete) {
             $accept = 'Strona www podana poniżej została odrzucona.';
-        } elseif ($active == 1) {
+        } elseif ($active === 1) {
             $accept = 'Strona www podana poniżej została zaakceptowana.';
         } else {
             return null;

@@ -43,15 +43,15 @@ class ChangePasswordValidator extends Error
                 'Hasło może składać się tylko z liter i cyfr.'
             );
         }
-        if ($newPassword == '' || $repeatPassword == '') {
+        if ($newPassword === '' || $repeatPassword === '') {
             $this->addError(
                 'Nowe hasło lub powtórzone hasło nie zostało podane.'
             );
         }
-        if ($newPassword != $repeatPassword) {
+        if ($newPassword !== $repeatPassword) {
             $this->addError('Nowe hasło i powtórzone hasło nie są zgodne.');
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }

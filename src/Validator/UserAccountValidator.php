@@ -26,15 +26,15 @@ class UserAccountValidator extends Error
             );
         }
         if (
-            substr($www, 0, 7) != 'http://'
-            && substr($www, 0, 8) != 'https://'
+            substr($www, 0, 7) !== 'http://'
+            && substr($www, 0, 8) !== 'https://'
         ) {
             $this->addError('Url musi rozpoczynać się od znaków: http://');
         }
         if (strlen($www) > 100) {
             $this->addError('Url może zawierać maksymalnie 100 znaków.');
         }
-        if ($token != $this->csrfToken->receiveToken()) {
+        if ($token !== $this->csrfToken->receiveToken()) {
             $this->addError('Nieprawidłowy token przesyłanych danych.');
         }
     }
