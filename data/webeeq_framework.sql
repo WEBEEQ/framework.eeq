@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS `users` (
     `user_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `province_id` TINYINT UNSIGNED DEFAULT NULL,
     `city_id` SMALLINT UNSIGNED DEFAULT NULL,
-    `user_admin` TINYINT(1) NOT NULL DEFAULT '0',
-    `user_active` TINYINT(1) NOT NULL DEFAULT '1',
+    `user_admin` TINYINT NOT NULL DEFAULT 0,
+    `user_active` TINYINT NOT NULL DEFAULT 1,
     `user_name` VARCHAR(30) NOT NULL DEFAULT '',
     `user_surname` VARCHAR(50) NOT NULL DEFAULT '',
     `user_login` VARCHAR(20) NOT NULL DEFAULT '',
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `user_street` VARCHAR(60) NOT NULL DEFAULT '',
     `user_postcode` VARCHAR(6) NOT NULL DEFAULT '',
     `user_description` TEXT NOT NULL,
-    `user_show` INT UNSIGNED NOT NULL DEFAULT '0',
+    `user_show` INT UNSIGNED NOT NULL DEFAULT 0,
     `user_ip_added` VARCHAR(15) NOT NULL DEFAULT '',
     `user_date_added` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `user_ip_updated` VARCHAR(15) NOT NULL DEFAULT '',
@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 CREATE TABLE IF NOT EXISTS `sites` (
     `site_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `user_id` INT UNSIGNED NOT NULL DEFAULT '0',
-    `site_active` TINYINT(1) NOT NULL DEFAULT '1',
-    `site_visible` TINYINT(1) NOT NULL DEFAULT '1',
+    `user_id` INT UNSIGNED NOT NULL DEFAULT 0,
+    `site_active` TINYINT NOT NULL DEFAULT 1,
+    `site_visible` TINYINT NOT NULL DEFAULT 1,
     `site_name` VARCHAR(100) NOT NULL DEFAULT '',
     `site_url` VARCHAR(100) NOT NULL DEFAULT '',
     `site_ip_added` VARCHAR(15) NOT NULL DEFAULT '',
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `sites` (
 
 CREATE TABLE IF NOT EXISTS `provinces` (
     `province_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `province_active` TINYINT(1) NOT NULL DEFAULT '1',
+    `province_active` TINYINT NOT NULL DEFAULT 1,
     `province_name` VARCHAR(30) NOT NULL DEFAULT '',
     PRIMARY KEY (`province_id`),
 --  KEY `province_id` (`province_id`),
@@ -111,8 +111,8 @@ INSERT INTO `provinces` (`province_id`, `province_active`, `province_name`) VALU
 
 CREATE TABLE IF NOT EXISTS `cities` (
     `city_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `province_id` TINYINT UNSIGNED NOT NULL DEFAULT '0',
-    `city_active` TINYINT(1) NOT NULL DEFAULT '1',
+    `province_id` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+    `city_active` TINYINT NOT NULL DEFAULT 1,
     `city_name` VARCHAR(30) NOT NULL DEFAULT '',
     PRIMARY KEY (`city_id`),
 --  KEY `city_id` (`city_id`),
