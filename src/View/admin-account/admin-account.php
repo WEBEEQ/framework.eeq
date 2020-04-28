@@ -8,13 +8,13 @@
     <?php } else { ?>
         <?php foreach ($array['siteList'] as $key => $value) { ?>
             <tr>
-                <td><a href="<?php echo $array['url']; ?>/strona,<?php echo $key; ?>,akceptacja"><?php echo $value['site_name']; ?></a></td>
-                <td class="option"><a href="<?php echo $array['url']; ?>/strona,<?php echo $key; ?>,akceptacja">Edytuj</a></td>
+                <td><a href="<?= $array['url'] ?>/strona,<?= $key ?>,akceptacja"><?= $value['site_name'] ?></a></td>
+                <td class="option"><a href="<?= $array['url'] ?>/strona,<?= $key ?>,akceptacja">Edytuj</a></td>
             </tr>
         <?php } ?>
         <?php if ($array['pageNavigator']) { ?>
             <tr>
-                <td colspan="2"><?php echo $array['pageNavigator']; ?></td>
+                <td colspan="2"><?= $array['pageNavigator'] ?></td>
             </tr>
         <?php } ?>
     <?php } ?>

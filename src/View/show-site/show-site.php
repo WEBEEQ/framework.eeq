@@ -1,1 +1,1 @@
-<iframe id="frame" src="<?php echo $array['www']; ?>"></iframe>
+<iframe id="frame" src="<?= $array['www'] ?>"></iframe>

@@ -9,7 +9,7 @@ $code = ($_GET['code']) ? (int) $_GET['code'] : 404;
 <html lang="en-US">
     <head>
         <meta charset="utf-8" />
-        <title>Error <?php echo $code; ?></title>
+        <title>Error <?= $code ?></title>
         <?php if ($code === 403 || $code === 404) { ?>
             <meta name="robots" content="noindex, nofollow" />
         <?php } ?>
@@ -56,7 +56,7 @@ $code = ($_GET['code']) ? (int) $_GET['code'] : 404;
         </style>
     </head>
     <body>
-        <h1>Error <?php echo $code; ?></h1>
+        <h1>Error <?= $code ?></h1>
         <p><a href="/">Back to the main page</a></p>
     </body>
 </html>

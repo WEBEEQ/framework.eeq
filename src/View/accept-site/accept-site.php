@@ -1,19 +1,19 @@
 <h2>Akceptacja strony</h2>
 <form method="post">
-    <?php echo $array['error']; ?>
+    <?= $array['error'] ?>
     <p>Dane do moderacji:</p>
     <table>
         <tr>
             <td>Link:</td>
-            <td><a href="<?php echo $array['url']; ?>/link?www=<?php echo urlencode($array['www']); ?>"><?php echo $array['name']; ?></a></td>
+            <td><a href="<?= $array['url'] ?>/link?www=<?= urlencode($array['www']) ?>"><?= $array['name'] ?></a></td>
         </tr>
         <tr>
             <td>Nazwa:</td>
-            <td><input type="text" name="name" value="<?php echo stripslashes($array['name']); ?>" size="50" maxlength="100" /></td>
+            <td><input type="text" name="name" value="<?= stripslashes($array['name']) ?>" size="50" maxlength="100" /></td>
         </tr>
         <tr>
             <td>Url:</td>
-            <td><input type="text" name="www" value="<?php echo stripslashes($array['www']); ?>" size="50" maxlength="100" /></td>
+            <td><input type="text" name="www" value="<?= stripslashes($array['www']) ?>" size="50" maxlength="100" /></td>
         </tr>
         <tr>
             <td>Aktywna:</td>
@@ -32,5 +32,5 @@
             <td><input type="submit" name="submit" value="Zatwierdź" /> <input type="reset" name="reset" value="Wyczyść" /></td>
         </tr>
     </table>
-    <input type="hidden" name="token" value="<?php echo $array['token']; ?>" />
+    <input type="hidden" name="token" value="<?= $array['token'] ?>" />
 </form>

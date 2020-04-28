@@ -1,10 +1,10 @@
 <div class="bar">
     <h2>Menu</h2>
     <ul>
-        <li><a href="<?php echo $array['url']; ?>/">Główna</a></li>
-        <li><a href="<?php echo $array['url']; ?>/regulamin">Regulamin</a></li>
-        <li><a href="<?php echo $array['url']; ?>/pomoc">Pomoc</a></li>
-        <li><a href="<?php echo $array['url']; ?>/kontakt">Kontakt</a></li>
+        <li><a href="<?= $array['url'] ?>/">Główna</a></li>
+        <li><a href="<?= $array['url'] ?>/regulamin">Regulamin</a></li>
+        <li><a href="<?= $array['url'] ?>/pomoc">Pomoc</a></li>
+        <li><a href="<?= $array['url'] ?>/kontakt">Kontakt</a></li>
     </ul>
 </div>
 <div class="bar">
