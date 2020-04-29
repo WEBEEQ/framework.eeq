@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <td>Widoczna:</td>
-            <td><input type="radio" name="visible" value="1"<?php if ($array['visible'] === 1) { ?> checked="checked"<?php } ?> /> Tak <input type="radio" name="visible" value="0"<?php if ($array['visible'] === 0) { ?> checked="checked"<?php } ?> /> Nie</td>
+            <td><input type="radio" name="visible" value="1"<?php if ((int) $array['visible'] === 1) { ?> checked="checked"<?php } ?> /> Tak <input type="radio" name="visible" value="0"<?php if ((int) $array['visible'] === 0) { ?> checked="checked"<?php } ?> /> Nie</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
