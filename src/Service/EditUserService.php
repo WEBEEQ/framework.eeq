@@ -66,15 +66,6 @@ class EditUserService
                 $user
             );
             if ($this->editUserValidator->isValid()) {
-                if ($login !== $lastLogin) {
-                    return array(
-                        'layout' => 'src/Layout/main/main.php',
-                        'content' => 'src/View/edit-user/'
-                            . 'record-stopped-info.php',
-                        'activeMenu' => 'edit-user',
-                        'title' => 'Informacja'
-                    );
-                }
                 $key = $this->editUserModel->generateKey();
                 $userData = $this->editUserModel->setUserData(
                     $user,
