@@ -23,7 +23,7 @@
         <tr>
             <td>Województwo:</td>
             <td>
-                <select name="province" onchange="ajaxData('select1', '<?= $array['url'] ?>/ajax/miejsce,' + this.value);">
+                <select id="province" name="province">
                     <option value="0">&nbsp;</option>
                     <?php foreach ($array['provinceList'] as $key => $value) { ?>
                         <option value="<?= $key ?>"<?php if ($key === (int) $array['province']) { ?> selected="selected"<?php } ?>><?= $value['province_name'] ?></option>
@@ -33,7 +33,7 @@
         </tr>
         <tr>
             <td>Miasto:</td>
-            <td id="select1">
+            <td id="select">
                 <select name="city">
                     <option value="0">&nbsp;</option>
                     <?php foreach ($array['cityList'] as $key => $value) { ?>
