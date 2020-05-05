@@ -86,11 +86,23 @@ class EditUserService
                 );
                 if ($userData) {
                     if ($newPassword !== '') {
-                        setcookie('login', '', 0, '/');
+                        setcookie(
+                            'login',
+                            '',
+                            0,
+                            '/',
+                            $this->config->getServerName()
+                        );
                     }
                     if ($newEmail !== '') {
                         session_destroy();
-                        setcookie('login', '', 0, '/');
+                        setcookie(
+                            'login',
+                            '',
+                            0,
+                            '/',
+                            $this->config->getServerName()
+                        );
                         $activationEmail = $this->sendActivationEmail(
                             $newEmail,
                             $login,
