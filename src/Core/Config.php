@@ -7,7 +7,7 @@ namespace App\Core;
 class Config
 {
     protected string $url;
-    protected string $serverPort;
+    protected int $serverPort;
     protected string $serverName;
     protected string $serverDomain;
     protected string $serverEmail;
@@ -17,7 +17,7 @@ class Config
 
     public function __construct()
     {
-        $this->serverPort = $_SERVER['SERVER_PORT'];
+        $this->serverPort = (int) $_SERVER['SERVER_PORT'];
         $this->url = 'http' . (($this->serverPort === 443) ? 's' : '') . '://'
             . $_SERVER['HTTP_HOST'];
         $this->serverName = $_SERVER['SERVER_NAME'];
@@ -33,7 +33,7 @@ class Config
         return $this->url;
     }
 
-    public function getServerPort(): string
+    public function getServerPort(): int
     {
         return $this->serverPort;
     }
