@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Bundle\Html;
+use App\Bundle\{Html, Key};
 use App\Core\{Config, Email, Token};
 use App\Model\EditUserModel;
 use App\Service\EditUserService;
@@ -38,6 +38,7 @@ class EditUserController
         $config = new Config();
         $mail = new Email();
         $html = new Html();
+        $key = new Key();
         $csrfToken = new Token();
         $editUserModel = new EditUserModel();
         $editUserValidator = new EditUserValidator($csrfToken, $editUserModel);
@@ -54,6 +55,7 @@ class EditUserController
             $config,
             $mail,
             $html,
+            $key,
             $csrfToken,
             $editUserModel,
             $editUserValidator

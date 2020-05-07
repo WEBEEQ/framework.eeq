@@ -6,10 +6,12 @@ namespace App\Service;
 
 class ActivateUserService
 {
+    protected object $key;
     protected object $activateUserModel;
 
-    public function __construct(object $activateUserModel)
+    public function __construct(object $key, object $activateUserModel)
     {
+        $this->key = $key;
         $this->activateUserModel = $activateUserModel;
     }
 
@@ -39,7 +41,7 @@ class ActivateUserService
                     'title' => 'Informacja'
                 );
             }
-            $key = $this->activateUserModel->generateKey();
+            $key = $this->key->generateKey();
             $userActive = $this->activateUserModel->setUserActive(
                 (int) $id,
                 $key

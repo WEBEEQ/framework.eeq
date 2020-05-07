@@ -9,6 +9,7 @@ class ChangePasswordService
     protected object $config;
     protected object $mail;
     protected object $html;
+    protected object $key;
     protected object $csrfToken;
     protected object $changePasswordModel;
     protected object $changePasswordValidator;
@@ -17,6 +18,7 @@ class ChangePasswordService
         object $config,
         object $mail,
         object $html,
+        object $key,
         object $csrfToken,
         object $changePasswordModel,
         object $changePasswordValidator
@@ -24,6 +26,7 @@ class ChangePasswordService
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
+        $this->key = $key;
         $this->csrfToken = $csrfToken;
         $this->changePasswordModel = $changePasswordModel;
         $this->changePasswordValidator = $changePasswordValidator;
@@ -76,7 +79,7 @@ class ChangePasswordService
                     $token
                 );
                 if ($this->changePasswordValidator->isValid()) {
-                    $key = $this->changePasswordModel->generateKey();
+                    $key = $this->key->generateKey();
                     $userPassword = $this->changePasswordModel
                         ->setUserPassword(
                             (int) $id,

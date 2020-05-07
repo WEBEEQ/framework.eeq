@@ -9,6 +9,7 @@ class EditUserService
     protected object $config;
     protected object $mail;
     protected object $html;
+    protected object $key;
     protected object $csrfToken;
     protected object $editUserModel;
     protected object $editUserValidator;
@@ -17,6 +18,7 @@ class EditUserService
         object $config,
         object $mail,
         object $html,
+        object $key,
         object $csrfToken,
         object $editUserModel,
         object $editUserValidator
@@ -24,6 +26,7 @@ class EditUserService
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
+        $this->key = $key;
         $this->csrfToken = $csrfToken;
         $this->editUserModel = $editUserModel;
         $this->editUserValidator = $editUserValidator;
@@ -66,7 +69,7 @@ class EditUserService
                 $user
             );
             if ($this->editUserValidator->isValid()) {
-                $key = $this->editUserModel->generateKey();
+                $key = $this->key->generateKey();
                 $userData = $this->editUserModel->setUserData(
                     $user,
                     $province,

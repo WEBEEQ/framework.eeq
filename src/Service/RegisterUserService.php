@@ -9,6 +9,7 @@ class RegisterUserService
     protected object $config;
     protected object $mail;
     protected object $html;
+    protected object $key;
     protected object $csrfToken;
     protected object $registerUserModel;
     protected object $registerUserValidator;
@@ -17,6 +18,7 @@ class RegisterUserService
         object $config,
         object $mail,
         object $html,
+        object $key,
         object $csrfToken,
         object $registerUserModel,
         object $registerUserValidator
@@ -24,6 +26,7 @@ class RegisterUserService
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
+        $this->key = $key;
         $this->csrfToken = $csrfToken;
         $this->registerUserModel = $registerUserModel;
         $this->registerUserValidator = $registerUserValidator;
@@ -54,7 +57,7 @@ class RegisterUserService
                 $token
             );
             if ($this->registerUserValidator->isValid()) {
-                $key = $this->registerUserModel->generateKey();
+                $key = $this->key->generateKey();
                 $userData = $this->registerUserModel->addUserData(
                     $name,
                     $surname,

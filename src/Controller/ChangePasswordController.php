@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Bundle\Html;
+use App\Bundle\{Html, Key};
 use App\Core\{Config, Email, Token};
 use App\Model\ChangePasswordModel;
 use App\Service\ChangePasswordService;
@@ -23,6 +23,7 @@ class ChangePasswordController
         $config = new Config();
         $mail = new Email();
         $html = new Html();
+        $key = new Key();
         $csrfToken = new Token();
         $changePasswordModel = new ChangePasswordModel();
         $changePasswordValidator = new ChangePasswordValidator($csrfToken);
@@ -33,6 +34,7 @@ class ChangePasswordController
             $config,
             $mail,
             $html,
+            $key,
             $csrfToken,
             $changePasswordModel,
             $changePasswordValidator

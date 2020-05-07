@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Bundle\Html;
+use App\Bundle\{Html, Key};
 use App\Core\{Config, Email, Token};
 use App\Model\RegisterUserModel;
 use App\Service\RegisterUserService;
@@ -27,6 +27,7 @@ class RegisterUserController
         $config = new Config();
         $mail = new Email();
         $html = new Html();
+        $key = new Key();
         $csrfToken = new Token();
         $registerUserModel = new RegisterUserModel();
         $registerUserValidator = new RegisterUserValidator(
@@ -40,6 +41,7 @@ class RegisterUserController
             $config,
             $mail,
             $html,
+            $key,
             $csrfToken,
             $registerUserModel,
             $registerUserValidator
