@@ -6,10 +6,17 @@ namespace App\Service;
 
 class AdminAccountService
 {
+    protected object $config;
+    protected object $html;
     protected object $adminAccountModel;
 
-    public function __construct(object $adminAccountModel)
-    {
+    public function __construct(
+        object $config,
+        object $html,
+        object $adminAccountModel
+    ) {
+        $this->config = $config;
+        $this->html = $html;
         $this->adminAccountModel = $adminAccountModel;
     }
 
@@ -21,10 +28,13 @@ class AdminAccountService
             $level,
             $listLimit = 10
         );
-        $pageNavigator = $this->adminAccountModel->pageNavigator(
-            $id,
+        $siteCount = $this->adminAccountModel->getSiteCount();
+        $pageNavigator = $this->html->preparePageNavigator(
+            $this->config->getUrl() . '/admin,' . $id . ',strona,',
             $level,
-            $listLimit
+            $listLimit,
+            $siteCount,
+            3
         );
 
         return array(

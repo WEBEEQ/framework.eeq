@@ -8,16 +8,6 @@ use App\Core\DataBase;
 
 class AdminAccountModel extends DataBase
 {
-    protected object $config;
-    protected object $html;
-
-    public function __construct(object $config, object $html)
-    {
-        parent::__construct();
-        $this->config = $config;
-        $this->html = $html;
-    }
-
     public function getUserData(int $id): array
     {
         $arrayResult = array();
@@ -51,11 +41,8 @@ class AdminAccountModel extends DataBase
         return $arrayResult;
     }
 
-    public function pageNavigator(
-        int $id,
-        int $level,
-        int $listLimit
-    ): string {
+    public function getSiteCount(): int
+    {
         $count = 0;
 
         $result = $this->dbQuery(
@@ -67,12 +54,6 @@ class AdminAccountModel extends DataBase
             $count = (is_numeric($row['count'])) ? (int) $row['count'] : 0;
         }
 
-        return $this->html->preparePageNavigator(
-            $this->config->getUrl() . '/admin,' . $id . ',strona,',
-            $level,
-            $listLimit,
-            $count,
-            3
-        );
+        return $count;
     }
 }

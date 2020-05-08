@@ -70,10 +70,13 @@ class UserAccountService
             $level,
             $listLimit = 10
         );
-        $pageNavigator = $this->userAccountModel->pageNavigator(
-            $id,
+        $siteCount = $this->userAccountModel->getSiteCount($id);
+        $pageNavigator = $this->html->preparePageNavigator(
+            $this->config->getUrl() . '/konto,' . $id . ',strona,',
             $level,
-            $listLimit
+            $listLimit,
+            $siteCount,
+            3
         );
 
         return array(

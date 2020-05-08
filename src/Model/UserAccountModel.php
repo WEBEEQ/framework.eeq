@@ -8,16 +8,6 @@ use App\Core\DataBase;
 
 class UserAccountModel extends DataBase
 {
-    protected object $config;
-    protected object $html;
-
-    public function __construct(object $config, object $html)
-    {
-        parent::__construct();
-        $this->config = $config;
-        $this->html = $html;
-    }
-
     public function getUserData(int $id): array
     {
         $arrayResult = array();
@@ -56,11 +46,8 @@ class UserAccountModel extends DataBase
         return $arrayResult;
     }
 
-    public function pageNavigator(
-        int $id,
-        int $level,
-        int $listLimit
-    ): string {
+    public function getSiteCount(int $id): int
+    {
         $count = 0;
 
         $result = $this->dbQuery(
@@ -73,13 +60,7 @@ class UserAccountModel extends DataBase
             $count = (is_numeric($row['count'])) ? (int) $row['count'] : 0;
         }
 
-        return $this->html->preparePageNavigator(
-            $this->config->getUrl() . '/konto,' . $id . ',strona,',
-            $level,
-            $listLimit,
-            $count,
-            3
-        );
+        return $count;
     }
 
     public function addSiteData(

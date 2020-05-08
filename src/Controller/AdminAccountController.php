@@ -18,7 +18,7 @@ class AdminAccountController
     ): array {
         $config = new Config();
         $html = new Html();
-        $adminAccountModel = new AdminAccountModel($config, $html);
+        $adminAccountModel = new AdminAccountModel();
 
         if ($account && $account !== $id) {
             header('Location: ' . $config->getUrl() . '/logowanie');
@@ -33,7 +33,11 @@ class AdminAccountController
             exit;
         }
 
-        $adminAccountService = new AdminAccountService($adminAccountModel);
+        $adminAccountService = new AdminAccountService(
+            $config,
+            $html,
+            $adminAccountModel
+        );
         $array = $adminAccountService->variableAction(
             $level,
             $id

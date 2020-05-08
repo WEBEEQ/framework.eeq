@@ -24,7 +24,7 @@ class UserAccountController
         $config = new Config();
         $html = new Html();
         $csrfToken = new Token();
-        $userAccountModel = new UserAccountModel($config, $html);
+        $userAccountModel = new UserAccountModel();
         $userAccountValidator = new UserAccountValidator($csrfToken);
 
         if ($account && $account !== $id) {
