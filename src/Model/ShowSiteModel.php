@@ -22,7 +22,7 @@ class ShowSiteModel extends DataBase
             ) AND `users`.`user_id` = ' . $id
         );
 
-        return ($this->dbFetchArray($result)) ? true : false;
+        return (bool) $this->dbFetchArray($result);
     }
 
     public function getSiteRandomUrl(

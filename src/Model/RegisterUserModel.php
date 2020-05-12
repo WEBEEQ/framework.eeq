@@ -57,6 +57,6 @@ class RegisterUserModel extends DataBase
             WHERE `users`.`user_login` = '" . $login . "'"
         );
 
-        return ($this->dbFetchArray($result)) ? true : false;
+        return (bool) $this->dbFetchArray($result);
     }
 }

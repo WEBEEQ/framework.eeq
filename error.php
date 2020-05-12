@@ -2,7 +2,7 @@
 
 require_once('src/Config/config.php');
 
-$code = ($_GET['code']) ? (int) $_GET['code'] : 404;
+$code = (int) ($_GET['code'] ?? 404);
 ?>
 <!DOCTYPE html>
 <?php ob_start(); ?>

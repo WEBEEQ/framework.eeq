@@ -51,7 +51,7 @@ class AdminAccountModel extends DataBase
             WHERE `sites`.`site_active` = 0 AND `users`.`user_active` = 1'
         );
         if ($row = $this->dbFetchArray($result)) {
-            $count = (is_numeric($row['count'])) ? (int) $row['count'] : 0;
+            $count = (int) $row['count'];
         }
 
         return $count;

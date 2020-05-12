@@ -16,7 +16,7 @@ class EditUserModel extends DataBase
                 AND `users`.`user_id` = ' . $user
         );
 
-        return ($this->dbFetchArray($result)) ? true : false;
+        return (bool) $this->dbFetchArray($result);
     }
 
     public function getUserPassword(int $user): ?string

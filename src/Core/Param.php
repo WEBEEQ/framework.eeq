@@ -56,22 +56,16 @@ class Param
 
     public function prepareInt(?string $int, int $default = 0): int
     {
-        $int = (is_numeric($int) && (int) $int >= 1) ? (int) $int : $default;
-
-        return $int;
+        return (int) ($int ?? $default);
     }
 
     public function prepareIntBool(?string $intBool): int
     {
-        $intBool = (is_numeric($intBool) && (int) $intBool === 1) ? 1 : 0;
-
-        return $intBool;
+        return (int) (bool) $intBool;
     }
 
     public function prepareBool(?string $bool): bool
     {
-        $bool = ($bool) ? true : false;
-
-        return $bool;
+        return (bool) $bool;
     }
 }

@@ -35,7 +35,7 @@ class DeleteSiteModel extends DataBase
                 AND `sites`.`site_id` = ' . $site
         );
 
-        return ($this->dbFetchArray($result)) ? true : false;
+        return (bool) $this->dbFetchArray($result);
     }
 
     public function deleteSiteData(int $site): bool

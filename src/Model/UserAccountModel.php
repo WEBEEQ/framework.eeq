@@ -57,7 +57,7 @@ class UserAccountModel extends DataBase
                 AND `sites`.`user_id` = ' . $id
         );
         if ($row = $this->dbFetchArray($result)) {
-            $count = (is_numeric($row['count'])) ? (int) $row['count'] : 0;
+            $count = (int) $row['count'];
         }
 
         return $count;
