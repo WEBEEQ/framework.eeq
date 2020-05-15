@@ -331,10 +331,8 @@ switch ($_GET['option']) {
         exit;
         break;
     case 'add-site':
-        $user = $param->prepareString((string) $_SERVER['PHP_AUTH_USER']);
-        $password = $param->preparePassString(
-            (string) $_SERVER['PHP_AUTH_PW']
-        );
+        $user = $param->prepareString($_SERVER['PHP_AUTH_USER']);
+        $password = $param->preparePassString($_SERVER['PHP_AUTH_PW']);
 
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -353,10 +351,8 @@ switch ($_GET['option']) {
         exit;
         break;
     case 'update-site':
-        $user = $param->prepareString((string) $_SERVER['PHP_AUTH_USER']);
-        $password = $param->preparePassString(
-            (string) $_SERVER['PHP_AUTH_PW']
-        );
+        $user = $param->prepareString($_SERVER['PHP_AUTH_USER']);
+        $password = $param->preparePassString($_SERVER['PHP_AUTH_PW']);
 
         $data = json_decode(file_get_contents('php://input'), true);
 
@@ -377,10 +373,8 @@ switch ($_GET['option']) {
         exit;
         break;
     case 'delete-site':
-        $user = $param->prepareString((string) $_SERVER['PHP_AUTH_USER']);
-        $password = $param->preparePassString(
-            (string) $_SERVER['PHP_AUTH_PW']
-        );
+        $user = $param->prepareString($_SERVER['PHP_AUTH_USER']);
+        $password = $param->preparePassString($_SERVER['PHP_AUTH_PW']);
 
         $data = json_decode(file_get_contents('php://input'), true);
 
