@@ -47,7 +47,6 @@ class UserAccountService
                 );
                 if ($siteData) {
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/user-account/'
                             . 'site-added-info.php',
                         'activeMenu' => 'user-account',
@@ -55,7 +54,6 @@ class UserAccountService
                     );
                 } else {
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/user-account/'
                             . 'site-not-added-info.php',
                         'activeMenu' => 'user-account',
@@ -80,7 +78,6 @@ class UserAccountService
         );
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/user-account/user-account.php',
             'activeMenu' => 'user-account',
             'title' => 'Konto',

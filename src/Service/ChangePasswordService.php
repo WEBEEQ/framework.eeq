@@ -49,7 +49,6 @@ class ChangePasswordService
             );
             if ($code !== $userKey) {
                 return array(
-                    'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/change-password/'
                         . 'code-not-valid-info.php',
                     'activeMenu' => 'change-password',
@@ -64,7 +63,6 @@ class ChangePasswordService
                 );
 
                 return array(
-                    'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/change-password/'
                         . 'account-not-active-info.php',
                     'activeMenu' => 'change-password',
@@ -92,7 +90,6 @@ class ChangePasswordService
                         setcookie('login', '', 0, '/');
 
                         return array(
-                            'layout' => 'src/Layout/main/main.php',
                             'content' => 'src/View/change-password/'
                                 . 'password-changed-info.php',
                             'activeMenu' => 'change-password',
@@ -100,7 +97,6 @@ class ChangePasswordService
                         );
                     } else {
                         return array(
-                            'layout' => 'src/Layout/main/main.php',
                             'content' => 'src/View/change-password/'
                                 . 'password-not-changed-info.php',
                             'activeMenu' => 'change-password',
@@ -112,7 +108,6 @@ class ChangePasswordService
         }
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/change-password/change-password.php',
             'activeMenu' => 'change-password',
             'title' => 'Resetowanie',

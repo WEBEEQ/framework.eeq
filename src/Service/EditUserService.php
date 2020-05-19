@@ -114,7 +114,6 @@ class EditUserService
                     }
 
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/edit-user/data-saved-info.php',
                         'activeMenu' => 'edit-user',
                         'title' => 'Informacja',
@@ -124,7 +123,6 @@ class EditUserService
                     );
                 } else {
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/edit-user/'
                             . 'data-not-saved-info.php',
                         'activeMenu' => 'edit-user',
@@ -152,7 +150,6 @@ class EditUserService
         $cityList = $this->editUserModel->getCityList((int) $province);
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/edit-user/edit-user.php',
             'activeMenu' => 'edit-user',
             'title' => 'Edycja użytkownika',

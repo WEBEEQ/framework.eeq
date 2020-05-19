@@ -52,7 +52,6 @@ class AcceptSiteService
                     );
 
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/accept-site/'
                             . 'site-rejected-info.php',
                         'activeMenu' => 'accept-site',
@@ -61,7 +60,6 @@ class AcceptSiteService
                     );
                 } else {
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/accept-site/'
                             . 'data-not-deleted-info.php',
                         'activeMenu' => 'accept-site',
@@ -99,7 +97,6 @@ class AcceptSiteService
                     );
 
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/accept-site/'
                             . 'site-accepted-info.php',
                         'activeMenu' => 'accept-site',
@@ -109,7 +106,6 @@ class AcceptSiteService
                     );
                 } else {
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/accept-site/'
                             . 'data-not-saved-info.php',
                         'activeMenu' => 'accept-site',
@@ -130,7 +126,6 @@ class AcceptSiteService
         }
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/accept-site/accept-site.php',
             'activeMenu' => 'accept-site',
             'title' => 'Akceptacja strony',

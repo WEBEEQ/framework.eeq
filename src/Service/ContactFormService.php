@@ -48,7 +48,6 @@ class ContactFormService
                 );
 
                 return array(
-                    'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/contact-form/send-message-info.php',
                     'activeMenu' => 'contact-form',
                     'title' => 'Informacja',
@@ -58,7 +57,6 @@ class ContactFormService
         }
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/contact-form/contact-form.php',
             'activeMenu' => 'contact-form',
             'title' => 'Kontakt',

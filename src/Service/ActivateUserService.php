@@ -25,7 +25,6 @@ class ActivateUserService
             );
             if ($code !== $userKey) {
                 return array(
-                    'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/activate-user/'
                         . 'code-not-valid-info.php',
                     'activeMenu' => 'activate-user',
@@ -34,7 +33,6 @@ class ActivateUserService
             }
             if ($active) {
                 return array(
-                    'layout' => 'src/Layout/main/main.php',
                     'content' => 'src/View/activate-user/'
                         . 'account-is-active-info.php',
                     'activeMenu' => 'activate-user',
@@ -48,7 +46,6 @@ class ActivateUserService
             );
 
             return array(
-                'layout' => 'src/Layout/main/main.php',
                 'content' => 'src/View/activate-user/'
                     . 'account-activation-info.php',
                 'activeMenu' => 'activate-user',
@@ -58,7 +55,6 @@ class ActivateUserService
         }
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/activate-user/activate-user.php',
             'activeMenu' => 'activate-user',
             'title' => 'Aktywacja'

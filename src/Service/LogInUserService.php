@@ -56,7 +56,6 @@ class LogInUserService
                         );
 
                         return array(
-                            'layout' => 'src/Layout/main/main.php',
                             'content' => 'src/View/log-in-user/'
                                 . 'account-not-active-info.php',
                             'activeMenu' => 'log-in-user',
@@ -99,7 +98,6 @@ class LogInUserService
         }
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/log-in-user/log-in-user.php',
             'activeMenu' => 'log-in-user',
             'title' => 'Logowanie',

@@ -52,7 +52,6 @@ class ResetPasswordService
                         );
 
                         return array(
-                            'layout' => 'src/Layout/main/main.php',
                             'content' => 'src/View/reset-password/'
                                 . 'account-not-active-info.php',
                             'activeMenu' => 'reset-password',
@@ -67,7 +66,6 @@ class ResetPasswordService
                     );
 
                     return array(
-                        'layout' => 'src/Layout/main/main.php',
                         'content' => 'src/View/reset-password/'
                             . 'more-instructions-info.php',
                         'activeMenu' => 'reset-password',
@@ -83,7 +81,6 @@ class ResetPasswordService
         }
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/reset-password/reset-password.php',
             'activeMenu' => 'reset-password',
             'title' => 'Resetowanie',

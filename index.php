@@ -402,4 +402,4 @@ switch ($_GET['option']) {
 
 $array['url'] = $config->getUrl();
 
-include($array['layout']);
+include($array['layout'] ?? 'src/Layout/main/main.php');

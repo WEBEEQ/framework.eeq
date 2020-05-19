@@ -38,7 +38,6 @@ class AdminAccountService
         );
 
         return array(
-            'layout' => 'src/Layout/main/main.php',
             'content' => 'src/View/admin-account/admin-account.php',
             'activeMenu' => 'admin-account',
             'title' => 'Admin',
