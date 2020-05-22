@@ -31,14 +31,12 @@ class EditUserValidator extends Error
         string $token,
         int $user
     ): void {
-        if ($newPassword !== '' && strlen($newPassword) < 8) {
-            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } elseif ($repeatPassword !== '' && strlen($repeatPassword) < 8) {
-            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } elseif (
-            strlen($newPassword) > 30
-            || strlen($repeatPassword) > 30
+        if (
+            ($password !== '' || $newPassword !== '' || $repeatPassword !== '')
+            && (strlen($newPassword) < 8 || strlen($repeatPassword) < 8)
         ) {
+            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
+        } elseif (strlen($newPassword) > 30 || strlen($repeatPassword) > 30) {
             $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $newPassword)) {

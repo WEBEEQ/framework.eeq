@@ -21,14 +21,9 @@ class ChangePasswordValidator extends Error
         string $repeatPassword,
         string $token
     ): void {
-        if (strlen($newPassword) < 8) {
+        if (strlen($newPassword) < 8 || strlen($repeatPassword) < 8) {
             $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } elseif (strlen($repeatPassword) < 8) {
-            $this->addError('Hasło musi zawierać minimalnie 8 znaków.');
-        } elseif (
-            strlen($newPassword) > 30
-            || strlen($repeatPassword) > 30
-        ) {
+        } elseif (strlen($newPassword) > 30 || strlen($repeatPassword) > 30) {
             $this->addError('Hasło może zawierać maksymalnie 30 znaków.');
         }
         if (!preg_match('/^([!@#$%^&*()0-9A-Za-z]*)$/', $newPassword)) {
