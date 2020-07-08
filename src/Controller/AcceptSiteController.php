@@ -5,58 +5,47 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Bundle\Html;
-use App\Core\{Config, Email, Token};
-use App\Model\AcceptSiteModel;
+use App\Core\{Config, Controller, Email, Token};
+use App\Repository\SiteRepository;
 use App\Service\AcceptSiteService;
 use App\Validator\AcceptSiteValidator;
 
-class AcceptSiteController
+class AcceptSiteController extends Controller
 {
-    public function acceptSiteAction(
-        string $name,
-        string $www,
-        int $active,
-        int $visible,
-        bool $delete,
-        bool $submit,
-        string $token,
-        int $site
-    ): array {
+    public function acceptSiteAction(array $request, array $session): array
+    {
         $config = new Config();
         $mail = new Email();
         $html = new Html();
         $csrfToken = new Token();
-        $acceptSiteModel = new AcceptSiteModel();
         $acceptSiteValidator = new AcceptSiteValidator($csrfToken);
+        $rm = $this->getManager();
 
-        $acceptSiteModel->dbConnect();
-
-        if (!$acceptSiteModel->isSiteId($site)) {
-            $acceptSiteModel->dbClose();
+        $siteId = $rm->getRepository(SiteRepository::class)
+            ->isSiteId((int) $request['site']);
+        if (!$siteId) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }
 
         $acceptSiteService = new AcceptSiteService(
+            $this,
             $config,
             $mail,
             $html,
             $csrfToken,
-            $acceptSiteModel,
             $acceptSiteValidator
         );
         $array = $acceptSiteService->variableAction(
-            $name,
-            $www,
-            $active,
-            $visible,
-            $delete,
-            $submit,
-            $token,
-            $site
+            (string) $request['name'],
+            (string) $request['www'],
+            (int) (bool) $request['active'],
+            (int) (bool) $request['visible'],
+            (bool) $request['delete'],
+            (bool) $request['submit'],
+            (string) $request['token'],
+            (int) $request['site']
         );
-
-        $acceptSiteModel->dbClose();
 
         return $array;
     }

@@ -5,15 +5,16 @@ declare(strict_types=1);
 namespace App\Validator\Api;
 
 use App\Bundle\Message;
+use App\Repository\{SiteRepository, UserRepository};
 
 class UpdateSiteValidator extends Message
 {
-    protected object $updateSiteModel;
+    protected object $rm;
 
-    public function __construct(object $updateSiteModel)
+    public function __construct(object $rm)
     {
         parent::__construct();
-        $this->updateSiteModel = $updateSiteModel;
+        $this->rm = $rm;
     }
 
     public function validate(
@@ -22,14 +23,16 @@ class UpdateSiteValidator extends Message
         int $site,
         string $name
     ): void {
-        $userPassword = $this->updateSiteModel
-            ->getUserPassword($user, $id) ?? '';
-        if (!password_verify($password, $userPassword)) {
+        $apiUserData = $this->rm->getRepository(UserRepository::class)
+            ->getApiUserData($user);
+        if (!password_verify($password, $apiUserData['user_password'] ?? '')) {
             $this->addMessage('Błędna autoryzacja przesyłanych danych.');
 
             return;
         }
-        if (!$this->updateSiteModel->isUserSite((int) $id, $site)) {
+        $apiUserSite = $this->rm->getRepository(SiteRepository::class)
+            ->isApiUserSite($apiUserData['user_id'], $site);
+        if (!$apiUserSite) {
             $this->addMessage(
                 'Baza nie zawiera podanej strony dla autoryzacji.'
             );

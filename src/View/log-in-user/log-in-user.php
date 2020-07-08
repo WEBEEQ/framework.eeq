@@ -5,7 +5,7 @@
     <table>
         <tr>
             <td>Login:</td>
-            <td><input type="text" name="login" value="<?= stripslashes($array['login']) ?>" size="20" maxlength="20" /></td>
+            <td><input type="text" name="login" value="<?= $array['login'] ?>" size="20" maxlength="20" /></td>
         </tr>
         <tr>
             <td>Hasło:</td>

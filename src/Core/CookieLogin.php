@@ -4,78 +4,68 @@ declare(strict_types=1);
 
 namespace App\Core;
 
-class CookieLogin extends DataBase
+use App\Core\Controller;
+
+class CookieLogin extends Controller
 {
     protected object $config;
-    protected object $param;
 
-    public function __construct(object $config, object $param)
+    public function __construct(object $config)
     {
-        parent::__construct();
         $this->config = $config;
-        $this->param = $param;
     }
 
     public function setCookieLogin(): void
     {
-        if (!$_SESSION['user'] && $_COOKIE['login']) {
+        if (!$_SESSION['user'] && $_COOKIE['cookie_login']) {
+            $this->setManager();
             $this->setSessionLogin();
         }
     }
 
     private function setSessionLogin(): void
     {
-        $login = explode(';', $this->param->prepareString($_COOKIE['login']));
+        $cookie = explode(';', $_COOKIE['cookie_login']);
 
-        $this->dbConnect();
-
-        $userPassword = $this->isUserPassword(
-            $login[0],
-            $login[1],
-            $id,
-            $admin,
-            $active
-        );
-        if ($userPassword) {
-            if ($active) {
-                $userLoged = $this->dbQuery(
-                    "UPDATE `users`
-                    SET `users`.`user_ip_loged` = '"
-                        . $this->config->getRemoteAddress()
-                        . "', `users`.`user_date_loged` = '"
-                        . $this->config->getDateTimeNow() . "'
-                    WHERE `users`.`user_id` = " . $id
-                );
-                if ($userLoged) {
-                    $_SESSION['id'] = $id;
-                    $_SESSION['admin'] = $admin;
-                    $_SESSION['user'] = $login[0];
-                }
+        $userData = $this->getUserData($cookie[0], $cookie[1]);
+        if ($userData['user_active']) {
+            $query = $this->manager->createQuery(
+                "UPDATE `users` u
+                SET u.`user_ip_loged` = ':ip', u.`user_date_loged` = ':date'
+                WHERE u.`user_id` = :user"
+            )
+                ->setParameter('ip', $this->config->getRemoteAddress())
+                ->setParameter('date', $this->config->getDateTimeNow())
+                ->setParameter('user', $userData['user_id'])
+                ->getStrQuery();
+            $userLoged = $this->database->dbQuery($query);
+            if ($userLoged) {
+                $_SESSION['id'] = $userData['user_id'];
+                $_SESSION['admin'] = $userData['user_admin'];
+                $_SESSION['user'] = $cookie[0];
             }
         }
-
-        $this->dbClose();
     }
 
-    private function isUserPassword(
-        string $login,
-        string $password,
-        ?int &$user_id,
-        ?bool &$user_admin,
-        ?bool &$user_active
-    ): bool {
-        $result = $this->dbQuery(
-            "SELECT `users`.`user_id`, `users`.`user_admin`,
-                `users`.`user_active` FROM `users`
-            WHERE `users`.`user_login` = '" . $login . "'
-                AND `users`.`user_password` = '" . $password . "'"
-        );
-        if ($row = $this->dbFetchArray($result)) {
-            extract($row);
+    private function getUserData(string $login, string $password): array
+    {
+        $arrayResult = array();
 
-            return true;
+        $query = $this->manager->createQuery(
+            "SELECT u.`user_id`, u.`user_admin`, u.`user_active` FROM `users` u
+            WHERE u.`user_login` = ':login'
+                AND u.`user_password` = ':password'"
+        )
+            ->setParameter('login', $login)
+            ->setParameter('password', $password)
+            ->getStrQuery();
+        $result = $this->database->dbQuery($query);
+        if ($row = $this->database->dbFetchArray($result)) {
+            $arrayResult['user_id'] = (int) $row['user_id'];
+            $arrayResult['user_admin'] = (int) $row['user_admin'];
+            $arrayResult['user_active'] = (int) $row['user_active'];
         }
 
-        return false;
+        return $arrayResult;
     }
 }

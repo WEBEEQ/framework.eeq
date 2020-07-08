@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\UserRepository;
+
 class ChangePasswordService
 {
+    protected object $controller;
     protected object $config;
     protected object $mail;
     protected object $html;
     protected object $key;
     protected object $csrfToken;
-    protected object $changePasswordModel;
     protected object $changePasswordValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $mail,
         object $html,
         object $key,
         object $csrfToken,
-        object $changePasswordModel,
         object $changePasswordValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->key = $key;
         $this->csrfToken = $csrfToken;
-        $this->changePasswordModel = $changePasswordModel;
         $this->changePasswordValidator = $changePasswordValidator;
     }
 
@@ -40,14 +42,12 @@ class ChangePasswordService
         string $user,
         string $code
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($user && $code) {
-            $userKey = $this->changePasswordModel->getUserKey(
-                $user,
-                $id,
-                $active,
-                $email
-            );
-            if ($code !== $userKey) {
+            $passwordUserData = $rm->getRepository(UserRepository::class)
+                ->getPasswordUserData($user);
+            if ($code !== $passwordUserData['user_key']) {
                 return array(
                     'content' => 'src/View/change-password/'
                         . 'code-not-valid-info.php',
@@ -55,9 +55,9 @@ class ChangePasswordService
                     'title' => 'Informacja'
                 );
             }
-            if (!$active) {
+            if (!$passwordUserData['user_active']) {
                 $activationEmail = $this->sendActivationEmail(
-                    $email,
+                    $passwordUserData['user_email'],
                     $user,
                     $code
                 );
@@ -78,16 +78,17 @@ class ChangePasswordService
                 );
                 if ($this->changePasswordValidator->isValid()) {
                     $key = $this->key->generateKey();
-                    $userPassword = $this->changePasswordModel
-                        ->setUserPassword(
-                            (int) $id,
+                    $passwordUserData = $rm
+                        ->getRepository(UserRepository::class)
+                        ->setPasswordUserData(
+                            $passwordUserData['user_id'],
                             $newPassword,
                             $key,
                             $this->config->getRemoteAddress(),
                             $this->config->getDateTimeNow()
                         );
-                    if ($userPassword) {
-                        setcookie('login', '', 0, '/');
+                    if ($passwordUserData) {
+                        setcookie('cookie_login', '', 0, '/');
 
                         return array(
                             'content' => 'src/View/change-password/'

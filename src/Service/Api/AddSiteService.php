@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Service\Api;
 
+use App\Repository\{SiteRepository, UserRepository};
+
 class AddSiteService
 {
+    protected object $controller;
     protected object $config;
-    protected object $addSiteModel;
     protected object $addSiteValidator;
 
     public function __construct(
+        object $controller,
         object $config,
-        object $addSiteModel,
         object $addSiteValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
-        $this->addSiteModel = $addSiteModel;
         $this->addSiteValidator = $addSiteValidator;
     }
 
@@ -26,22 +28,26 @@ class AddSiteService
         string $name,
         string $www
     ): object {
+        $rm = $this->controller->getManager();
+
         $this->addSiteValidator->validate(
             $user,
             $password,
             $name,
-            $www,
-            $id
+            $www
         );
         if ($this->addSiteValidator->isValid()) {
-            $siteData = $this->addSiteModel->addSiteData(
-                (int) $id,
-                $name,
-                $www,
-                $this->config->getRemoteAddress(),
-                $this->config->getDateTimeNow()
-            );
-            if ($siteData) {
+            $apiUserData = $rm->getRepository(UserRepository::class)
+                ->getApiUserData($user);
+            $apiSiteData = $rm->getRepository(SiteRepository::class)
+                ->addApiSiteData(
+                    $apiUserData['user_id'],
+                    $name,
+                    $www,
+                    $this->config->getRemoteAddress(),
+                    $this->config->getDateTimeNow()
+                );
+            if ($apiSiteData) {
                 $this->addSiteValidator->addMessage(
                     'Strona www została dodana i oczekuje na akceptację.'
                 );

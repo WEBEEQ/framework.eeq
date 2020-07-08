@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\UserRepository;
+
 class ResetPasswordService
 {
+    protected object $controller;
     protected object $config;
     protected object $mail;
     protected object $html;
     protected object $csrfToken;
-    protected object $resetPasswordModel;
     protected object $resetPasswordValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $resetPasswordModel,
         object $resetPasswordValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->resetPasswordModel = $resetPasswordModel;
         $this->resetPasswordValidator = $resetPasswordValidator;
     }
 
@@ -34,21 +36,19 @@ class ResetPasswordService
         bool $submit,
         string $token
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             $this->resetPasswordValidator->validate($login, $token);
             if ($this->resetPasswordValidator->isValid()) {
-                $userLogin = $this->resetPasswordModel->isUserLogin(
-                    $login,
-                    $active,
-                    $email,
-                    $key
-                );
-                if ($userLogin) {
-                    if (!$active) {
+                $resetUserData = $rm->getRepository(UserRepository::class)
+                    ->getResetUserData($login);
+                if ($resetUserData) {
+                    if (!$resetUserData['user_active']) {
                         $activationEmail = $this->sendActivationEmail(
-                            $email,
+                            $resetUserData['user_email'],
                             $login,
-                            $key
+                            $resetUserData['user_key']
                         );
 
                         return array(
@@ -60,9 +60,9 @@ class ResetPasswordService
                         );
                     }
                     $passwordChangeEmail = $this->sendPasswordChangeEmail(
-                        $email,
+                        $resetUserData['user_email'],
                         $login,
-                        $key
+                        $resetUserData['user_key']
                     );
 
                     return array(

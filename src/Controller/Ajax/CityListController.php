@@ -4,19 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller\Ajax;
 
-use App\Model\Ajax\CityListModel;
+use App\Core\Controller;
+use App\Repository\CityRepository;
 
-class CityListController
+class CityListController extends Controller
 {
-    public function cityListAction(int $province): array
+    public function cityListAction(array $request): array
     {
-        $cityListModel = new CityListModel();
+        $rm = $this->getManager();
 
-        $cityListModel->dbConnect();
-
-        $cityList = $cityListModel->getCityList($province);
-
-        $cityListModel->dbClose();
+        $cityList = $rm->getRepository(CityRepository::class)
+            ->getCityList((int) $request['province']);
 
         return array(
             'content' => 'src/View/ajax/city-list.php',

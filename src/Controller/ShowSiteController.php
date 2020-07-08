@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Core\Config;
-use App\Model\ShowSiteModel;
+use App\Core\{Config, Controller};
 use App\Service\ShowSiteService;
 
-class ShowSiteController
+class ShowSiteController extends Controller
 {
-    public function showSiteAction(int $id): array
+    public function showSiteAction(array $request, array $session): array
     {
         $config = new Config();
-        $showSiteModel = new ShowSiteModel();
 
-        $showSiteModel->dbConnect();
-
-        $showSiteService = new ShowSiteService($config, $showSiteModel);
-        $array = $showSiteService->wwwAction($id);
-
-        $showSiteModel->dbClose();
+        $showSiteService = new ShowSiteService($this, $config);
+        $array = $showSiteService->wwwAction((int) $session['id']);
 
         return $array;
     }

@@ -4,30 +4,32 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\SiteRepository;
+
 class UserAccountService
 {
+    protected object $controller;
     protected object $config;
     protected object $html;
     protected object $csrfToken;
-    protected object $userAccountModel;
     protected object $userAccountValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $html,
         object $csrfToken,
-        object $userAccountModel,
         object $userAccountValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->userAccountModel = $userAccountModel;
         $this->userAccountValidator = $userAccountValidator;
     }
 
     public function variableAction(
-        array $userData,
+        array $accountUserData,
         string $name,
         string $www,
         bool $submit,
@@ -35,17 +37,20 @@ class UserAccountService
         int $level,
         int $id
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             $this->userAccountValidator->validate($name, $www, $token);
             if ($this->userAccountValidator->isValid()) {
-                $siteData = $this->userAccountModel->addSiteData(
-                    $id,
-                    $name,
-                    $www,
-                    $this->config->getRemoteAddress(),
-                    $this->config->getDateTimeNow()
-                );
-                if ($siteData) {
+                $accountSiteData = $rm->getRepository(SiteRepository::class)
+                    ->addAccountSiteData(
+                        $id,
+                        $name,
+                        $www,
+                        $this->config->getRemoteAddress(),
+                        $this->config->getDateTimeNow()
+                    );
+                if ($accountSiteData) {
                     return array(
                         'content' => 'src/View/user-account/'
                             . 'site-added-info.php',
@@ -63,17 +68,19 @@ class UserAccountService
             }
         }
 
-        $siteList = $this->userAccountModel->getSiteList(
-            $id,
-            $level,
-            $listLimit = 10
-        );
-        $siteCount = $this->userAccountModel->getSiteCount($id);
+        $accountSiteList = $rm->getRepository(SiteRepository::class)
+            ->getAccountSiteList(
+                $id,
+                $level,
+                $listLimit = 10
+            );
+        $accountSiteCount = $rm->getRepository(SiteRepository::class)
+            ->getAccountSiteCount($id);
         $pageNavigator = $this->html->preparePageNavigator(
             $this->config->getUrl() . '/konto,' . $id . ',strona,',
             $level,
             $listLimit,
-            $siteCount,
+            $accountSiteCount,
             3
         );
 
@@ -87,8 +94,8 @@ class UserAccountService
             'name' => $name,
             'www' => $www,
             'token' => $this->csrfToken->generateToken(),
-            'userData' => $userData,
-            'siteList' => $siteList,
+            'accountUserData' => $accountUserData,
+            'accountSiteList' => $accountSiteList,
             'pageNavigator' => $pageNavigator
         );
     }

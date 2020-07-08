@@ -4,25 +4,27 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\SiteRepository;
+
 class EditSiteService
 {
+    protected object $controller;
     protected object $config;
     protected object $html;
     protected object $csrfToken;
-    protected object $editSiteModel;
     protected object $editSiteValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $html,
         object $csrfToken,
-        object $editSiteModel,
         object $editSiteValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->editSiteModel = $editSiteModel;
         $this->editSiteValidator = $editSiteValidator;
     }
 
@@ -35,36 +37,41 @@ class EditSiteService
         string $token,
         int $site
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             if ($delete) {
-                $siteData = $this->editSiteModel->deleteSiteData($site);
+                $editingSiteData = $rm->getRepository(SiteRepository::class)
+                    ->deleteEditingSiteData($site);
 
                 return array(
                     'content' => 'src/View/edit-site/data-deletion-info.php',
                     'activeMenu' => 'edit-site',
                     'title' => 'Informacja',
-                    'siteData' => $siteData
+                    'editingSiteData' => $editingSiteData
                 );
             }
             $this->editSiteValidator->validate($name, $token);
             if ($this->editSiteValidator->isValid()) {
-                $siteData = $this->editSiteModel->setSiteData(
-                    $site,
-                    $visible,
-                    $name,
-                    $this->config->getRemoteAddress(),
-                    $this->config->getDateTimeNow()
-                );
+                $editingSiteData = $rm->getRepository(SiteRepository::class)
+                    ->setEditingSiteData(
+                        $site,
+                        $visible,
+                        $name,
+                        $this->config->getRemoteAddress(),
+                        $this->config->getDateTimeNow()
+                    );
 
                 return array(
                     'content' => 'src/View/edit-site/data-record-info.php',
                     'activeMenu' => 'edit-site',
                     'title' => 'Informacja',
-                    'siteData' => $siteData
+                    'editingSiteData' => $editingSiteData
                 );
             }
         } else {
-            $this->editSiteModel->getSiteData($site, $visible, $name, $www);
+            $editingSiteData = $rm->getRepository(SiteRepository::class)
+                ->getEditingSiteData($site);
         }
 
         return array(
@@ -74,9 +81,9 @@ class EditSiteService
             'error' => $this->html->prepareError(
                 $this->editSiteValidator->getError()
             ),
-            'name' => $name,
-            'www' => $www,
-            'visible' => $visible,
+            'name' => $editingSiteData['site_name'] ?? $name,
+            'www' => $editingSiteData['site_url'] ?? $www,
+            'visible' => $editingSiteData['site_visible'] ?? $visible,
             'delete' => $delete,
             'token' => $this->csrfToken->generateToken()
         );

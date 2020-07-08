@@ -5,28 +5,20 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Bundle\Key;
-use App\Model\ActivateUserModel;
+use App\Core\Controller;
 use App\Service\ActivateUserService;
 
-class ActivateUserController
+class ActivateUserController extends Controller
 {
-    public function activateUserAction(string $user, string $code): array
+    public function activateUserAction(array $request, array $session): array
     {
         $key = new Key();
-        $activateUserModel = new ActivateUserModel();
 
-        $activateUserModel->dbConnect();
-
-        $activateUserService = new ActivateUserService(
-            $key,
-            $activateUserModel
-        );
+        $activateUserService = new ActivateUserService($this, $key);
         $array = $activateUserService->variableAction(
-            $user,
-            $code
+            (string) $request['user'],
+            (string) $request['code']
         );
-
-        $activateUserModel->dbClose();
 
         return $array;
     }

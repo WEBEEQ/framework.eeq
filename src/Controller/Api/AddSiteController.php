@@ -4,38 +4,28 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Core\Config;
-use App\Model\Api\AddSiteModel;
+use App\Core\{Config, Controller};
 use App\Service\Api\AddSiteService;
 use App\Validator\Api\AddSiteValidator;
 
-class AddSiteController
+class AddSiteController extends Controller
 {
-    public function addSiteAction(
-        string $user,
-        string $password,
-        string $name,
-        string $www
-    ): array {
+    public function addSiteAction(array $server, array $data): array
+    {
         $config = new Config();
-        $addSiteModel = new AddSiteModel();
-        $addSiteValidator = new AddSiteValidator($addSiteModel);
-
-        $addSiteModel->dbConnect();
+        $addSiteValidator = new AddSiteValidator($this->getManager());
 
         $addSiteService = new AddSiteService(
+            $this,
             $config,
-            $addSiteModel,
             $addSiteValidator
         );
         $message = $addSiteService->addSiteMessage(
-            $user,
-            $password,
-            $name,
-            $www
+            (string) $server['PHP_AUTH_USER'],
+            (string) $server['PHP_AUTH_PW'],
+            (string) $data['name'],
+            (string) $data['www']
         );
-
-        $addSiteModel->dbClose();
 
         return array(
             'message' => $message->getStrMessage(),

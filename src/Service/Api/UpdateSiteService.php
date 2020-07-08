@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Service\Api;
 
+use App\Repository\SiteRepository;
+
 class UpdateSiteService
 {
+    protected object $controller;
     protected object $config;
-    protected object $updateSiteModel;
     protected object $updateSiteValidator;
 
     public function __construct(
+        object $controller,
         object $config,
-        object $updateSiteModel,
         object $updateSiteValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
-        $this->updateSiteModel = $updateSiteModel;
         $this->updateSiteValidator = $updateSiteValidator;
     }
 
@@ -27,6 +29,8 @@ class UpdateSiteService
         string $name,
         int $visible
     ): object {
+        $rm = $this->controller->getManager();
+
         $this->updateSiteValidator->validate(
             $user,
             $password,
@@ -34,14 +38,15 @@ class UpdateSiteService
             $name
         );
         if ($this->updateSiteValidator->isValid()) {
-            $siteData = $this->updateSiteModel->setSiteData(
-                $site,
-                $visible,
-                $name,
-                $this->config->getRemoteAddress(),
-                $this->config->getDateTimeNow()
-            );
-            if ($siteData) {
+            $apiSiteData = $rm->getRepository(SiteRepository::class)
+                ->setApiSiteData(
+                    $site,
+                    $visible,
+                    $name,
+                    $this->config->getRemoteAddress(),
+                    $this->config->getDateTimeNow()
+                );
+            if ($apiSiteData) {
                 $this->updateSiteValidator->addMessage(
                     'Dane strony www zostały zapisane.'
                 );

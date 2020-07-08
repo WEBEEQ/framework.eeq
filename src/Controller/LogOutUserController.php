@@ -13,7 +13,7 @@ class LogOutUserController
         $config = new Config();
 
         session_destroy();
-        setcookie('login', '', 0, '/', $config->getServerName());
+        setcookie('cookie_login', '', 0, '/', $config->getServerName());
         header('Location: ' . $config->getUrl() . '/logowanie');
     }
 }

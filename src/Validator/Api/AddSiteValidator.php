@@ -5,26 +5,27 @@ declare(strict_types=1);
 namespace App\Validator\Api;
 
 use App\Bundle\Message;
+use App\Repository\UserRepository;
 
 class AddSiteValidator extends Message
 {
-    protected object $addSiteModel;
+    protected object $rm;
 
-    public function __construct(object $addSiteModel)
+    public function __construct(object $rm)
     {
         parent::__construct();
-        $this->addSiteModel = $addSiteModel;
+        $this->rm = $rm;
     }
 
     public function validate(
         string $user,
         string $password,
         string $name,
-        string $www,
-        ?int &$id
+        string $www
     ): void {
-        $userPassword = $this->addSiteModel->getUserPassword($user, $id) ?? '';
-        if (!password_verify($password, $userPassword)) {
+        $apiUserData = $this->rm->getRepository(UserRepository::class)
+            ->getApiUserData($user);
+        if (!password_verify($password, $apiUserData['user_password'] ?? '')) {
             $this->addMessage('Błędna autoryzacja przesyłanych danych.');
 
             return;

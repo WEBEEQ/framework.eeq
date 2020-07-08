@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\{SiteRepository, UserRepository};
+
 class AcceptSiteService
 {
+    protected object $controller;
     protected object $config;
     protected object $mail;
     protected object $html;
     protected object $csrfToken;
-    protected object $acceptSiteModel;
     protected object $acceptSiteValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $acceptSiteModel,
         object $acceptSiteValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->acceptSiteModel = $acceptSiteModel;
         $this->acceptSiteValidator = $acceptSiteValidator;
     }
 
@@ -39,15 +41,22 @@ class AcceptSiteService
         string $token,
         int $site
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             if ($delete) {
-                $this->acceptSiteModel->getUserData($site, $login, $email);
-                if ($this->acceptSiteModel->deleteSiteData($site)) {
+                $acceptationUserData = $rm
+                    ->getRepository(UserRepository::class)
+                    ->getAcceptationUserData($site);
+                $acceptationSiteData = $rm
+                    ->getRepository(SiteRepository::class)
+                    ->deleteAcceptationSiteData($site);
+                if ($acceptationSiteData) {
                     $acceptationEmail = $this->sendAcceptationEmail(
                         $active,
                         $delete,
-                        $email,
-                        $login,
+                        $acceptationUserData['user_email'],
+                        $acceptationUserData['user_login'],
                         $www
                     );
 
@@ -69,30 +78,26 @@ class AcceptSiteService
             }
             $this->acceptSiteValidator->validate($name, $www, $token);
             if ($this->acceptSiteValidator->isValid()) {
-                $siteData = $this->acceptSiteModel->setSiteData(
-                    $site,
-                    $active,
-                    $visible,
-                    $name,
-                    $www,
-                    $this->config->getRemoteAddress(),
-                    $this->config->getDateTimeNow()
-                );
-                if ($siteData) {
-                    $this->acceptSiteModel->getSiteData(
+                $acceptationSiteData = $rm
+                    ->getRepository(SiteRepository::class)
+                    ->setAcceptationSiteData(
                         $site,
                         $active,
                         $visible,
                         $name,
                         $www,
-                        $login,
-                        $email
+                        $this->config->getRemoteAddress(),
+                        $this->config->getDateTimeNow()
                     );
+                if ($acceptationSiteData) {
+                    $acceptationUserData = $rm
+                        ->getRepository(UserRepository::class)
+                        ->getAcceptationUserData($site);
                     $acceptationEmail = $this->sendAcceptationEmail(
-                        (int) $active,
+                        $active,
                         $delete,
-                        $email,
-                        $login,
+                        $acceptationUserData['user_email'],
+                        $acceptationUserData['user_login'],
                         $www
                     );
 
@@ -114,15 +119,8 @@ class AcceptSiteService
                 }
             }
         } else {
-            $this->acceptSiteModel->getSiteData(
-                $site,
-                $active,
-                $visible,
-                $name,
-                $www,
-                $login,
-                $email
-            );
+            $acceptationSiteData = $rm->getRepository(SiteRepository::class)
+                ->getAcceptationSiteData($site);
         }
 
         return array(
@@ -132,10 +130,10 @@ class AcceptSiteService
             'error' => $this->html->prepareError(
                 $this->acceptSiteValidator->getError()
             ),
-            'name' => $name,
-            'www' => $www,
-            'active' => $active,
-            'visible' => $visible,
+            'name' => $acceptationSiteData['site_name'] ?? $name,
+            'www' => $acceptationSiteData['site_url'] ?? $www,
+            'active' => $acceptationSiteData['site_active'] ?? $active,
+            'visible' => $acceptationSiteData['site_visible'] ?? $visible,
             'delete' => $delete,
             'token' => $this->csrfToken->generateToken()
         );

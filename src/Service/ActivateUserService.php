@@ -4,26 +4,27 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\UserRepository;
+
 class ActivateUserService
 {
+    protected object $controller;
     protected object $key;
-    protected object $activateUserModel;
 
-    public function __construct(object $key, object $activateUserModel)
+    public function __construct(object $controller, object $key)
     {
+        $this->controller = $controller;
         $this->key = $key;
-        $this->activateUserModel = $activateUserModel;
     }
 
     public function variableAction(string $user, string $code): array
     {
+        $rm = $this->controller->getManager();
+
         if ($user && $code) {
-            $userKey = $this->activateUserModel->getUserKey(
-                $user,
-                $id,
-                $active
-            );
-            if ($code !== $userKey) {
+            $activationUserData = $rm->getRepository(UserRepository::class)
+                ->getActivationUserData($user);
+            if ($code !== $activationUserData['user_key']) {
                 return array(
                     'content' => 'src/View/activate-user/'
                         . 'code-not-valid-info.php',
@@ -31,7 +32,7 @@ class ActivateUserService
                     'title' => 'Informacja'
                 );
             }
-            if ($active) {
+            if ($activationUserData['user_active']) {
                 return array(
                     'content' => 'src/View/activate-user/'
                         . 'account-is-active-info.php',
@@ -40,10 +41,11 @@ class ActivateUserService
                 );
             }
             $key = $this->key->generateKey();
-            $userActive = $this->activateUserModel->setUserActive(
-                (int) $id,
-                $key
-            );
+            $userActive = $rm->getRepository(UserRepository::class)
+                ->setUserActive(
+                    $activationUserData['user_id'],
+                    $key
+                );
 
             return array(
                 'content' => 'src/View/activate-user/'

@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\{CityRepository, ProvinceRepository, UserRepository};
+
 class EditUserService
 {
+    protected object $controller;
     protected object $config;
     protected object $mail;
     protected object $html;
     protected object $key;
     protected object $csrfToken;
-    protected object $editUserModel;
     protected object $editUserValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $mail,
         object $html,
         object $key,
         object $csrfToken,
-        object $editUserModel,
         object $editUserValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->key = $key;
         $this->csrfToken = $csrfToken;
-        $this->editUserModel = $editUserModel;
         $this->editUserValidator = $editUserValidator;
     }
 
@@ -54,6 +56,8 @@ class EditUserService
         int $user,
         string $login
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             $this->editUserValidator->validate(
                 $password,
@@ -70,27 +74,28 @@ class EditUserService
             );
             if ($this->editUserValidator->isValid()) {
                 $key = $this->key->generateKey();
-                $userData = $this->editUserModel->setUserData(
-                    $user,
-                    $province,
-                    $city,
-                    $name,
-                    $surname,
-                    $newPassword,
-                    $key,
-                    $newEmail,
-                    $www,
-                    $phone,
-                    $street,
-                    $postcode,
-                    $description,
-                    $this->config->getRemoteAddress(),
-                    $this->config->getDateTimeNow()
-                );
-                if ($userData) {
+                $editingUserData = $rm->getRepository(UserRepository::class)
+                    ->setEditingUserData(
+                        $user,
+                        $province,
+                        $city,
+                        $name,
+                        $surname,
+                        $newPassword,
+                        $key,
+                        $newEmail,
+                        $www,
+                        $phone,
+                        $street,
+                        $postcode,
+                        $description,
+                        $this->config->getRemoteAddress(),
+                        $this->config->getDateTimeNow()
+                    );
+                if ($editingUserData) {
                     if ($newPassword !== '') {
                         setcookie(
-                            'login',
+                            'cookie_login',
                             '',
                             0,
                             '/',
@@ -100,7 +105,7 @@ class EditUserService
                     if ($newEmail !== '') {
                         session_destroy();
                         setcookie(
-                            'login',
+                            'cookie_login',
                             '',
                             0,
                             '/',
@@ -131,23 +136,14 @@ class EditUserService
                 }
             }
         } else {
-            $this->editUserModel->getUserData(
-                $user,
-                $province,
-                $city,
-                $name,
-                $surname,
-                $email,
-                $www,
-                $phone,
-                $street,
-                $postcode,
-                $description
-            );
+            $editingUserData = $rm->getRepository(UserRepository::class)
+                ->getEditingUserData($user);
         }
 
-        $provinceList = $this->editUserModel->getProvinceList();
-        $cityList = $this->editUserModel->getCityList((int) $province);
+        $provinceList = $rm->getRepository(ProvinceRepository::class)
+            ->getProvinceList();
+        $cityList = $rm->getRepository(CityRepository::class)
+            ->getCityList($editingUserData['province_id'] ?? $province);
 
         return array(
             'content' => 'src/View/edit-user/edit-user.php',
@@ -156,16 +152,17 @@ class EditUserService
             'error' => $this->html->prepareError(
                 $this->editUserValidator->getError()
             ),
-            'name' => $name,
-            'surname' => $surname,
-            'street' => $street,
-            'postcode' => $postcode,
-            'province' => $province,
-            'city' => $city,
-            'phone' => $phone,
-            'email' => $email,
-            'www' => $www,
-            'description' => $description,
+            'name' => $editingUserData['user_name'] ?? $name,
+            'surname' => $editingUserData['user_surname'] ?? $surname,
+            'street' => $editingUserData['user_street'] ?? $street,
+            'postcode' => $editingUserData['user_postcode'] ?? $postcode,
+            'province' => $editingUserData['province_id'] ?? $province,
+            'city' => $editingUserData['city_id'] ?? $city,
+            'phone' => $editingUserData['user_phone'] ?? $phone,
+            'email' => $editingUserData['user_email'] ?? $email,
+            'www' => $editingUserData['user_url'] ?? $www,
+            'description' => $editingUserData['user_description']
+                ?? $description,
             'login' => $login,
             'token' => $this->csrfToken->generateToken(),
             'provinceList' => $provinceList,

@@ -4,47 +4,43 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\UserRepository;
+
 class ShowSiteService
 {
+    protected object $controller;
     protected object $config;
-    protected object $showSiteModel;
 
     public function __construct(
-        object $config,
-        object $showSiteModel
+        object $controller,
+        object $config
     ) {
+        $this->controller = $controller;
         $this->config = $config;
-        $this->showSiteModel = $showSiteModel;
     }
 
     public function wwwAction(int $id): array
     {
+        $rm = $this->controller->getManager();
         $www = '';
 
-        if (!$this->showSiteModel->isUserMaxShow($id)) {
-            $www = $this->showSiteModel->getSiteRandomUrl(
-                $id,
-                $user,
-                $show
-            );
-            if ($www) {
-                $this->showSiteModel->setUserShow(
+        if (!$rm->getRepository(UserRepository::class)->isUserMaxShow($id)) {
+            $showData = $rm->getRepository(UserRepository::class)
+                ->getShowData($id);
+            if ($showData['site_url']) {
+                $rm->getRepository(UserRepository::class)->setUserShow(
                     $id,
-                    (int) $user,
-                    (int) $show
+                    $showData['user_id'],
+                    $showData['user_show']
                 );
             } else {
-                $www = $this->showSiteModel->getSiteRandomUrl(
-                    $id,
-                    $user,
-                    $show,
-                    0
-                );
-                if ($www) {
-                    $this->showSiteModel->setUserShow(
+                $showData = $rm->getRepository(UserRepository::class)
+                    ->getShowData($id, 0);
+                if ($showData['site_url']) {
+                    $rm->getRepository(UserRepository::class)->setUserShow(
                         $id,
-                        (int) $user,
-                        (int) $show,
+                        $showData['user_id'],
+                        $showData['user_show'],
                         0
                     );
                 }
@@ -58,7 +54,7 @@ class ShowSiteService
             'content' => 'src/View/show-site/show-site.php',
             'activeMenu' => 'show-site',
             'title' => 'Pokaz stron',
-            'www' => $www
+            'www' => $showData['site_url'] ?? $www
         );
     }
 }

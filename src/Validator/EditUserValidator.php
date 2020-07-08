@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Validator;
 
 use App\Bundle\Error;
+use App\Repository\UserRepository;
 
 class EditUserValidator extends Error
 {
     protected object $csrfToken;
-    protected object $editUserModel;
+    protected object $rm;
 
-    public function __construct(object $csrfToken, object $editUserModel)
+    public function __construct(object $csrfToken, object $rm)
     {
         parent::__construct();
         $this->csrfToken = $csrfToken;
-        $this->editUserModel = $editUserModel;
+        $this->rm = $rm;
     }
 
     public function validate(
@@ -55,7 +56,8 @@ class EditUserValidator extends Error
             $password !== ''
             && !password_verify(
                 $password,
-                $this->editUserModel->getUserPassword($user)
+                $this->rm->getRepository(UserRepository::class)
+                    ->getUserPassword($user) ?? ''
             )
         ) {
             $this->addError(

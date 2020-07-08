@@ -11,13 +11,8 @@ use App\Validator\ContactFormValidator;
 
 class ContactFormController
 {
-    public function contactFormAction(
-        string $email,
-        string $subject,
-        string $text,
-        bool $submit,
-        string $token
-    ): array {
+    public function contactFormAction(array $request, array $session): array
+    {
         $config = new Config();
         $mail = new Email();
         $html = new Html();
@@ -32,11 +27,11 @@ class ContactFormController
             $contactFormValidator
         );
         $array = $contactFormService->variableAction(
-            $email,
-            $subject,
-            $text,
-            $submit,
-            $token
+            (string) $request['email'],
+            (string) $request['subject'],
+            (string) $request['message'],
+            (bool) $request['submit'],
+            (string) $request['token']
         );
 
         return $array;

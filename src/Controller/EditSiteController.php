@@ -5,55 +5,44 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Bundle\Html;
-use App\Core\{Config, Token};
-use App\Model\EditSiteModel;
+use App\Core\{Config, Controller, Token};
+use App\Repository\SiteRepository;
 use App\Service\EditSiteService;
 use App\Validator\EditSiteValidator;
 
-class EditSiteController
+class EditSiteController extends Controller
 {
-    public function editSiteAction(
-        string $name,
-        string $www,
-        int $visible,
-        bool $delete,
-        bool $submit,
-        string $token,
-        int $site,
-        int $id
-    ): array {
+    public function editSiteAction(array $request, array $session): array
+    {
         $config = new Config();
         $html = new Html();
         $csrfToken = new Token();
-        $editSiteModel = new EditSiteModel();
         $editSiteValidator = new EditSiteValidator($csrfToken);
+        $rm = $this->getManager();
 
-        $editSiteModel->dbConnect();
-
-        if (!$editSiteModel->isUserSiteId($id, $site)) {
-            $editSiteModel->dbClose();
+        $userSiteId = $rm->getRepository(SiteRepository::class)
+            ->isUserSiteId((int) $session['id'], (int) $request['site']);
+        if (!$userSiteId) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }
 
         $editSiteService = new EditSiteService(
+            $this,
             $config,
             $html,
             $csrfToken,
-            $editSiteModel,
             $editSiteValidator
         );
         $array = $editSiteService->variableAction(
-            $name,
-            $www,
-            $visible,
-            $delete,
-            $submit,
-            $token,
-            $site
+            (string) $request['name'],
+            (string) $request['www'],
+            (int) (bool) $request['visible'],
+            (bool) $request['delete'],
+            (bool) $request['submit'],
+            (string) $request['token'],
+            (int) $request['site']
         );
-
-        $editSiteModel->dbClose();
 
         return $array;
     }

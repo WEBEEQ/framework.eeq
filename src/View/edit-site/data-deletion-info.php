@@ -1,5 +1,5 @@
 <h2>Informacja</h2>
-<?php if ($array['siteData']) { ?>
+<?php if ($array['editingSiteData']) { ?>
     <p class="ok">Dane strony www zostały usunięte.</p>
 <?php } else { ?>
     <p class="bad">Usunięcie danych strony www nie powiodło się.</p>

@@ -5,85 +5,63 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Bundle\{Html, Key};
-use App\Core\{Config, Email, Token};
-use App\Model\EditUserModel;
+use App\Core\{Config, Controller, Email, Token};
+use App\Repository\UserRepository;
 use App\Service\EditUserService;
 use App\Validator\EditUserValidator;
 
-class EditUserController
+class EditUserController extends Controller
 {
-    public function editUserAction(
-        string $lastLogin,
-        string $password,
-        string $newPassword,
-        string $repeatPassword,
-        string $name,
-        string $surname,
-        string $street,
-        string $postcode,
-        int $province,
-        int $city,
-        string $phone,
-        string $email,
-        string $newEmail,
-        string $repeatEmail,
-        string $www,
-        string $description,
-        bool $submit,
-        string $token,
-        int $user,
-        int $id,
-        string $login
-    ): array {
+    public function editUserAction(array $request, array $session): array
+    {
         $config = new Config();
         $mail = new Email();
         $html = new Html();
         $key = new Key();
         $csrfToken = new Token();
-        $editUserModel = new EditUserModel();
-        $editUserValidator = new EditUserValidator($csrfToken, $editUserModel);
+        $editUserValidator = new EditUserValidator(
+            $csrfToken,
+            $rm = $this->getManager()
+        );
 
-        $editUserModel->dbConnect();
-
-        if (!$editUserModel->isUserId($id, $user)) {
-            $editUserModel->dbClose();
+        $userId = $rm->getRepository(UserRepository::class)
+            ->isUserId((int) $session['id'], (int) $request['user']);
+        if (!$userId) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }
 
         $editUserService = new EditUserService(
+            $this,
             $config,
             $mail,
             $html,
             $key,
             $csrfToken,
-            $editUserModel,
             $editUserValidator
         );
         $array = $editUserService->variableAction(
-            $lastLogin,
-            $password,
-            $newPassword,
-            $repeatPassword,
-            $name,
-            $surname,
-            $street,
-            $postcode,
-            $province,
-            $city,
-            $phone,
-            $email,
-            $newEmail,
-            $repeatEmail,
-            $www,
-            $description,
-            $submit,
-            $token,
-            $user,
-            $login
+            (string) $request['login'],
+            (string) $request['password'],
+            (string) $request['new_password'],
+            (string) $request['repeat_password'],
+            (string) $request['name'],
+            (string) $request['surname'],
+            (string) $request['street'],
+            (string) $request['postcode'],
+            (int) $request['province'],
+            (int) $request['city'],
+            (string) $request['phone'],
+            (string) $request['email'],
+            (string) $request['new_email'],
+            (string) $request['repeat_email'],
+            (string) $request['www'],
+            (string) $request['description'],
+            (bool) $request['submit'],
+            (string) $request['token'],
+            (int) $request['user'],
+            (string) $session['user']
         );
-
-        $editUserModel->dbClose();
 
         return $array;
     }

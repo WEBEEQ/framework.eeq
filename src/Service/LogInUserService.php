@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\UserRepository;
+
 class LogInUserService
 {
+    protected object $controller;
     protected object $config;
     protected object $mail;
     protected object $html;
     protected object $csrfToken;
-    protected object $logInUserModel;
     protected object $logInUserValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
-        object $logInUserModel,
         object $logInUserValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
-        $this->logInUserModel = $logInUserModel;
         $this->logInUserValidator = $logInUserValidator;
     }
 
@@ -36,23 +38,23 @@ class LogInUserService
         bool $submit,
         string $token
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             $this->logInUserValidator->validate($login, $password, $token);
             if ($this->logInUserValidator->isValid()) {
-                $userPassword = $this->logInUserModel->getUserPassword(
-                    $login,
-                    $id,
-                    $admin,
-                    $active,
-                    $email,
-                    $key
+                $loginUserData = $rm->getRepository(UserRepository::class)
+                    ->getLoginUserData($login);
+                $passwordVerify = password_verify(
+                    $password,
+                    $loginUserData['user_password'] ?? ''
                 );
-                if (password_verify($password, $userPassword ?? '')) {
-                    if (!$active) {
+                if ($passwordVerify) {
+                    if (!$loginUserData['user_active']) {
                         $activationEmail = $this->sendActivationEmail(
-                            $email,
+                            $loginUserData['user_email'],
                             $login,
-                            $key
+                            $loginUserData['user_key']
                         );
 
                         return array(
@@ -63,18 +65,18 @@ class LogInUserService
                             'activationEmail' => $activationEmail
                         );
                     }
-                    $this->logInUserModel->setUserLoged(
-                        (int) $id,
+                    $rm->getRepository(UserRepository::class)->setUserLoged(
+                        $loginUserData['user_id'],
                         $this->config->getRemoteAddress(),
                         $this->config->getDateTimeNow()
                     );
-                    $_SESSION['id'] = $id;
-                    $_SESSION['admin'] = $admin;
+                    $_SESSION['id'] = $loginUserData['user_id'];
+                    $_SESSION['admin'] = $loginUserData['user_admin'];
                     $_SESSION['user'] = $login;
                     if ($remember) {
                         setcookie(
-                            'login',
-                            $login . ';' . $userPassword,
+                            'cookie_login',
+                            $login . ';' . $loginUserData['user_password'],
                             [
                                 'expires' => time() + 365 * 24 * 60 * 60,
                                 'path' => '/',

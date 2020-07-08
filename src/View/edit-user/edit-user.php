@@ -6,19 +6,19 @@
     <table>
         <tr>
             <td>Imię:</td>
-            <td><input type="text" name="name" value="<?= stripslashes($array['name']) ?>" size="30" maxlength="30" /></td>
+            <td><input type="text" name="name" value="<?= $array['name'] ?>" size="30" maxlength="30" /></td>
         </tr>
         <tr>
             <td>Nazwisko:</td>
-            <td><input type="text" name="surname" value="<?= stripslashes($array['surname']) ?>" size="50" maxlength="50" /></td>
+            <td><input type="text" name="surname" value="<?= $array['surname'] ?>" size="50" maxlength="50" /></td>
         </tr>
         <tr>
             <td>Ulica:</td>
-            <td><input type="text" name="street" value="<?= stripslashes($array['street']) ?>" size="60" maxlength="60" /></td>
+            <td><input type="text" name="street" value="<?= $array['street'] ?>" size="60" maxlength="60" /></td>
         </tr>
         <tr>
             <td>Kod pocztowy:</td>
-            <td><input type="text" name="postcode" value="<?= stripslashes($array['postcode']) ?>" size="6" maxlength="6" /></td>
+            <td><input type="text" name="postcode" value="<?= $array['postcode'] ?>" size="6" maxlength="6" /></td>
         </tr>
         <tr>
             <td>Województwo:</td>
@@ -44,19 +44,19 @@
         </tr>
         <tr>
             <td>Telefon:</td>
-            <td><input type="text" name="phone" value="<?= stripslashes($array['phone']) ?>" size="20" maxlength="20" /></td>
+            <td><input type="text" name="phone" value="<?= $array['phone'] ?>" size="20" maxlength="20" /></td>
         </tr>
         <tr>
             <td>E-mail:</td>
-            <td><input type="text" name="email" value="<?= stripslashes($array['email']) ?>" size="50" maxlength="100" readonly="readonly" /></td>
+            <td><input type="text" name="email" value="<?= $array['email'] ?>" size="50" maxlength="100" readonly="readonly" /></td>
         </tr>
         <tr>
             <td>Strona www:</td>
-            <td><input type="text" name="www" value="<?= stripslashes($array['www']) ?>" size="50" maxlength="100" /></td>
+            <td><input type="text" name="www" value="<?= $array['www'] ?>" size="50" maxlength="100" /></td>
         </tr>
         <tr>
             <td>Opis:</td>
-            <td><textarea name="description" cols="47" rows="8"><?= stripslashes($array['description']) ?></textarea></td>
+            <td><textarea name="description" cols="47" rows="8"><?= $array['description'] ?></textarea></td>
         </tr>
         <tr>
             <td>&nbsp;</td>
@@ -82,7 +82,7 @@
     <table>
         <tr>
             <td>Login:</td>
-            <td><input type="text" name="login" value="<?= stripslashes($array['login']) ?>" size="20" maxlength="20" readonly="readonly" /></td>
+            <td><input type="text" name="login" value="<?= $array['login'] ?>" size="20" maxlength="20" readonly="readonly" /></td>
         </tr>
         <tr>
             <td>Stare hasło:</td>

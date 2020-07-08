@@ -4,31 +4,33 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Repository\UserRepository;
+
 class RegisterUserService
 {
+    protected object $controller;
     protected object $config;
     protected object $mail;
     protected object $html;
     protected object $key;
     protected object $csrfToken;
-    protected object $registerUserModel;
     protected object $registerUserValidator;
 
     public function __construct(
+        object $controller,
         object $config,
         object $mail,
         object $html,
         object $key,
         object $csrfToken,
-        object $registerUserModel,
         object $registerUserValidator
     ) {
+        $this->controller = $controller;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
         $this->key = $key;
         $this->csrfToken = $csrfToken;
-        $this->registerUserModel = $registerUserModel;
         $this->registerUserValidator = $registerUserValidator;
     }
 
@@ -44,6 +46,8 @@ class RegisterUserService
         bool $submit,
         string $token
     ): array {
+        $rm = $this->controller->getManager();
+
         if ($submit) {
             $this->registerUserValidator->validate(
                 $name,
@@ -58,17 +62,19 @@ class RegisterUserService
             );
             if ($this->registerUserValidator->isValid()) {
                 $key = $this->key->generateKey();
-                $userData = $this->registerUserModel->addUserData(
-                    $name,
-                    $surname,
-                    $login,
-                    $password,
-                    $email,
-                    $key,
-                    $this->config->getRemoteAddress(),
-                    $this->config->getDateTimeNow()
-                );
-                if ($userData) {
+                $registrationUserData = $rm
+                    ->getRepository(UserRepository::class)
+                    ->addRegistrationUserData(
+                        $name,
+                        $surname,
+                        $login,
+                        $password,
+                        $key,
+                        $email,
+                        $this->config->getRemoteAddress(),
+                        $this->config->getDateTimeNow()
+                    );
+                if ($registrationUserData) {
                     $activationEmail = $this->sendActivationEmail(
                         $email,
                         $login,

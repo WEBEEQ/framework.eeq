@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace App\Validator;
 
 use App\Bundle\Error;
+use App\Repository\UserRepository;
 
 class RegisterUserValidator extends Error
 {
     protected object $csrfToken;
-    protected object $registerUserModel;
+    protected object $rm;
 
-    public function __construct(object $csrfToken, object $registerUserModel)
+    public function __construct(object $csrfToken, object $rm)
     {
         parent::__construct();
         $this->csrfToken = $csrfToken;
-        $this->registerUserModel = $registerUserModel;
+        $this->rm = $rm;
     }
 
     public function validate(
@@ -47,7 +48,11 @@ class RegisterUserValidator extends Error
         if (!preg_match('/^([0-9A-Za-z]*)$/', $login)) {
             $this->addError('Login może składać się tylko z liter i cyfr.');
         }
-        if ($login !== '' && $this->registerUserModel->isUserLogin($login)) {
+        if (
+            $login !== ''
+            && $this->rm->getRepository(UserRepository::class)
+                ->isUserLogin($login)
+        ) {
             $this->addError('Konto o podanym loginie już istnieje.');
         }
         if (strlen($password) < 8 || strlen($repeatPassword) < 8) {

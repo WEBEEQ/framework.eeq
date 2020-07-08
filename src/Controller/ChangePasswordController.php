@@ -5,50 +5,38 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Bundle\{Html, Key};
-use App\Core\{Config, Email, Token};
-use App\Model\ChangePasswordModel;
+use App\Core\{Config, Controller, Email, Token};
 use App\Service\ChangePasswordService;
 use App\Validator\ChangePasswordValidator;
 
-class ChangePasswordController
+class ChangePasswordController extends Controller
 {
-    public function changePasswordAction(
-        string $newPassword,
-        string $repeatPassword,
-        bool $submit,
-        string $token,
-        string $user,
-        string $code
-    ): array {
+    public function changePasswordAction(array $request, array $session): array
+    {
         $config = new Config();
         $mail = new Email();
         $html = new Html();
         $key = new Key();
         $csrfToken = new Token();
-        $changePasswordModel = new ChangePasswordModel();
         $changePasswordValidator = new ChangePasswordValidator($csrfToken);
 
-        $changePasswordModel->dbConnect();
-
         $changePasswordService = new ChangePasswordService(
+            $this,
             $config,
             $mail,
             $html,
             $key,
             $csrfToken,
-            $changePasswordModel,
             $changePasswordValidator
         );
         $array = $changePasswordService->variableAction(
-            $newPassword,
-            $repeatPassword,
-            $submit,
-            $token,
-            $user,
-            $code
+            (string) $request['new_password'],
+            (string) $request['repeat_password'],
+            (bool) $request['submit'],
+            (string) $request['token'],
+            (string) $request['user'],
+            (string) $request['code']
         );
-
-        $changePasswordModel->dbClose();
 
         return $array;
     }

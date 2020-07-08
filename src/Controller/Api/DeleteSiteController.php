@@ -4,33 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
-use App\Model\Api\DeleteSiteModel;
+use App\Core\Controller;
 use App\Service\Api\DeleteSiteService;
 use App\Validator\Api\DeleteSiteValidator;
 
-class DeleteSiteController
+class DeleteSiteController extends Controller
 {
-    public function deleteSiteAction(
-        string $user,
-        string $password,
-        int $site
-    ): array {
-        $deleteSiteModel = new DeleteSiteModel();
-        $deleteSiteValidator = new DeleteSiteValidator($deleteSiteModel);
-
-        $deleteSiteModel->dbConnect();
+    public function deleteSiteAction(array $server, array $data): array
+    {
+        $deleteSiteValidator = new DeleteSiteValidator($this->getManager());
 
         $deleteSiteService = new DeleteSiteService(
-            $deleteSiteModel,
+            $this,
             $deleteSiteValidator
         );
         $message = $deleteSiteService->deleteSiteMessage(
-            $user,
-            $password,
-            $site
+            (string) $server['PHP_AUTH_USER'],
+            (string) $server['PHP_AUTH_PW'],
+            (int) $data['id']
         );
-
-        $deleteSiteModel->dbClose();
 
         return array(
             'message' => $message->getStrMessage(),

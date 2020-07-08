@@ -5,15 +5,15 @@
     <table>
         <tr>
             <td>Imię:</td>
-            <td><input type="text" name="name" value="<?= stripslashes($array['name']) ?>" size="30" maxlength="30" /></td>
+            <td><input type="text" name="name" value="<?= $array['name'] ?>" size="30" maxlength="30" /></td>
         </tr>
         <tr>
             <td>Nazwisko:</td>
-            <td><input type="text" name="surname" value="<?= stripslashes($array['surname']) ?>" size="50" maxlength="50" /></td>
+            <td><input type="text" name="surname" value="<?= $array['surname'] ?>" size="50" maxlength="50" /></td>
         </tr>
         <tr>
             <td>Login:</td>
-            <td><input type="text" name="login" value="<?= stripslashes($array['login']) ?>" size="20" maxlength="20" /></td>
+            <td><input type="text" name="login" value="<?= $array['login'] ?>" size="20" maxlength="20" /></td>
         </tr>
         <tr>
             <td>Hasło:</td>
@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <td>E-mail:</td>
-            <td><input type="text" name="email" value="<?= stripslashes($array['email']) ?>" size="50" maxlength="100" /></td>
+            <td><input type="text" name="email" value="<?= $array['email'] ?>" size="50" maxlength="100" /></td>
         </tr>
         <tr>
             <td>Powtórz e-mail:</td>

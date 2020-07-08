@@ -5,61 +5,53 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Bundle\Html;
-use App\Core\{Config, Token};
-use App\Model\UserAccountModel;
+use App\Core\{Config, Controller, Token};
+use App\Repository\UserRepository;
 use App\Service\UserAccountService;
 use App\Validator\UserAccountValidator;
 
-class UserAccountController
+class UserAccountController extends Controller
 {
-    public function userAccountAction(
-        string $name,
-        string $www,
-        bool $submit,
-        string $token,
-        int $account,
-        int $level,
-        int $id
-    ): array {
+    public function userAccountAction(array $request, array $session): array
+    {
         $config = new Config();
         $html = new Html();
         $csrfToken = new Token();
-        $userAccountModel = new UserAccountModel();
         $userAccountValidator = new UserAccountValidator($csrfToken);
+        $rm = $this->getManager();
 
-        if ($account && $account !== $id) {
+        if (
+            (int) $request['account']
+            && (int) $request['account'] !== (int) $session['id']
+        ) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }
 
-        $userAccountModel->dbConnect();
+        $accountUserData = $rm->getRepository(UserRepository::class)
+            ->getAccountUserData((int) $session['id']);
 
-        $userData = $userAccountModel->getUserData($id);
-
-        if (!$userData) {
-            $userAccountModel->dbClose();
+        if (!$accountUserData) {
             header('Location: ' . $config->getUrl() . '/logowanie');
             exit;
         }
 
         $userAccountService = new UserAccountService(
+            $this,
             $config,
             $html,
             $csrfToken,
-            $userAccountModel,
             $userAccountValidator
         );
         $array = $userAccountService->variableAction(
-            $userData,
-            $name,
-            $www,
-            $submit,
-            $token,
-            $level,
-            $id
+            $accountUserData,
+            (string) $request['name'],
+            (string) $request['www'],
+            (bool) $request['submit'],
+            (string) $request['token'],
+            (int) ($request['level'] ?? 1),
+            (int) $session['id']
         );
-
-        $userAccountModel->dbClose();
 
         return $array;
     }
