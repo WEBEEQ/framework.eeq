@@ -24,16 +24,14 @@ class UserAccountController extends Controller
             (int) $request['account']
             && (int) $request['account'] !== (int) $session['id']
         ) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $accountUserData = $rm->getRepository(UserRepository::class)
             ->getAccountUserData((int) $session['id']);
 
         if (!$accountUserData) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $userAccountService = new UserAccountService(

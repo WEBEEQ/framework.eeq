@@ -26,4 +26,18 @@ class Controller
 
         return $this->manager;
     }
+
+    public function redirectToRoute(string $route): array
+    {
+        switch ($route) {
+            case 'login_page':
+                $path = '/logowanie';
+                break;
+            default:
+                $path = '/';
+                break;
+        }
+
+        return array('redirection' => true, 'path' => $path);
+    }
 }

@@ -21,15 +21,13 @@ class AdminAccountController extends Controller
             (int) $request['account']
             && (int) $request['account'] !== (int) $session['id']
         ) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $adminUserId = $rm->getRepository(UserRepository::class)
             ->isAdminUserId((int) $session['id']);
         if (!$adminUserId) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $adminAccountService = new AdminAccountService(

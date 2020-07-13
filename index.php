@@ -47,9 +47,9 @@ switch ($_GET['option']) {
         $controller = new $class();
         $array = $controller->$method($_REQUEST);
 
+        if ($array['redirection']) break;
         include($array['content']);
         exit;
-        break;
     case 'api':
         $class = 'App\\Controller\\Api\\' . $name . 'Controller';
 
@@ -59,9 +59,9 @@ switch ($_GET['option']) {
             json_decode(file_get_contents('php://input'), true)
         );
 
+        if ($array['redirection']) break;
         echo json_encode($array);
         exit;
-        break;
     default:
         $array = array();
 
@@ -70,6 +70,11 @@ switch ($_GET['option']) {
         $array['activeMenu'] = '';
         $array['title'] = 'Pusta strona';
         break;
+}
+
+if ($array['redirection']) {
+    header('Location: ' . $config->getUrl() . $array['path']);
+    exit;
 }
 
 foreach ($array as $key => $value) {

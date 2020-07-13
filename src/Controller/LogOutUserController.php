@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Core\Config;
+use App\Core\{Config, Controller};
 
-class LogOutUserController
+class LogOutUserController extends Controller
 {
     public function logOutUserAction(): array
     {
@@ -14,6 +14,7 @@ class LogOutUserController
 
         session_destroy();
         setcookie('cookie_login', '', 0, '/', $config->getServerName());
-        header('Location: ' . $config->getUrl() . '/logowanie');
+
+        return $this->redirectToRoute('login_page');
     }
 }

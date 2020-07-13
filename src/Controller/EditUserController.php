@@ -27,8 +27,7 @@ class EditUserController extends Controller
         $userId = $rm->getRepository(UserRepository::class)
             ->isUserId((int) $session['id'], (int) $request['user']);
         if (!$userId) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $editUserService = new EditUserService(

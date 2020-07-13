@@ -23,8 +23,7 @@ class EditSiteController extends Controller
         $userSiteId = $rm->getRepository(SiteRepository::class)
             ->isUserSiteId((int) $session['id'], (int) $request['site']);
         if (!$userSiteId) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $editSiteService = new EditSiteService(

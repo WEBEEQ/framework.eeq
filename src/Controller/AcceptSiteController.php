@@ -24,8 +24,7 @@ class AcceptSiteController extends Controller
         $siteId = $rm->getRepository(SiteRepository::class)
             ->isSiteId((int) $request['site']);
         if (!$siteId) {
-            header('Location: ' . $config->getUrl() . '/logowanie');
-            exit;
+            return $this->redirectToRoute('login_page');
         }
 
         $acceptSiteService = new AcceptSiteService(
