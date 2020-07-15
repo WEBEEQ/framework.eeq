@@ -10,7 +10,10 @@ $config = new Config();
 $cookieLogin = new CookieLogin($config);
 $cookieLogin->setCookieLogin();
 
-switch ($_GET['role']) {
+$appSettings = require($_SERVER['DOCUMENT_ROOT'] . '/src/Config/settings.php');
+$settings = $appSettings[$_GET['action']];
+
+switch ($settings['role']) {
     case 'user':
         if (!$_SESSION['user']) {
             header('Location: ' . $config->getUrl() . '/logowanie');
@@ -27,14 +30,14 @@ switch ($_GET['role']) {
         break;
 }
 
-if ($_GET['option'] && $_GET['action']) {
-    $name = str_replace('-', ' ', $_GET['action']);
+if ($settings['option'] && $settings['action']) {
+    $name = str_replace('-', ' ', $settings['action']);
     $name = ucwords($name);
     $name = str_replace(' ', '', $name);
     $method = $name . 'Action';
 }
 
-switch ($_GET['option']) {
+switch ($settings['option']) {
     case 'page':
         $class = 'App\\Controller\\' . $name . 'Controller';
 
