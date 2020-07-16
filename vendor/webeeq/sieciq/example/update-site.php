@@ -46,7 +46,7 @@ if ($response['code'] === 200 && $response['response']['success']) {
 
 if ($response['response']['message']) {
 ?>
-            <pre><?= str_replace("\n", '<br />', $response['response']['message']) ?></pre>
+            <pre><?= str_replace("\n", '<br />', htmlspecialchars($response['response']['message'])) ?></pre>
 <?php
 }
 ?>

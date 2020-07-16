@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require('src/Core/core.php');
 
-use App\Core\{Config, CookieLogin};
+use App\Core\{Config, CookieLogin, Preparation};
 
 $config = new Config();
 $cookieLogin = new CookieLogin($config);
@@ -44,10 +44,7 @@ switch ($settings['option']) {
 
         $controller = new $class();
         $array = $controller->$method($_REQUEST);
-
-        if ($array['redirection']) break;
-        include($array['content']);
-        exit;
+        break;
     case 'api':
         $class = 'App\\Controller\\Api\\' . $settings['name'] . 'Controller';
         $method = $settings['name'] . 'Action';
@@ -76,29 +73,13 @@ if ($array['redirection']) {
     exit;
 }
 
-foreach ($array as $key => $value) {
-    if (
-        $key !== 'error'
-        && $key !== 'message'
-        && $key !== 'pageNavigator'
-        && is_string($value)
-    ) {
-        $array[$key] = htmlspecialchars($value);
-    } elseif (is_array($value)) {
-        foreach ($value as $key2 => $value2) {
-            if (is_string($value2)) {
-                $array[$key][$key2] = htmlspecialchars($value2);
-            } elseif (is_array($value2)) {
-                foreach ($value2 as $key3 => $value3) {
-                    if (is_string($value3)) {
-                        $array[$key][$key2][$key3] = htmlspecialchars($value3);
-                    }
-                }
-            }
-        }
-    }
-}
-
 $array['url'] = $config->getUrl();
 
-include($array['layout'] ?? 'src/Layout/main/main.php');
+$preparation = new Preparation();
+$array = $preparation->prepare($array);
+
+if ($settings['option'] === 'ajax') {
+    include($array['content']);
+} else {
+    include($array['layout'] ?? 'src/Layout/main/main.php');
+}
