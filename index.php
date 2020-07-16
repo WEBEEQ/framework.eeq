@@ -30,22 +30,17 @@ switch ($settings['role']) {
         break;
 }
 
-if ($settings['option'] && $settings['action']) {
-    $name = str_replace('-', ' ', $settings['action']);
-    $name = ucwords($name);
-    $name = str_replace(' ', '', $name);
-    $method = $name . 'Action';
-}
-
 switch ($settings['option']) {
     case 'page':
-        $class = 'App\\Controller\\' . $name . 'Controller';
+        $class = 'App\\Controller\\' . $settings['name'] . 'Controller';
+        $method = $settings['name'] . 'Action';
 
         $controller = new $class();
         $array = $controller->$method($_REQUEST, $_SESSION);
         break;
     case 'ajax':
-        $class = 'App\\Controller\\Ajax\\' . $name . 'Controller';
+        $class = 'App\\Controller\\Ajax\\' . $settings['name'] . 'Controller';
+        $method = $settings['name'] . 'Action';
 
         $controller = new $class();
         $array = $controller->$method($_REQUEST);
@@ -54,7 +49,8 @@ switch ($settings['option']) {
         include($array['content']);
         exit;
     case 'api':
-        $class = 'App\\Controller\\Api\\' . $name . 'Controller';
+        $class = 'App\\Controller\\Api\\' . $settings['name'] . 'Controller';
+        $method = $settings['name'] . 'Action';
 
         $controller = new $class();
         $array = $controller->$method(

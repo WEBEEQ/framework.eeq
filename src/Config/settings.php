@@ -6,138 +6,138 @@ return
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'main-page'
+        'name' => 'MainPage'
     ],
     'register-user' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'register-user'
+        'name' => 'RegisterUser'
     ],
     'activate-user' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'activate-user'
+        'name' => 'ActivateUser'
     ],
     'log-in-user' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'log-in-user'
+        'name' => 'LogInUser'
     ],
     'reset-password' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'reset-password'
+        'name' => 'ResetPassword'
     ],
     'change-password' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'change-password'
+        'name' => 'ChangePassword'
     ],
     'user-account' =>
     [
         'role' => 'user',
         'option' => 'page',
-        'action' => 'user-account'
+        'name' => 'UserAccount'
     ],
     'edit-user' =>
     [
         'role' => 'user',
         'option' => 'page',
-        'action' => 'edit-user'
+        'name' => 'EditUser'
     ],
     'edit-site' =>
     [
         'role' => 'user',
         'option' => 'page',
-        'action' => 'edit-site'
+        'name' => 'EditSite'
     ],
     'admin-account' =>
     [
         'role' => 'admin',
         'option' => 'page',
-        'action' => 'admin-account'
+        'name' => 'AdminAccount'
     ],
     'accept-site' =>
     [
         'role' => 'admin',
         'option' => 'page',
-        'action' => 'accept-site'
+        'name' => 'AcceptSite'
     ],
     'log-out-user' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'log-out-user'
+        'name' => 'LogOutUser'
     ],
     'user-regulation' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'user-regulation'
+        'name' => 'UserRegulation'
     ],
     'user-privacy' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'user-privacy'
+        'name' => 'UserPrivacy'
     ],
     'user-help' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'user-help'
+        'name' => 'UserHelp'
     ],
     'contact-form' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'contact-form'
+        'name' => 'ContactForm'
     ],
     'show-link' =>
     [
         'role' => 'user',
         'option' => 'page',
-        'action' => 'show-link'
+        'name' => 'ShowLink'
     ],
     'show-site' =>
     [
         'role' => 'user',
         'option' => 'page',
-        'action' => 'show-site'
+        'name' => 'ShowSite'
     ],
     'show-info' =>
     [
         'role' => 'none',
         'option' => 'page',
-        'action' => 'show-info'
+        'name' => 'ShowInfo'
     ],
     'city-list' =>
     [
         'role' => 'none',
         'option' => 'ajax',
-        'action' => 'city-list'
+        'name' => 'CityList'
     ],
     'add-site' =>
     [
         'role' => 'none',
         'option' => 'api',
-        'action' => 'add-site'
+        'name' => 'AddSite'
     ],
     'update-site' =>
     [
         'role' => 'none',
         'option' => 'api',
-        'action' => 'update-site'
+        'name' => 'UpdateSite'
     ],
     'delete-site' =>
     [
         'role' => 'none',
         'option' => 'api',
-        'action' => 'delete-site'
+        'name' => 'DeleteSite'
     ]
 ];
