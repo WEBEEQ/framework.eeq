@@ -29,8 +29,8 @@ class UpdateSiteController extends Controller
         );
 
         return array(
-            'message' => $message->getStrMessage(),
-            'success' => $message->getOk()
+            'success' => $message->getOk(),
+            'message' => $message->getStrMessage()
         );
     }
 }
