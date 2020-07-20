@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 require('src/Core/core.php');
 
-use App\Core\{Config, CookieLogin, Preparation};
+use App\Bundle\Html;
+use App\Core\{Config, CookieLogin};
 
 $config = new Config();
 $cookieLogin = new CookieLogin($config);
@@ -75,8 +76,8 @@ if ($array['redirection']) {
 
 $array['url'] = $config->getUrl();
 
-$preparation = new Preparation();
-$array = $preparation->prepare($array);
+$html = new Html();
+$array = $html->prepareData($array);
 
 if ($settings['option'] === 'ajax') {
     include($array['content']);
