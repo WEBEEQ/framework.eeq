@@ -8,16 +8,16 @@ use App\Repository\{SiteRepository, UserRepository};
 
 class AddSiteService
 {
-    protected object $controller;
+    protected object $addSiteController;
     protected object $config;
     protected object $addSiteValidator;
 
     public function __construct(
-        object $controller,
+        object $addSiteController,
         object $config,
         object $addSiteValidator
     ) {
-        $this->controller = $controller;
+        $this->addSiteController = $addSiteController;
         $this->config = $config;
         $this->addSiteValidator = $addSiteValidator;
     }
@@ -28,7 +28,7 @@ class AddSiteService
         string $name,
         string $www
     ): object {
-        $rm = $this->controller->getManager();
+        $rm = $this->addSiteController->getManager();
 
         $this->addSiteValidator->validate(
             $user,

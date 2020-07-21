@@ -8,16 +8,16 @@ use App\Repository\SiteRepository;
 
 class UpdateSiteService
 {
-    protected object $controller;
+    protected object $updateSiteController;
     protected object $config;
     protected object $updateSiteValidator;
 
     public function __construct(
-        object $controller,
+        object $updateSiteController,
         object $config,
         object $updateSiteValidator
     ) {
-        $this->controller = $controller;
+        $this->updateSiteController = $updateSiteController;
         $this->config = $config;
         $this->updateSiteValidator = $updateSiteValidator;
     }
@@ -29,7 +29,7 @@ class UpdateSiteService
         string $name,
         int $visible
     ): object {
-        $rm = $this->controller->getManager();
+        $rm = $this->updateSiteController->getManager();
 
         $this->updateSiteValidator->validate(
             $user,

@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 
 class ChangePasswordService
 {
-    protected object $controller;
+    protected object $changePasswordController;
     protected object $config;
     protected object $mail;
     protected object $html;
@@ -17,7 +17,7 @@ class ChangePasswordService
     protected object $changePasswordValidator;
 
     public function __construct(
-        object $controller,
+        object $changePasswordController,
         object $config,
         object $mail,
         object $html,
@@ -25,7 +25,7 @@ class ChangePasswordService
         object $csrfToken,
         object $changePasswordValidator
     ) {
-        $this->controller = $controller;
+        $this->changePasswordController = $changePasswordController;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
@@ -42,7 +42,7 @@ class ChangePasswordService
         string $user,
         string $code
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->changePasswordController->getManager();
 
         if ($user && $code) {
             $passwordUserData = $rm->getRepository(UserRepository::class)

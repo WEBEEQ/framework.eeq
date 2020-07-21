@@ -8,7 +8,7 @@ use App\Repository\{SiteRepository, UserRepository};
 
 class AcceptSiteService
 {
-    protected object $controller;
+    protected object $acceptSiteController;
     protected object $config;
     protected object $mail;
     protected object $html;
@@ -16,14 +16,14 @@ class AcceptSiteService
     protected object $acceptSiteValidator;
 
     public function __construct(
-        object $controller,
+        object $acceptSiteController,
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
         object $acceptSiteValidator
     ) {
-        $this->controller = $controller;
+        $this->acceptSiteController = $acceptSiteController;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
@@ -41,7 +41,7 @@ class AcceptSiteService
         string $token,
         int $site
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->acceptSiteController->getManager();
 
         if ($submit) {
             if ($delete) {

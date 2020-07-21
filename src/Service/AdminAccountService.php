@@ -8,16 +8,16 @@ use App\Repository\SiteRepository;
 
 class AdminAccountService
 {
-    protected object $controller;
+    protected object $adminAccountController;
     protected object $config;
     protected object $html;
 
     public function __construct(
-        object $controller,
+        object $adminAccountController,
         object $config,
         object $html
     ) {
-        $this->controller = $controller;
+        $this->adminAccountController = $adminAccountController;
         $this->config = $config;
         $this->html = $html;
     }
@@ -26,7 +26,7 @@ class AdminAccountService
         int $level,
         int $id
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->adminAccountController->getManager();
 
         $adminSiteList = $rm->getRepository(SiteRepository::class)
             ->getAdminSiteList(

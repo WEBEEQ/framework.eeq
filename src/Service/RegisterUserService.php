@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 
 class RegisterUserService
 {
-    protected object $controller;
+    protected object $registerUserController;
     protected object $config;
     protected object $mail;
     protected object $html;
@@ -17,7 +17,7 @@ class RegisterUserService
     protected object $registerUserValidator;
 
     public function __construct(
-        object $controller,
+        object $registerUserController,
         object $config,
         object $mail,
         object $html,
@@ -25,7 +25,7 @@ class RegisterUserService
         object $csrfToken,
         object $registerUserValidator
     ) {
-        $this->controller = $controller;
+        $this->registerUserController = $registerUserController;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
@@ -46,7 +46,7 @@ class RegisterUserService
         bool $submit,
         string $token
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->registerUserController->getManager();
 
         if ($submit) {
             $this->registerUserValidator->validate(

@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 
 class ResetPasswordService
 {
-    protected object $controller;
+    protected object $resetPasswordController;
     protected object $config;
     protected object $mail;
     protected object $html;
@@ -16,14 +16,14 @@ class ResetPasswordService
     protected object $resetPasswordValidator;
 
     public function __construct(
-        object $controller,
+        object $resetPasswordController,
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
         object $resetPasswordValidator
     ) {
-        $this->controller = $controller;
+        $this->resetPasswordController = $resetPasswordController;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
@@ -36,7 +36,7 @@ class ResetPasswordService
         bool $submit,
         string $token
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->resetPasswordController->getManager();
 
         if ($submit) {
             $this->resetPasswordValidator->validate($login, $token);

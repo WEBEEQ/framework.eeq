@@ -8,7 +8,7 @@ use App\Repository\UserRepository;
 
 class LogInUserService
 {
-    protected object $controller;
+    protected object $logInUserController;
     protected object $config;
     protected object $mail;
     protected object $html;
@@ -16,14 +16,14 @@ class LogInUserService
     protected object $logInUserValidator;
 
     public function __construct(
-        object $controller,
+        object $logInUserController,
         object $config,
         object $mail,
         object $html,
         object $csrfToken,
         object $logInUserValidator
     ) {
-        $this->controller = $controller;
+        $this->logInUserController = $logInUserController;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
@@ -38,7 +38,7 @@ class LogInUserService
         bool $submit,
         string $token
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->logInUserController->getManager();
 
         if ($submit) {
             $this->logInUserValidator->validate($login, $password, $token);

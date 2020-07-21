@@ -8,7 +8,7 @@ use App\Repository\{CityRepository, ProvinceRepository, UserRepository};
 
 class EditUserService
 {
-    protected object $controller;
+    protected object $editUserController;
     protected object $config;
     protected object $mail;
     protected object $html;
@@ -17,7 +17,7 @@ class EditUserService
     protected object $editUserValidator;
 
     public function __construct(
-        object $controller,
+        object $editUserController,
         object $config,
         object $mail,
         object $html,
@@ -25,7 +25,7 @@ class EditUserService
         object $csrfToken,
         object $editUserValidator
     ) {
-        $this->controller = $controller;
+        $this->editUserController = $editUserController;
         $this->config = $config;
         $this->mail = $mail;
         $this->html = $html;
@@ -56,7 +56,7 @@ class EditUserService
         int $user,
         string $login
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->editUserController->getManager();
 
         if ($submit) {
             $this->editUserValidator->validate(

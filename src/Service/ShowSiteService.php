@@ -8,20 +8,20 @@ use App\Repository\UserRepository;
 
 class ShowSiteService
 {
-    protected object $controller;
+    protected object $showSiteController;
     protected object $config;
 
     public function __construct(
-        object $controller,
+        object $showSiteController,
         object $config
     ) {
-        $this->controller = $controller;
+        $this->showSiteController = $showSiteController;
         $this->config = $config;
     }
 
     public function wwwAction(int $id): array
     {
-        $rm = $this->controller->getManager();
+        $rm = $this->showSiteController->getManager();
         $www = '';
 
         if (!$rm->getRepository(UserRepository::class)->isUserMaxShow($id)) {

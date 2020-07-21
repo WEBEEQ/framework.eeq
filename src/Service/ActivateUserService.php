@@ -8,18 +8,18 @@ use App\Repository\UserRepository;
 
 class ActivateUserService
 {
-    protected object $controller;
+    protected object $activateUserController;
     protected object $key;
 
-    public function __construct(object $controller, object $key)
+    public function __construct(object $activateUserController, object $key)
     {
-        $this->controller = $controller;
+        $this->activateUserController = $activateUserController;
         $this->key = $key;
     }
 
     public function variableAction(string $user, string $code): array
     {
-        $rm = $this->controller->getManager();
+        $rm = $this->activateUserController->getManager();
 
         if ($user && $code) {
             $activationUserData = $rm->getRepository(UserRepository::class)

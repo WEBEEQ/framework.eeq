@@ -8,14 +8,14 @@ use App\Repository\SiteRepository;
 
 class DeleteSiteService
 {
-    protected object $controller;
+    protected object $deleteSiteController;
     protected object $deleteSiteValidator;
 
     public function __construct(
-        object $controller,
+        object $deleteSiteController,
         object $deleteSiteValidator
     ) {
-        $this->controller = $controller;
+        $this->deleteSiteController = $deleteSiteController;
         $this->deleteSiteValidator = $deleteSiteValidator;
     }
 
@@ -24,7 +24,7 @@ class DeleteSiteService
         string $password,
         int $site
     ): object {
-        $rm = $this->controller->getManager();
+        $rm = $this->deleteSiteController->getManager();
 
         $this->deleteSiteValidator->validate(
             $user,

@@ -8,20 +8,20 @@ use App\Repository\SiteRepository;
 
 class EditSiteService
 {
-    protected object $controller;
+    protected object $editSiteController;
     protected object $config;
     protected object $html;
     protected object $csrfToken;
     protected object $editSiteValidator;
 
     public function __construct(
-        object $controller,
+        object $editSiteController,
         object $config,
         object $html,
         object $csrfToken,
         object $editSiteValidator
     ) {
-        $this->controller = $controller;
+        $this->editSiteController = $editSiteController;
         $this->config = $config;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
@@ -37,7 +37,7 @@ class EditSiteService
         string $token,
         int $site
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->editSiteController->getManager();
 
         if ($submit) {
             if ($delete) {

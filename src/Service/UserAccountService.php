@@ -8,20 +8,20 @@ use App\Repository\SiteRepository;
 
 class UserAccountService
 {
-    protected object $controller;
+    protected object $userAccountController;
     protected object $config;
     protected object $html;
     protected object $csrfToken;
     protected object $userAccountValidator;
 
     public function __construct(
-        object $controller,
+        object $userAccountController,
         object $config,
         object $html,
         object $csrfToken,
         object $userAccountValidator
     ) {
-        $this->controller = $controller;
+        $this->userAccountController = $userAccountController;
         $this->config = $config;
         $this->html = $html;
         $this->csrfToken = $csrfToken;
@@ -37,7 +37,7 @@ class UserAccountService
         int $level,
         int $id
     ): array {
-        $rm = $this->controller->getManager();
+        $rm = $this->userAccountController->getManager();
 
         if ($submit) {
             $this->userAccountValidator->validate($name, $www, $token);
