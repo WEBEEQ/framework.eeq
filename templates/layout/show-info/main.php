@@ -7,7 +7,7 @@
     <body>
         <div id="content">
             <section>
-                <?php include($array['content']); ?>
+                <?php include('../templates/' . $array['content']); ?>
             </section>
         </div>
     </body>

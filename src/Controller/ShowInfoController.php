@@ -9,8 +9,8 @@ class ShowInfoController
     public function showInfoAction(): array
     {
         return array(
-            'layout' => 'src/Layout/show-info/main.php',
-            'content' => 'src/View/show-info/show-info.php',
+            'layout' => 'layout/show-info/main.php',
+            'content' => 'show-info/show-info.php',
             'activeMenu' => 'show-info',
             'title' => 'Informacja'
         );

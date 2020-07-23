@@ -9,7 +9,7 @@ class UserHelpController
     public function userHelpAction(): array
     {
         return array(
-            'content' => 'src/View/user-help/user-help.php',
+            'content' => 'user-help/user-help.php',
             'activeMenu' => 'user-help',
             'title' => 'Pomoc'
         );

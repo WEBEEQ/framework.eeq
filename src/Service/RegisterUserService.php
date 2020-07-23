@@ -82,7 +82,7 @@ class RegisterUserService
                     );
 
                     return array(
-                        'content' => 'src/View/register-user/'
+                        'content' => 'register-user/'
                             . 'account-created-info.php',
                         'activeMenu' => 'register-user',
                         'title' => 'Informacja',
@@ -90,7 +90,7 @@ class RegisterUserService
                     );
                 } else {
                     return array(
-                        'content' => 'src/View/register-user/'
+                        'content' => 'register-user/'
                             . 'account-not-created-info.php',
                         'activeMenu' => 'register-user',
                         'title' => 'Informacja'
@@ -100,7 +100,7 @@ class RegisterUserService
         }
 
         return array(
-            'content' => 'src/View/register-user/register-user.php',
+            'content' => 'register-user/register-user.php',
             'activeMenu' => 'register-user',
             'title' => 'Rejestracja',
             'error' => $this->html->prepareError(

@@ -20,7 +20,7 @@
         </div>
         <div id="content">
             <section>
-                <?php include($array['content']); ?>
+                <?php include('../templates/' . $array['content']); ?>
             </section>
         </div>
         <div id="bottombar">

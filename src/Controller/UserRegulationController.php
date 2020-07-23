@@ -9,7 +9,7 @@ class UserRegulationController
     public function userRegulationAction(): array
     {
         return array(
-            'content' => 'src/View/user-regulation/user-regulation.php',
+            'content' => 'user-regulation/user-regulation.php',
             'activeMenu' => 'user-regulation',
             'title' => 'Regulamin'
         );

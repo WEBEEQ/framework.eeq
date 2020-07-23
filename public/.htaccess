@@ -2,7 +2,7 @@ ErrorDocument 403 /error.php?code=403
 ErrorDocument 404 /error.php?code=404
 ErrorDocument 500 /error.php?code=500
 DirectoryIndex index.html index.php /error.php?code=403
-# AddHandler application/x-httpd-php72 .php
+# AddHandler application/x-httpd-php74 .php
 # AddType application/x-httpd-php .php .html
 # php_flag register_globals off
 # php_value default_charset utf-8
@@ -48,11 +48,3 @@ RewriteRule ^ajax/miejsce,([0-9]+)$ /index.php?action=city-list&province=$1 [L]
 RewriteRule ^api/dodaj-strone$ /index.php?action=add-site [L]
 RewriteRule ^api/zaktualizuj-strone$ /index.php?action=update-site [L]
 RewriteRule ^api/usun-strone$ /index.php?action=delete-site [L]
-RewriteRule ^$ - [L]
-RewriteRule ^index\.php$ - [L]
-RewriteRule ^link\.php$ - [L]
-RewriteRule ^error\.php$ - [L]
-RewriteRule ^slider/slider\.php$ - [L]
-RewriteRule ^vendor/webeeq/sieciq/example/ - [L]
-RewriteRule \.(eot|woff|woff2|ttf|svg|txt|js|css|ico|bmp|png|gif|jpg|jpeg|flv|swf)$ - [NC,L]
-RewriteRule ^.*$ - [F,L]

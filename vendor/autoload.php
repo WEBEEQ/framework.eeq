@@ -1,3 +1,3 @@
 <?php
 
-require('vendor/webeeq/sieciq/autoload.php');
+require('../vendor/webeeq/sieciq/autoload.php');

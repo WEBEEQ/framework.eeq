@@ -49,8 +49,7 @@ class ChangePasswordService
                 ->getPasswordUserData($user);
             if ($code !== $passwordUserData['user_key']) {
                 return array(
-                    'content' => 'src/View/change-password/'
-                        . 'code-not-valid-info.php',
+                    'content' => 'change-password/code-not-valid-info.php',
                     'activeMenu' => 'change-password',
                     'title' => 'Informacja'
                 );
@@ -63,8 +62,7 @@ class ChangePasswordService
                 );
 
                 return array(
-                    'content' => 'src/View/change-password/'
-                        . 'account-not-active-info.php',
+                    'content' => 'change-password/account-not-active-info.php',
                     'activeMenu' => 'change-password',
                     'title' => 'Informacja',
                     'activationEmail' => $activationEmail
@@ -91,14 +89,14 @@ class ChangePasswordService
                         setcookie('cookie_login', '', 0, '/');
 
                         return array(
-                            'content' => 'src/View/change-password/'
+                            'content' => 'change-password/'
                                 . 'password-changed-info.php',
                             'activeMenu' => 'change-password',
                             'title' => 'Informacja'
                         );
                     } else {
                         return array(
-                            'content' => 'src/View/change-password/'
+                            'content' => 'change-password/'
                                 . 'password-not-changed-info.php',
                             'activeMenu' => 'change-password',
                             'title' => 'Informacja'
@@ -109,7 +107,7 @@ class ChangePasswordService
         }
 
         return array(
-            'content' => 'src/View/change-password/change-password.php',
+            'content' => 'change-password/change-password.php',
             'activeMenu' => 'change-password',
             'title' => 'Resetowanie',
             'error' => $this->html->prepareError(

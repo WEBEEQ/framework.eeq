@@ -17,9 +17,7 @@ class Database
 
     public function __construct()
     {
-        $database = require(
-            $_SERVER['DOCUMENT_ROOT'] . '/src/Config/database.php'
-        );
+        $database = require(__DIR__ . '/../../config/database.php');
 
         $this->mysqlHost = $database['db_host'];
         $this->mysqlPort = $database['db_port'];

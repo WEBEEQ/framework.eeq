@@ -48,7 +48,7 @@ class ContactFormService
                 );
 
                 return array(
-                    'content' => 'src/View/contact-form/send-message-info.php',
+                    'content' => 'contact-form/send-message-info.php',
                     'activeMenu' => 'contact-form',
                     'title' => 'Informacja',
                     'contactEmail' => $contactEmail
@@ -57,7 +57,7 @@ class ContactFormService
         }
 
         return array(
-            'content' => 'src/View/contact-form/contact-form.php',
+            'content' => 'contact-form/contact-form.php',
             'activeMenu' => 'contact-form',
             'title' => 'Kontakt',
             'error' => $this->html->prepareError(

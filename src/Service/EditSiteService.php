@@ -45,7 +45,7 @@ class EditSiteService
                     ->deleteEditingSiteData($site);
 
                 return array(
-                    'content' => 'src/View/edit-site/data-deletion-info.php',
+                    'content' => 'edit-site/data-deletion-info.php',
                     'activeMenu' => 'edit-site',
                     'title' => 'Informacja',
                     'editingSiteData' => $editingSiteData
@@ -63,7 +63,7 @@ class EditSiteService
                     );
 
                 return array(
-                    'content' => 'src/View/edit-site/data-record-info.php',
+                    'content' => 'edit-site/data-record-info.php',
                     'activeMenu' => 'edit-site',
                     'title' => 'Informacja',
                     'editingSiteData' => $editingSiteData
@@ -75,7 +75,7 @@ class EditSiteService
         }
 
         return array(
-            'content' => 'src/View/edit-site/edit-site.php',
+            'content' => 'edit-site/edit-site.php',
             'activeMenu' => 'edit-site',
             'title' => 'Edycja strony',
             'error' => $this->html->prepareError(

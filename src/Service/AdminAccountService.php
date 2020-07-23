@@ -44,7 +44,7 @@ class AdminAccountService
         );
 
         return array(
-            'content' => 'src/View/admin-account/admin-account.php',
+            'content' => 'admin-account/admin-account.php',
             'activeMenu' => 'admin-account',
             'title' => 'Admin',
             'adminSiteList' => $adminSiteList,

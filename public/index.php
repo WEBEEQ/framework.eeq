@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-require('src/Core/core.php');
+require('../config/config.php');
+require('../src/autoload.php');
+require('../vendor/autoload.php');
 
 use App\Bundle\Html;
 use App\Core\{Config, CookieLogin};
@@ -11,7 +13,7 @@ $config = new Config();
 $cookieLogin = new CookieLogin($config);
 $cookieLogin->setCookieLogin();
 
-$appSettings = require($_SERVER['DOCUMENT_ROOT'] . '/src/Config/settings.php');
+$appSettings = require(__DIR__ . '/../config/settings.php');
 $settings = $appSettings[$_GET['action']];
 
 switch ($settings['role']) {
@@ -62,8 +64,8 @@ switch ($settings['option']) {
     default:
         $array = array();
 
-        $array['layout'] = 'src/Layout/main/main.php';
-        $array['content'] = 'src/View/default/default.php';
+        $array['layout'] = 'layout/main/main.php';
+        $array['content'] = 'default/default.php';
         $array['activeMenu'] = '';
         $array['title'] = 'Pusta strona';
         break;
@@ -80,7 +82,7 @@ $html = new Html();
 $array = $html->prepareData($array);
 
 if ($settings['option'] === 'ajax') {
-    include($array['content']);
+    include('../templates/' . $array['content']);
 } else {
-    include($array['layout'] ?? 'src/Layout/main/main.php');
+    include('../templates/' . ($array['layout'] ?? 'layout/main/main.php'));
 }

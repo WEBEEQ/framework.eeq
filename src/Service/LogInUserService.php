@@ -58,7 +58,7 @@ class LogInUserService
                         );
 
                         return array(
-                            'content' => 'src/View/log-in-user/'
+                            'content' => 'log-in-user/'
                                 . 'account-not-active-info.php',
                             'activeMenu' => 'log-in-user',
                             'title' => 'Informacja',
@@ -89,8 +89,9 @@ class LogInUserService
                             ]
                         );
                     }
-                    header('Location: ' . $this->config->getUrl() . '/konto');
-                    exit;
+
+                    return $this->logInUserController
+                        ->redirectToRoute('user_account');
                 } else {
                     $this->logInUserValidator->addError(
                         'Konto o podanym loginie i haśle nie istnieje.'
@@ -100,7 +101,7 @@ class LogInUserService
         }
 
         return array(
-            'content' => 'src/View/log-in-user/log-in-user.php',
+            'content' => 'log-in-user/log-in-user.php',
             'activeMenu' => 'log-in-user',
             'title' => 'Logowanie',
             'error' => $this->html->prepareError(

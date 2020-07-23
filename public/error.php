@@ -1,13 +1,18 @@
 <?php
 
-require_once('src/Config/config.php');
+require_once('../config/config.php');
+
+$code = (int) ($_GET['code'] ?? 404);
 ?>
 <!DOCTYPE html>
 <?php ob_start(); ?>
-<html lang="pl-PL">
+<html lang="en-US">
     <head>
         <meta charset="utf-8" />
-        <title>Przerwa techniczna</title>
+        <title>Error <?= $code ?></title>
+        <?php if ($code === 403 || $code === 404) { ?>
+            <meta name="robots" content="noindex, nofollow" />
+        <?php } ?>
         <style type="text/css">
             body {
                 margin: 30px;
@@ -51,8 +56,8 @@ require_once('src/Config/config.php');
         </style>
     </head>
     <body>
-        <h1>Przerwa techniczna</h1>
-        <p><a href="/">Powróć do strony głównej</a></p>
+        <h1>Error <?= $code ?></h1>
+        <p><a href="/">Back to the main page</a></p>
     </body>
 </html>
 <?php ob_end_flush(); ?>

@@ -17,7 +17,7 @@ class CityListController extends Controller
             ->getCityList((int) $request['province']);
 
         return array(
-            'content' => 'src/View/ajax/city-list.php',
+            'content' => 'ajax/city-list.php',
             'cityList' => $cityList
         );
     }

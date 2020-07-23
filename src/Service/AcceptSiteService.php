@@ -61,16 +61,14 @@ class AcceptSiteService
                     );
 
                     return array(
-                        'content' => 'src/View/accept-site/'
-                            . 'site-rejected-info.php',
+                        'content' => 'accept-site/site-rejected-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja',
                         'acceptationEmail' => $acceptationEmail
                     );
                 } else {
                     return array(
-                        'content' => 'src/View/accept-site/'
-                            . 'data-not-deleted-info.php',
+                        'content' => 'accept-site/data-not-deleted-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja'
                     );
@@ -102,8 +100,7 @@ class AcceptSiteService
                     );
 
                     return array(
-                        'content' => 'src/View/accept-site/'
-                            . 'site-accepted-info.php',
+                        'content' => 'accept-site/site-accepted-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja',
                         'active' => $active,
@@ -111,8 +108,7 @@ class AcceptSiteService
                     );
                 } else {
                     return array(
-                        'content' => 'src/View/accept-site/'
-                            . 'data-not-saved-info.php',
+                        'content' => 'accept-site/data-not-saved-info.php',
                         'activeMenu' => 'accept-site',
                         'title' => 'Informacja'
                     );
@@ -124,7 +120,7 @@ class AcceptSiteService
         }
 
         return array(
-            'content' => 'src/View/accept-site/accept-site.php',
+            'content' => 'accept-site/accept-site.php',
             'activeMenu' => 'accept-site',
             'title' => 'Akceptacja strony',
             'error' => $this->html->prepareError(

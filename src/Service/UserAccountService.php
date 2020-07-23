@@ -52,15 +52,13 @@ class UserAccountService
                     );
                 if ($accountSiteData) {
                     return array(
-                        'content' => 'src/View/user-account/'
-                            . 'site-added-info.php',
+                        'content' => 'user-account/site-added-info.php',
                         'activeMenu' => 'user-account',
                         'title' => 'Informacja'
                     );
                 } else {
                     return array(
-                        'content' => 'src/View/user-account/'
-                            . 'site-not-added-info.php',
+                        'content' => 'user-account/site-not-added-info.php',
                         'activeMenu' => 'user-account',
                         'title' => 'Informacja'
                     );
@@ -85,7 +83,7 @@ class UserAccountService
         );
 
         return array(
-            'content' => 'src/View/user-account/user-account.php',
+            'content' => 'user-account/user-account.php',
             'activeMenu' => 'user-account',
             'title' => 'Konto',
             'error' => $this->html->prepareError(

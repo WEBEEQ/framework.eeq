@@ -33,6 +33,9 @@ class Controller
             case 'login_page':
                 $path = '/logowanie';
                 break;
+            case 'user_account':
+                $path = '/konto';
+                break;
             default:
                 $path = '/';
                 break;

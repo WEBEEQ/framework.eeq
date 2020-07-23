@@ -15,7 +15,7 @@
                 <?php include('header.php'); ?>
             </header>
         </div>
-        <?php include($array['content']); ?>
+        <?php include('../templates/' . $array['content']); ?>
         <div id="footer">
             <footer>
                 <?php include('footer.php'); ?>

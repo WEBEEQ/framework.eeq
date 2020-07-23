@@ -50,8 +50,8 @@ class ShowSiteService
         }
 
         return array(
-            'layout' => 'src/Layout/show-site/main.php',
-            'content' => 'src/View/show-site/show-site.php',
+            'layout' => 'layout/show-site/main.php',
+            'content' => 'show-site/show-site.php',
             'activeMenu' => 'show-site',
             'title' => 'Pokaz stron',
             'www' => $showData['site_url'] ?? $www

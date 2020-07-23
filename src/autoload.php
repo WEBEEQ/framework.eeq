@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($class) {
-    $directory = $_SERVER['DOCUMENT_ROOT'] . '/src/';
+    $directory = __DIR__ . '/';
     $prefix = 'App\\';
     $length = strlen($prefix);
 
