@@ -19,7 +19,13 @@ $data['visible'] = 1;
 
 $config = new Config();
 $order = new Order($config);
-$response = $order->updateSite($auth, $data);
+
+try {
+    $response = $order->updateSite($auth, $data);
+} catch (SieciqException $e) {
+    echo $e->getMessage();
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en-US">

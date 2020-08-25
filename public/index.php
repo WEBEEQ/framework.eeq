@@ -55,7 +55,7 @@ switch ($settings['option']) {
         $controller = new $class();
         $array = $controller->$method(
             $_SERVER,
-            json_decode(file_get_contents('php://input'), true)
+            json_decode(file_get_contents('php://input'), true) ?? []
         );
 
         if ($array['redirection']) break;

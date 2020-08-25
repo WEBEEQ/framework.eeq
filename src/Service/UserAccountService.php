@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Service;
 
-use App\Repository\SiteRepository;
+use App\Repository\{SiteRepository, UserRepository};
 
 class UserAccountService
 {
@@ -29,7 +29,6 @@ class UserAccountService
     }
 
     public function variableAction(
-        array $accountUserData,
         string $name,
         string $www,
         bool $submit,
@@ -66,6 +65,8 @@ class UserAccountService
             }
         }
 
+        $accountUserData = $rm->getRepository(UserRepository::class)
+            ->getAccountUserData($id);
         $accountSiteList = $rm->getRepository(SiteRepository::class)
             ->getAccountSiteList(
                 $id,

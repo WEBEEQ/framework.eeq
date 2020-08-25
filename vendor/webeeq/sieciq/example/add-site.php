@@ -18,7 +18,13 @@ $data['www'] = 'http://www.naszfach.pl';
 
 $config = new Config();
 $order = new Order($config);
-$response = $order->addSite($auth, $data);
+
+try {
+    $response = $order->addSite($auth, $data);
+} catch (SieciqException $e) {
+    echo $e->getMessage();
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en-US">

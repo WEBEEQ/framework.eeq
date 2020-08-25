@@ -17,7 +17,13 @@ $data['id'] = 8;
 
 $config = new Config();
 $order = new Order($config);
-$response = $order->deleteSite($auth, $data);
+
+try {
+    $response = $order->deleteSite($auth, $data);
+} catch (SieciqException $e) {
+    echo $e->getMessage();
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en-US">

@@ -27,10 +27,9 @@ class UserAccountController extends Controller
             return $this->redirectToRoute('login_page');
         }
 
-        $accountUserData = $rm->getRepository(UserRepository::class)
-            ->getAccountUserData((int) $session['id']);
-
-        if (!$accountUserData) {
+        $userId = $rm->getRepository(UserRepository::class)
+            ->isUserId((int) $session['id']);
+        if (!$userId) {
             return $this->redirectToRoute('login_page');
         }
 
@@ -42,7 +41,6 @@ class UserAccountController extends Controller
             $userAccountValidator
         );
         $array = $userAccountService->variableAction(
-            $accountUserData,
             (string) $request['name'],
             (string) $request['www'],
             (bool) $request['submit'],

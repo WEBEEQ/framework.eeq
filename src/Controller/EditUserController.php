@@ -24,9 +24,9 @@ class EditUserController extends Controller
             $rm = $this->getManager()
         );
 
-        $userId = $rm->getRepository(UserRepository::class)
-            ->isUserId((int) $session['id'], (int) $request['user']);
-        if (!$userId) {
+        $userUserId = $rm->getRepository(UserRepository::class)
+            ->isUserUserId((int) $session['id'], (int) $request['user']);
+        if (!$userUserId) {
             return $this->redirectToRoute('login_page');
         }
 

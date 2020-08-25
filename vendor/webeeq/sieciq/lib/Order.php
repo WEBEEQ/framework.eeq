@@ -17,49 +17,28 @@ class Order extends Http
 
     public function addSite(array $auth, array $data): array
     {
-        try {
-            $response = $this->doPost(
-                $this->config->getAddSitePathUrl(),
-                $auth,
-                $data
-            );
-        } catch (SieciqException $e) {
-            echo $e->getMessage();
-            exit;
-        }
-
-        return $response;
+        return $this->doPost(
+            $this->config->getAddSitePathUrl(),
+            $auth,
+            $data
+        );
     }
 
     public function updateSite(array $auth, array $data): array
     {
-        try {
-            $response = $this->doPut(
-                $this->config->getUpdateSitePathUrl(),
-                $auth,
-                $data
-            );
-        } catch (SieciqException $e) {
-            echo $e->getMessage();
-            exit;
-        }
-
-        return $response;
+        return $this->doPut(
+            $this->config->getUpdateSitePathUrl(),
+            $auth,
+            $data
+        );
     }
 
     public function deleteSite(array $auth, array $data): array
     {
-        try {
-            $response = $this->doDelete(
-                $this->config->getDeleteSitePathUrl(),
-                $auth,
-                $data
-            );
-        } catch (SieciqException $e) {
-            echo $e->getMessage();
-            exit;
-        }
-
-        return $response;
+        return $this->doDelete(
+            $this->config->getDeleteSitePathUrl(),
+            $auth,
+            $data
+        );
     }
 }

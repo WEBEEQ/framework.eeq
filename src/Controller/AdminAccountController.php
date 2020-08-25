@@ -24,9 +24,9 @@ class AdminAccountController extends Controller
             return $this->redirectToRoute('login_page');
         }
 
-        $adminUserId = $rm->getRepository(UserRepository::class)
-            ->isAdminUserId((int) $session['id']);
-        if (!$adminUserId) {
+        $userId = $rm->getRepository(UserRepository::class)
+            ->isUserId((int) $session['id']);
+        if (!$userId) {
             return $this->redirectToRoute('login_page');
         }
 

@@ -15,14 +15,12 @@ class UserRepository
         $this->manager = $manager;
     }
 
-    public function isUserId(int $user, int $user2): bool
+    public function isUserId(int $user): bool
     {
         $query = $this->manager->createQuery(
             'SELECT u.`user_id` FROM `users` u
-            WHERE u.`user_active` = 1 AND u.`user_id` = :user2
-                AND u.`user_id` = :user'
+            WHERE u.`user_active` = 1 AND u.`user_id` = :user'
         )
-            ->setParameter('user2', $user2)
             ->setParameter('user', $user)
             ->getStrQuery();
         $result = $this->database->dbQuery($query);
@@ -30,12 +28,14 @@ class UserRepository
         return (bool) $this->database->dbFetchArray($result);
     }
 
-    public function isAdminUserId(int $user): bool
+    public function isUserUserId(int $user, int $user2): bool
     {
         $query = $this->manager->createQuery(
             'SELECT u.`user_id` FROM `users` u
-            WHERE u.`user_active` = 1 AND u.`user_id` = :user'
+            WHERE u.`user_active` = 1 AND u.`user_id` = :user2
+                AND u.`user_id` = :user'
         )
+            ->setParameter('user2', $user2)
             ->setParameter('user', $user)
             ->getStrQuery();
         $result = $this->database->dbQuery($query);
